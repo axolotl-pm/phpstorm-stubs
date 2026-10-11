@@ -211,6 +211,7 @@ class PhpCoreStubsProvider
             'suhosin',
             'svm',
             'v8js',
+            'webrtc',
             'win32service',
             'xcache',
             'xdebug',
