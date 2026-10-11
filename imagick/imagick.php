@@ -22,34 +22,122 @@ class ImagickKernelException extends Exception {}
  */
 class Imagick implements Iterator, Countable
 {
+    // Constants available in Imagick 7.1
+    // https://im7.phpimagick.com/Imagick/constants
+
+    public const ALIGN_CENTER = 2;
+    public const ALIGN_LEFT = 1;
+    public const ALIGN_RIGHT = 3;
+    public const ALIGN_UNDEFINED = 0;
+    public const ALPHACHANNEL_ACTIVATE = 1;
+    public const ALPHACHANNEL_ASSOCIATE = 2;
+    public const ALPHACHANNEL_BACKGROUND = 3;
+    public const ALPHACHANNEL_COPY = 4;
+    public const ALPHACHANNEL_DEACTIVATE = 5;
+    public const ALPHACHANNEL_DISCRETE = 6;
+    public const ALPHACHANNEL_DISSOCIATE = 7;
+    public const ALPHACHANNEL_EXTRACT = 8;
+    public const ALPHACHANNEL_OFF = 9;
+    public const ALPHACHANNEL_ON = 10;
+    public const ALPHACHANNEL_OPAQUE = 11;
+    public const ALPHACHANNEL_REMOVE = 12;
+    public const ALPHACHANNEL_SET = 13;
+    public const ALPHACHANNEL_SHAPE = 14;
+    public const ALPHACHANNEL_TRANSPARENT = 15;
+    public const ALPHACHANNEL_UNDEFINED = 0;
+    public const AUTO_THRESHOLD_KAPUR = 1;
+    public const AUTO_THRESHOLD_OTSU = 2;
+    public const AUTO_THRESHOLD_TRIANGLE = 3;
+    public const CHANNEL_ALL = 134217727;
+    public const CHANNEL_ALPHA = 16;
+    public const CHANNEL_BLACK = 8;
+    public const CHANNEL_BLUE = 4;
+    public const CHANNEL_COMPOSITES = 31;
+    public const CHANNEL_COMPOSITE_MASK = 512;
+    public const CHANNEL_CYAN = 1;
+    public const CHANNEL_DEFAULT = 134217727;
+    public const CHANNEL_GRAY = 1;
+    public const CHANNEL_GRAY_CHANNELS = 1024;
+    public const CHANNEL_GREEN = 2;
+    public const CHANNEL_INDEX = 32;
+    public const CHANNEL_MAGENTA = 2;
+    public const CHANNEL_META = 256;
+    public const CHANNEL_OPACITY = 16;
+    public const CHANNEL_READ_MASK = 64;
+    public const CHANNEL_RED = 1;
+    public const CHANNEL_RGBA = 23;
+    public const CHANNEL_RGBS = 512;
+    public const CHANNEL_SYNC = 131072;
+    public const CHANNEL_TRUEALPHA = 256;
+    public const CHANNEL_UNDEFINED = 0;
+    public const CHANNEL_WRITE_MASK = 128;
+    public const CHANNEL_YELLOW = 4;
+    public const COLORSPACE_ADOBE98 = 36;
+    public const COLORSPACE_CMY = 1;
+    public const COLORSPACE_CMYK = 2;
+    public const COLORSPACE_DISPLAYP3 = 35;
+    public const COLORSPACE_GRAY = 3;
+    public const COLORSPACE_HCL = 4;
+    public const COLORSPACE_HCLP = 5;
+    public const COLORSPACE_HSB = 6;
+    public const COLORSPACE_HSI = 7;
+    public const COLORSPACE_HSL = 8;
+    public const COLORSPACE_HSV = 9;
+    public const COLORSPACE_HWB = 10;
+    public const COLORSPACE_JZAZBZ = 34;
+    public const COLORSPACE_LCH = 12;
+    public const COLORSPACE_LCHAB = 13;
+    public const COLORSPACE_LCHUV = 14;
+    public const COLORSPACE_LINEARGRAY = 33;
+    public const COLORSPACE_LMS = 16;
+    public const COLORSPACE_LOG = 15;
+    public const COLORSPACE_LUV = 17;
+    public const COLORSPACE_OHTA = 18;
+    public const COLORSPACE_PROPHOTO = 37;
+    public const COLORSPACE_REC601YCBCR = 19;
+    public const COLORSPACE_REC709YCBCR = 20;
+    public const COLORSPACE_RGB = 21;
+    public const COLORSPACE_SCRGB = 22;
+    public const COLORSPACE_SRGB = 23;
+    public const COLORSPACE_TRANSPARENT = 24;
+    public const COLORSPACE_UNDEFINED = 0;
+    public const COLORSPACE_XYY = 25;
+    public const COLORSPACE_XYZ = 26;
+    public const COLORSPACE_YCBCR = 27;
+    public const COLORSPACE_YCC = 28;
+    public const COLORSPACE_YDBDR = 29;
+    public const COLORSPACE_YIQ = 30;
+    public const COLORSPACE_YPBPR = 31;
+    public const COLORSPACE_YUV = 32;
+    public const COLOR_ALPHA = 18;
     public const COLOR_BLACK = 11;
     public const COLOR_BLUE = 12;
     public const COLOR_CYAN = 13;
+    public const COLOR_FUZZ = 19;
     public const COLOR_GREEN = 14;
+    public const COLOR_MAGENTA = 17;
     public const COLOR_RED = 15;
     public const COLOR_YELLOW = 16;
-    public const COLOR_MAGENTA = 17;
-    public const COLOR_OPACITY = 18;
-    public const COLOR_ALPHA = 19;
-    public const COLOR_FUZZ = 20;
-    public const IMAGICK_EXTNUM = 30403;
-    public const IMAGICK_EXTVER = "3.4.3";
-    public const QUANTUM_RANGE = 65535;
-    public const USE_ZEND_MM = 0;
-    public const COMPOSITE_DEFAULT = 40;
-    public const COMPOSITE_UNDEFINED = 0;
-    public const COMPOSITE_NO = 1;
-    public const COMPOSITE_ADD = 2;
-    public const COMPOSITE_ATOP = 3;
-    public const COMPOSITE_BLEND = 4;
+    public const COMPLEX_OPERATOR_ADD = 1;
+    public const COMPLEX_OPERATOR_CONJUGATE = 2;
+    public const COMPLEX_OPERATOR_DIVIDE = 3;
+    public const COMPLEX_OPERATOR_MAGNITUDEPHASE = 4;
+    public const COMPLEX_OPERATOR_MULTIPLY = 5;
+    public const COMPLEX_OPERATOR_REALIMAGINARY = 6;
+    public const COMPLEX_OPERATOR_SUBTRACT = 7;
+    public const COMPOSITE_ATOP = 2;
+    public const COMPOSITE_BLEND = 3;
+    public const COMPOSITE_BLUR = 4;
     public const COMPOSITE_BUMPMAP = 5;
+    public const COMPOSITE_CHANGEMASK = 6;
     public const COMPOSITE_CLEAR = 7;
     public const COMPOSITE_COLORBURN = 8;
     public const COMPOSITE_COLORDODGE = 9;
     public const COMPOSITE_COLORIZE = 10;
+    public const COMPOSITE_COPY = 13;
+    public const COMPOSITE_COPYALPHA = 17;
     public const COMPOSITE_COPYBLACK = 11;
     public const COMPOSITE_COPYBLUE = 12;
-    public const COMPOSITE_COPY = 13;
     public const COMPOSITE_COPYCYAN = 14;
     public const COMPOSITE_COPYGREEN = 15;
     public const COMPOSITE_COPYMAGENTA = 16;
@@ -57,453 +145,472 @@ class Imagick implements Iterator, Countable
     public const COMPOSITE_COPYRED = 18;
     public const COMPOSITE_COPYYELLOW = 19;
     public const COMPOSITE_DARKEN = 20;
-    public const COMPOSITE_DSTATOP = 21;
-    public const COMPOSITE_DST = 22;
-    public const COMPOSITE_DSTIN = 23;
-    public const COMPOSITE_DSTOUT = 24;
-    public const COMPOSITE_DSTOVER = 25;
-    public const COMPOSITE_DIFFERENCE = 26;
-    public const COMPOSITE_DISPLACE = 27;
-    public const COMPOSITE_DISSOLVE = 28;
-    public const COMPOSITE_EXCLUSION = 29;
-    public const COMPOSITE_HARDLIGHT = 30;
-    public const COMPOSITE_HUE = 31;
-    public const COMPOSITE_IN = 32;
-    public const COMPOSITE_LIGHTEN = 33;
-    public const COMPOSITE_LUMINIZE = 35;
-    public const COMPOSITE_MINUS = 36;
-    public const COMPOSITE_MODULATE = 37;
-    public const COMPOSITE_MULTIPLY = 38;
-    public const COMPOSITE_OUT = 39;
-    public const COMPOSITE_OVER = 40;
-    public const COMPOSITE_OVERLAY = 41;
-    public const COMPOSITE_PLUS = 42;
-    public const COMPOSITE_REPLACE = 43;
-    public const COMPOSITE_SATURATE = 44;
-    public const COMPOSITE_SCREEN = 45;
-    public const COMPOSITE_SOFTLIGHT = 46;
-    public const COMPOSITE_SRCATOP = 47;
-    public const COMPOSITE_SRC = 48;
-    public const COMPOSITE_SRCIN = 49;
-    public const COMPOSITE_SRCOUT = 50;
-    public const COMPOSITE_SRCOVER = 51;
-    public const COMPOSITE_SUBTRACT = 52;
-    public const COMPOSITE_THRESHOLD = 53;
-    public const COMPOSITE_XOR = 54;
-    public const COMPOSITE_CHANGEMASK = 6;
-    public const COMPOSITE_LINEARLIGHT = 34;
-    public const COMPOSITE_DIVIDE = 55;
-    public const COMPOSITE_DISTORT = 56;
-    public const COMPOSITE_BLUR = 57;
-    public const COMPOSITE_PEGTOPLIGHT = 58;
-    public const COMPOSITE_VIVIDLIGHT = 59;
-    public const COMPOSITE_PINLIGHT = 60;
-    public const COMPOSITE_LINEARDODGE = 61;
-    public const COMPOSITE_LINEARBURN = 62;
-    public const COMPOSITE_MATHEMATICS = 63;
-    public const COMPOSITE_MODULUSADD = 2;
-    public const COMPOSITE_MODULUSSUBTRACT = 52;
-    public const COMPOSITE_MINUSDST = 36;
-    public const COMPOSITE_DIVIDEDST = 55;
-    public const COMPOSITE_DIVIDESRC = 64;
-    public const COMPOSITE_MINUSSRC = 65;
-    public const COMPOSITE_DARKENINTENSITY = 66;
-    public const COMPOSITE_LIGHTENINTENSITY = 67;
-    public const MONTAGEMODE_FRAME = 1;
-    public const MONTAGEMODE_UNFRAME = 2;
-    public const MONTAGEMODE_CONCATENATE = 3;
-    public const STYLE_NORMAL = 1;
-    public const STYLE_ITALIC = 2;
-    public const STYLE_OBLIQUE = 3;
-    public const STYLE_ANY = 4;
-    public const FILTER_UNDEFINED = 0;
-    public const FILTER_POINT = 1;
-    public const FILTER_BOX = 2;
-    public const FILTER_TRIANGLE = 3;
-    public const FILTER_HERMITE = 4;
-    public const FILTER_HANNING = 5;
-    public const FILTER_HAMMING = 6;
-    public const FILTER_BLACKMAN = 7;
-    public const FILTER_GAUSSIAN = 8;
-    public const FILTER_QUADRATIC = 9;
-    public const FILTER_CUBIC = 10;
-    public const FILTER_CATROM = 11;
-    public const FILTER_MITCHELL = 12;
-    public const FILTER_LANCZOS = 22;
-    public const FILTER_BESSEL = 13;
-    public const FILTER_SINC = 14;
-    public const FILTER_KAISER = 16;
-    public const FILTER_WELSH = 17;
-    public const FILTER_PARZEN = 18;
-    public const FILTER_LAGRANGE = 21;
-    public const FILTER_SENTINEL = 31;
-    public const FILTER_BOHMAN = 19;
-    public const FILTER_BARTLETT = 20;
-    public const FILTER_JINC = 13;
-    public const FILTER_SINCFAST = 15;
-    public const FILTER_ROBIDOUX = 26;
-    public const FILTER_LANCZOSSHARP = 23;
-    public const FILTER_LANCZOS2 = 24;
-    public const FILTER_LANCZOS2SHARP = 25;
-    public const FILTER_ROBIDOUXSHARP = 27;
-    public const FILTER_COSINE = 28;
-    public const FILTER_SPLINE = 29;
-    public const FILTER_LANCZOSRADIUS = 30;
-    public const IMGTYPE_UNDEFINED = 0;
-    public const IMGTYPE_BILEVEL = 1;
-    public const IMGTYPE_GRAYSCALE = 2;
-    public const IMGTYPE_GRAYSCALEMATTE = 3;
-    public const IMGTYPE_PALETTE = 4;
-    public const IMGTYPE_PALETTEMATTE = 5;
-    public const IMGTYPE_TRUECOLOR = 6;
-    public const IMGTYPE_TRUECOLORMATTE = 7;
-    public const IMGTYPE_COLORSEPARATION = 8;
-    public const IMGTYPE_COLORSEPARATIONMATTE = 9;
-    public const IMGTYPE_OPTIMIZE = 10;
-    public const IMGTYPE_PALETTEBILEVELMATTE = 11;
-    public const RESOLUTION_UNDEFINED = 0;
-    public const RESOLUTION_PIXELSPERINCH = 1;
-    public const RESOLUTION_PIXELSPERCENTIMETER = 2;
+    public const COMPOSITE_DARKENINTENSITY = 21;
+    public const COMPOSITE_DEFAULT = 54;
+    public const COMPOSITE_DIFFERENCE = 22;
+    public const COMPOSITE_DISPLACE = 23;
+    public const COMPOSITE_DISSOLVE = 24;
+    public const COMPOSITE_DISTORT = 25;
+    public const COMPOSITE_DIVIDEDST = 26;
+    public const COMPOSITE_DIVIDESRC = 27;
+    public const COMPOSITE_DST = 29;
+    public const COMPOSITE_DSTATOP = 28;
+    public const COMPOSITE_DSTIN = 30;
+    public const COMPOSITE_DSTOUT = 31;
+    public const COMPOSITE_DSTOVER = 32;
+    public const COMPOSITE_EXCLUSION = 33;
+    public const COMPOSITE_FREEZE = 72;
+    public const COMPOSITE_HARDLIGHT = 34;
+    public const COMPOSITE_HARDMIX = 35;
+    public const COMPOSITE_HUE = 36;
+    public const COMPOSITE_IN = 37;
+    public const COMPOSITE_INTERPOLATE = 73;
+    public const COMPOSITE_LIGHTEN = 39;
+    public const COMPOSITE_LIGHTENINTENSITY = 40;
+    public const COMPOSITE_LINEARBURN = 41;
+    public const COMPOSITE_LINEARDODGE = 42;
+    public const COMPOSITE_LINEARLIGHT = 43;
+    public const COMPOSITE_LUMINIZE = 44;
+    public const COMPOSITE_MATHEMATICS = 45;
+    public const COMPOSITE_MINUSDST = 46;
+    public const COMPOSITE_MINUSSRC = 47;
+    public const COMPOSITE_MODULATE = 48;
+    public const COMPOSITE_MODULUSADD = 49;
+    public const COMPOSITE_MODULUSSUBTRACT = 50;
+    public const COMPOSITE_MULTIPLY = 51;
+    public const COMPOSITE_NEGATE = 74;
+    public const COMPOSITE_NO = 52;
+    public const COMPOSITE_OUT = 53;
+    public const COMPOSITE_OVER = 54;
+    public const COMPOSITE_OVERLAY = 55;
+    public const COMPOSITE_PEGTOPLIGHT = 56;
+    public const COMPOSITE_PINLIGHT = 57;
+    public const COMPOSITE_PLUS = 58;
+    public const COMPOSITE_REFLECT = 75;
+    public const COMPOSITE_REPLACE = 59;
+    public const COMPOSITE_RMSE = 79;
+    public const COMPOSITE_SALIENCY_BLEND = 80;
+    public const COMPOSITE_SEAMLESS_BLEND = 81;
+    public const COMPOSITE_SATURATE = 60;
+    public const COMPOSITE_SCREEN = 61;
+    public const COMPOSITE_SOFTBURN = 76;
+    public const COMPOSITE_SOFTDODGE = 77;
+    public const COMPOSITE_SOFTLIGHT = 62;
+    public const COMPOSITE_SRC = 64;
+    public const COMPOSITE_SRCATOP = 63;
+    public const COMPOSITE_SRCIN = 65;
+    public const COMPOSITE_SRCOUT = 66;
+    public const COMPOSITE_SRCOVER = 67;
+    public const COMPOSITE_STAMP = 78;
+    public const COMPOSITE_STEREO = 71;
+    public const COMPOSITE_THRESHOLD = 68;
+    public const COMPOSITE_UNDEFINED = 0;
+    public const COMPOSITE_VIVIDLIGHT = 69;
+    public const COMPOSITE_XOR = 70;
+    public const COMPRESSION_B44 = 2;
+    public const COMPRESSION_B44A = 1;
+    public const COMPRESSION_BZIP = 3;
+    public const COMPRESSION_DWAA = 24;
+    public const COMPRESSION_DWAB = 25;
+    public const COMPRESSION_DXT1 = 4;
+    public const COMPRESSION_DXT3 = 5;
+    public const COMPRESSION_DXT5 = 6;
+    public const COMPRESSION_FAX = 7;
+    public const COMPRESSION_GROUP4 = 8;
+    public const COMPRESSION_JBIG1 = 9;
+    public const COMPRESSION_JBIG2 = 10;
+    public const COMPRESSION_JPEG = 12;
+    public const COMPRESSION_JPEG2000 = 11;
+    public const COMPRESSION_LOSSLESSJPEG = 13;
+    public const COMPRESSION_LZMA = 14;
+    public const COMPRESSION_LZW = 15;
+    public const COMPRESSION_NO = 16;
+    public const COMPRESSION_PIZ = 17;
+    public const COMPRESSION_PXR24 = 18;
+    public const COMPRESSION_RLE = 19;
     public const COMPRESSION_UNDEFINED = 0;
-    public const COMPRESSION_NO = 1;
-    public const COMPRESSION_BZIP = 2;
-    public const COMPRESSION_FAX = 6;
-    public const COMPRESSION_GROUP4 = 7;
-    public const COMPRESSION_JPEG = 8;
-    public const COMPRESSION_JPEG2000 = 9;
-    public const COMPRESSION_LOSSLESSJPEG = 10;
-    public const COMPRESSION_LZW = 11;
-    public const COMPRESSION_RLE = 12;
-    public const COMPRESSION_ZIP = 13;
-    public const COMPRESSION_DXT1 = 3;
-    public const COMPRESSION_DXT3 = 4;
-    public const COMPRESSION_DXT5 = 5;
-    public const COMPRESSION_ZIPS = 14;
-    public const COMPRESSION_PIZ = 15;
-    public const COMPRESSION_PXR24 = 16;
-    public const COMPRESSION_B44 = 17;
-    public const COMPRESSION_B44A = 18;
-    public const COMPRESSION_LZMA = 19;
-    public const COMPRESSION_JBIG1 = 20;
-    public const COMPRESSION_JBIG2 = 21;
-    public const PAINT_POINT = 1;
-    public const PAINT_REPLACE = 2;
-    public const PAINT_FLOODFILL = 3;
-    public const PAINT_FILLTOBORDER = 4;
-    public const PAINT_RESET = 5;
-    public const GRAVITY_NORTHWEST = 1;
-    public const GRAVITY_NORTH = 2;
-    public const GRAVITY_NORTHEAST = 3;
-    public const GRAVITY_WEST = 4;
-    public const GRAVITY_CENTER = 5;
-    public const GRAVITY_EAST = 6;
-    public const GRAVITY_SOUTHWEST = 7;
-    public const GRAVITY_SOUTH = 8;
-    public const GRAVITY_SOUTHEAST = 9;
-    public const GRAVITY_FORGET = 0;
-    public const GRAVITY_STATIC = 10;
-    public const STRETCH_NORMAL = 1;
-    public const STRETCH_ULTRACONDENSED = 2;
-    public const STRETCH_EXTRACONDENSED = 3;
-    public const STRETCH_CONDENSED = 4;
-    public const STRETCH_SEMICONDENSED = 5;
-    public const STRETCH_SEMIEXPANDED = 6;
-    public const STRETCH_EXPANDED = 7;
-    public const STRETCH_EXTRAEXPANDED = 8;
-    public const STRETCH_ULTRAEXPANDED = 9;
-    public const STRETCH_ANY = 10;
-    public const ALIGN_UNDEFINED = 0;
-    public const ALIGN_LEFT = 1;
-    public const ALIGN_CENTER = 2;
-    public const ALIGN_RIGHT = 3;
-    public const DECORATION_NO = 1;
-    public const DECORATION_UNDERLINE = 2;
-    public const DECORATION_OVERLINE = 3;
-    public const DECORATION_LINETROUGH = 4;
+    public const COMPRESSION_WEBP = 23;
+    public const COMPRESSION_ZIP = 20;
+    public const COMPRESSION_ZIPS = 21;
+    public const COMPRESSION_ZSTD = 22;
     public const DECORATION_LINETHROUGH = 4;
-    public const NOISE_UNIFORM = 1;
-    public const NOISE_GAUSSIAN = 2;
-    public const NOISE_MULTIPLICATIVEGAUSSIAN = 3;
-    public const NOISE_IMPULSE = 4;
-    public const NOISE_LAPLACIAN = 5;
-    public const NOISE_POISSON = 6;
-    public const NOISE_RANDOM = 7;
-    public const CHANNEL_UNDEFINED = 0;
-    public const CHANNEL_RED = 1;
-    public const CHANNEL_GRAY = 1;
-    public const CHANNEL_CYAN = 1;
-    public const CHANNEL_GREEN = 2;
-    public const CHANNEL_MAGENTA = 2;
-    public const CHANNEL_BLUE = 4;
-    public const CHANNEL_YELLOW = 4;
-    public const CHANNEL_ALPHA = 8;
-    public const CHANNEL_OPACITY = 8;
-    public const CHANNEL_MATTE = 8;
-    public const CHANNEL_BLACK = 32;
-    public const CHANNEL_INDEX = 32;
-    public const CHANNEL_ALL = 134217727;
-    public const CHANNEL_DEFAULT = 134217719;
-    public const CHANNEL_RGBA = 15;
-    public const CHANNEL_TRUEALPHA = 64;
-    public const CHANNEL_RGBS = 128;
-    public const CHANNEL_GRAY_CHANNELS = 128;
-    public const CHANNEL_SYNC = 256;
-    public const CHANNEL_COMPOSITES = 47;
-    public const METRIC_UNDEFINED = 0;
-    public const METRIC_ABSOLUTEERRORMETRIC = 1;
-    public const METRIC_MEANABSOLUTEERROR = 2;
-    public const METRIC_MEANERRORPERPIXELMETRIC = 3;
-    public const METRIC_MEANSQUAREERROR = 4;
-    public const METRIC_PEAKABSOLUTEERROR = 5;
-    public const METRIC_PEAKSIGNALTONOISERATIO = 6;
-    public const METRIC_ROOTMEANSQUAREDERROR = 7;
-    public const METRIC_NORMALIZEDCROSSCORRELATIONERRORMETRIC = 8;
-    public const METRIC_FUZZERROR = 9;
-    public const PIXEL_CHAR = 1;
-    public const PIXEL_DOUBLE = 2;
-    public const PIXEL_FLOAT = 3;
-    public const PIXEL_INTEGER = 4;
-    public const PIXEL_LONG = 5;
-    public const PIXEL_QUANTUM = 6;
-    public const PIXEL_SHORT = 7;
-    public const EVALUATE_UNDEFINED = 0;
-    public const EVALUATE_ADD = 1;
-    public const EVALUATE_AND = 2;
-    public const EVALUATE_DIVIDE = 3;
-    public const EVALUATE_LEFTSHIFT = 4;
-    public const EVALUATE_MAX = 5;
-    public const EVALUATE_MIN = 6;
-    public const EVALUATE_MULTIPLY = 7;
-    public const EVALUATE_OR = 8;
-    public const EVALUATE_RIGHTSHIFT = 9;
-    public const EVALUATE_SET = 10;
-    public const EVALUATE_SUBTRACT = 11;
-    public const EVALUATE_XOR = 12;
-    public const EVALUATE_POW = 13;
-    public const EVALUATE_LOG = 14;
-    public const EVALUATE_THRESHOLD = 15;
-    public const EVALUATE_THRESHOLDBLACK = 16;
-    public const EVALUATE_THRESHOLDWHITE = 17;
-    public const EVALUATE_GAUSSIANNOISE = 18;
-    public const EVALUATE_IMPULSENOISE = 19;
-    public const EVALUATE_LAPLACIANNOISE = 20;
-    public const EVALUATE_MULTIPLICATIVENOISE = 21;
-    public const EVALUATE_POISSONNOISE = 22;
-    public const EVALUATE_UNIFORMNOISE = 23;
-    public const EVALUATE_COSINE = 24;
+    public const DECORATION_LINETROUGH = 4;
+    public const DECORATION_NO = 1;
+    public const DECORATION_OVERLINE = 3;
+    public const DECORATION_UNDERLINE = 2;
+    public const DIRECTION_LEFT_TO_RIGHT = 2;
+    public const DIRECTION_RIGHT_TO_LEFT = 1;
+    public const DISPOSE_BACKGROUND = 2;
+    public const DISPOSE_NONE = 1;
+    public const DISPOSE_PREVIOUS = 3;
+    public const DISPOSE_UNDEFINED = 0;
+    public const DISPOSE_UNRECOGNIZED = 0;
+    public const DISTORTION_AFFINE = 1;
+    public const DISTORTION_AFFINEPROJECTION = 2;
+    public const DISTORTION_ARC = 9;
+    public const DISTORTION_BARREL = 14;
+    public const DISTORTION_BARRELINVERSE = 15;
+    public const DISTORTION_BILINEAR = 6;
+    public const DISTORTION_BILINEARFORWARD = 6;
+    public const DISTORTION_BILINEARREVERSE = 7;
+    public const DISTORTION_CYLINDER2PLANE = 12;
+    public const DISTORTION_DEPOLAR = 11;
+    public const DISTORTION_PERSPECTIVE = 4;
+    public const DISTORTION_PERSPECTIVEPROJECTION = 5;
+    public const DISTORTION_PLANE2CYLINDER = 13;
+    public const DISTORTION_POLAR = 10;
+    public const DISTORTION_POLYNOMIAL = 8;
+    public const DISTORTION_RESIZE = 17;
+    public const DISTORTION_RIGID_AFFINE = 19;
+    public const DISTORTION_SCALEROTATETRANSLATE = 3;
+    public const DISTORTION_SENTINEL = 18;
+    public const DISTORTION_SHEPARDS = 16;
+    public const DISTORTION_UNDEFINED = 0;
+    public const DITHERMETHOD_FLOYDSTEINBERG = 3;
+    public const DITHERMETHOD_NO = 1;
+    public const DITHERMETHOD_RIEMERSMA = 2;
+    public const DITHERMETHOD_UNDEFINED = 0;
+    public const EVALUATE_ABS = 1;
+    public const EVALUATE_ADD = 2;
+    public const EVALUATE_ADDMODULUS = 3;
+    public const EVALUATE_AND = 4;
+    public const EVALUATE_COSINE = 5;
+    public const EVALUATE_DIVIDE = 6;
+    public const EVALUATE_EXPONENTIAL = 7;
+    public const EVALUATE_GAUSSIANNOISE = 8;
+    public const EVALUATE_IMPULSENOISE = 9;
+    public const EVALUATE_INVERSE_LOG = 33;
+    public const EVALUATE_LAPLACIANNOISE = 10;
+    public const EVALUATE_LEFTSHIFT = 11;
+    public const EVALUATE_LOG = 12;
+    public const EVALUATE_MAX = 13;
+    public const EVALUATE_MEAN = 14;
+    public const EVALUATE_MEDIAN = 15;
+    public const EVALUATE_MIN = 16;
+    public const EVALUATE_MULTIPLICATIVENOISE = 17;
+    public const EVALUATE_MULTIPLY = 18;
+    public const EVALUATE_OR = 19;
+    public const EVALUATE_POISSONNOISE = 20;
+    public const EVALUATE_POW = 21;
+    public const EVALUATE_RIGHTSHIFT = 22;
+    public const EVALUATE_ROOT_MEAN_SQUARE = 23;
+    public const EVALUATE_SET = 24;
     public const EVALUATE_SINE = 25;
-    public const EVALUATE_ADDMODULUS = 26;
-    public const EVALUATE_MEAN = 27;
-    public const EVALUATE_ABS = 28;
-    public const EVALUATE_EXPONENTIAL = 29;
-    public const EVALUATE_MEDIAN = 30;
-    public const EVALUATE_SUM = 31;
-    public const COLORSPACE_UNDEFINED = 0;
-    public const COLORSPACE_RGB = 1;
-    public const COLORSPACE_GRAY = 2;
-    public const COLORSPACE_TRANSPARENT = 3;
-    public const COLORSPACE_OHTA = 4;
-    public const COLORSPACE_LAB = 5;
-    public const COLORSPACE_XYZ = 6;
-    public const COLORSPACE_YCBCR = 7;
-    public const COLORSPACE_YCC = 8;
-    public const COLORSPACE_YIQ = 9;
-    public const COLORSPACE_YPBPR = 10;
-    public const COLORSPACE_YUV = 11;
-    public const COLORSPACE_CMYK = 12;
-    public const COLORSPACE_SRGB = 13;
-    public const COLORSPACE_HSB = 14;
-    public const COLORSPACE_HSL = 15;
-    public const COLORSPACE_HWB = 16;
-    public const COLORSPACE_REC601LUMA = 17;
-    public const COLORSPACE_REC709LUMA = 19;
-    public const COLORSPACE_LOG = 21;
-    public const COLORSPACE_CMY = 22;
-    public const COLORSPACE_LUV = 23;
-    public const COLORSPACE_HCL = 24;
-    public const COLORSPACE_LCH = 25;
-    public const COLORSPACE_LMS = 26;
-    public const COLORSPACE_LCHAB = 27;
-    public const COLORSPACE_LCHUV = 28;
-    public const COLORSPACE_SCRGB = 29;
-    public const COLORSPACE_HSI = 30;
-    public const COLORSPACE_HSV = 31;
-    public const COLORSPACE_HCLP = 32;
-    public const COLORSPACE_YDBDR = 33;
-    public const COLORSPACE_REC601YCBCR = 18;
-    public const COLORSPACE_REC709YCBCR = 20;
-    public const VIRTUALPIXELMETHOD_UNDEFINED = 0;
-    public const VIRTUALPIXELMETHOD_BACKGROUND = 1;
-    public const VIRTUALPIXELMETHOD_CONSTANT = 2;
-    public const VIRTUALPIXELMETHOD_EDGE = 4;
-    public const VIRTUALPIXELMETHOD_MIRROR = 5;
-    public const VIRTUALPIXELMETHOD_TILE = 7;
-    public const VIRTUALPIXELMETHOD_TRANSPARENT = 8;
-    public const VIRTUALPIXELMETHOD_MASK = 9;
-    public const VIRTUALPIXELMETHOD_BLACK = 10;
-    public const VIRTUALPIXELMETHOD_GRAY = 11;
-    public const VIRTUALPIXELMETHOD_WHITE = 12;
-    public const VIRTUALPIXELMETHOD_HORIZONTALTILE = 13;
-    public const VIRTUALPIXELMETHOD_VERTICALTILE = 14;
-    public const VIRTUALPIXELMETHOD_HORIZONTALTILEEDGE = 15;
-    public const VIRTUALPIXELMETHOD_VERTICALTILEEDGE = 16;
-    public const VIRTUALPIXELMETHOD_CHECKERTILE = 17;
-    public const PREVIEW_UNDEFINED = 0;
-    public const PREVIEW_ROTATE = 1;
-    public const PREVIEW_SHEAR = 2;
-    public const PREVIEW_ROLL = 3;
-    public const PREVIEW_HUE = 4;
-    public const PREVIEW_SATURATION = 5;
-    public const PREVIEW_BRIGHTNESS = 6;
-    public const PREVIEW_GAMMA = 7;
-    public const PREVIEW_SPIFF = 8;
-    public const PREVIEW_DULL = 9;
-    public const PREVIEW_GRAYSCALE = 10;
-    public const PREVIEW_QUANTIZE = 11;
-    public const PREVIEW_DESPECKLE = 12;
-    public const PREVIEW_REDUCENOISE = 13;
-    public const PREVIEW_ADDNOISE = 14;
-    public const PREVIEW_SHARPEN = 15;
-    public const PREVIEW_BLUR = 16;
-    public const PREVIEW_THRESHOLD = 17;
-    public const PREVIEW_EDGEDETECT = 18;
-    public const PREVIEW_SPREAD = 19;
-    public const PREVIEW_SOLARIZE = 20;
-    public const PREVIEW_SHADE = 21;
-    public const PREVIEW_RAISE = 22;
-    public const PREVIEW_SEGMENT = 23;
-    public const PREVIEW_SWIRL = 24;
-    public const PREVIEW_IMPLODE = 25;
-    public const PREVIEW_WAVE = 26;
-    public const PREVIEW_OILPAINT = 27;
-    public const PREVIEW_CHARCOALDRAWING = 28;
-    public const PREVIEW_JPEG = 29;
-    public const RENDERINGINTENT_UNDEFINED = 0;
-    public const RENDERINGINTENT_SATURATION = 1;
-    public const RENDERINGINTENT_PERCEPTUAL = 2;
-    public const RENDERINGINTENT_ABSOLUTE = 3;
-    public const RENDERINGINTENT_RELATIVE = 4;
-    public const INTERLACE_UNDEFINED = 0;
-    public const INTERLACE_NO = 1;
-    public const INTERLACE_LINE = 2;
-    public const INTERLACE_PLANE = 3;
-    public const INTERLACE_PARTITION = 4;
-    public const INTERLACE_GIF = 5;
-    public const INTERLACE_JPEG = 6;
-    public const INTERLACE_PNG = 7;
-    public const FILLRULE_UNDEFINED = 0;
+    public const EVALUATE_SUBTRACT = 26;
+    public const EVALUATE_SUM = 27;
+    public const EVALUATE_THRESHOLD = 29;
+    public const EVALUATE_THRESHOLDBLACK = 28;
+    public const EVALUATE_THRESHOLDWHITE = 30;
+    public const EVALUATE_UNDEFINED = 0;
+    public const EVALUATE_UNIFORMNOISE = 31;
+    public const EVALUATE_XOR = 32;
     public const FILLRULE_EVENODD = 1;
     public const FILLRULE_NONZERO = 2;
-    public const PATHUNITS_UNDEFINED = 0;
-    public const PATHUNITS_USERSPACE = 1;
-    public const PATHUNITS_USERSPACEONUSE = 2;
-    public const PATHUNITS_OBJECTBOUNDINGBOX = 3;
-    public const LINECAP_UNDEFINED = 0;
-    public const LINECAP_BUTT = 1;
-    public const LINECAP_ROUND = 2;
-    public const LINECAP_SQUARE = 3;
-    public const LINEJOIN_UNDEFINED = 0;
-    public const LINEJOIN_MITER = 1;
-    public const LINEJOIN_ROUND = 2;
-    public const LINEJOIN_BEVEL = 3;
-    public const RESOURCETYPE_UNDEFINED = 0;
-    public const RESOURCETYPE_AREA = 1;
-    public const RESOURCETYPE_DISK = 2;
-    public const RESOURCETYPE_FILE = 3;
-    public const RESOURCETYPE_MAP = 4;
-    public const RESOURCETYPE_MEMORY = 5;
-    public const RESOURCETYPE_TIME = 7;
-    public const RESOURCETYPE_THROTTLE = 8;
-    public const RESOURCETYPE_THREAD = 6;
-    public const DISPOSE_UNRECOGNIZED = 0;
-    public const DISPOSE_UNDEFINED = 0;
-    public const DISPOSE_NONE = 1;
-    public const DISPOSE_BACKGROUND = 2;
-    public const DISPOSE_PREVIOUS = 3;
-    public const INTERPOLATE_UNDEFINED = 0;
+    public const FILLRULE_UNDEFINED = 0;
+    public const FILTER_BARTLETT = 20;
+    public const FILTER_BESSEL = 13;
+    public const FILTER_BLACKMAN = 7;
+    public const FILTER_BOHMAN = 19;
+    public const FILTER_BOX = 2;
+    public const FILTER_CATROM = 11;
+    public const FILTER_COSINE = 28;
+    public const FILTER_CUBIC = 10;
+    public const FILTER_CUBIC_SPLINE = 31;
+    public const FILTER_GAUSSIAN = 8;
+    public const FILTER_HAMMING = 6;
+    public const FILTER_HANN = 5;
+    public const FILTER_HANNING = 5;
+    public const FILTER_HERMITE = 4;
+    public const FILTER_JINC = 13;
+    public const FILTER_KAISER = 16;
+    public const FILTER_LAGRANGE = 21;
+    public const FILTER_LANCZOS = 22;
+    public const FILTER_LANCZOS2 = 24;
+    public const FILTER_LANCZOS2SHARP = 25;
+    public const FILTER_LANCZOSRADIUS = 30;
+    public const FILTER_LANCZOSSHARP = 23;
+    public const FILTER_MITCHELL = 12;
+    public const FILTER_PARZEN = 18;
+    public const FILTER_POINT = 1;
+    public const FILTER_QUADRATIC = 9;
+    public const FILTER_ROBIDOUX = 26;
+    public const FILTER_ROBIDOUXSHARP = 27;
+    public const FILTER_SENTINEL = 34;
+    public const FILTER_SINC = 14;
+    public const FILTER_SINCFAST = 15;
+    public const FILTER_SPLINE = 29;
+    public const FILTER_TRIANGLE = 3;
+    public const FILTER_UNDEFINED = 0;
+    public const FILTER_WELCH = 17;
+    public const FILTER_WELSH = 17;
+    public const FUNCTION_ARCSIN = 1;
+    public const FUNCTION_ARCTAN = 2;
+    public const FUNCTION_POLYNOMIAL = 3;
+    public const FUNCTION_SINUSOID = 4;
+    public const FUNCTION_UNDEFINED = 0;
+    public const GRAVITY_CENTER = 5;
+    public const GRAVITY_EAST = 6;
+    public const GRAVITY_FORGET = 0;
+    public const GRAVITY_NORTH = 2;
+    public const GRAVITY_NORTHEAST = 3;
+    public const GRAVITY_NORTHWEST = 1;
+    public const GRAVITY_SOUTH = 8;
+    public const GRAVITY_SOUTHEAST = 9;
+    public const GRAVITY_SOUTHWEST = 7;
+    public const GRAVITY_WEST = 4;
+    public const IMAGE_TYPE_BILEVEL = 1;
+    public const IMAGE_TYPE_COLOR_SEPARATION = 8;
+    public const IMAGE_TYPE_COLOR_SEPARATION_ALPHA = 9;
+    public const IMAGE_TYPE_GRAYSCALE = 2;
+    public const IMAGE_TYPE_GRAYSCALE_ALPHA = 3;
+    public const IMAGE_TYPE_OPTIMIZE = 10;
+    public const IMAGE_TYPE_PALETTE = 4;
+    public const IMAGE_TYPE_PALETTE_ALPHA = 5;
+    public const IMAGE_TYPE_PALETTE_BILEVEL_ALPHA = 11;
+    public const IMAGE_TYPE_TRUE_COLOR = 6;
+    public const IMAGE_TYPE_TRUE_COLOR_ALPHA = 7;
+    public const IMAGICK_EXTNUM = 30800;
+    public const IMAGICK_EXTVER = "3.8.0";
+    public const IMGTYPE_BILEVEL = 1;
+    public const IMGTYPE_COLORSEPARATION = 8;
+    public const IMGTYPE_COLORSEPARATIONALPHA = 9;
+    public const IMGTYPE_COLORSEPARATIONMATTE = 9;
+    public const IMGTYPE_GRAYSCALE = 2;
+    public const IMGTYPE_GRAYSCALEALPHA = 3;
+    public const IMGTYPE_GRAYSCALEMATTE = 3;
+    public const IMGTYPE_OPTIMIZE = 10;
+    public const IMGTYPE_PALETTE = 4;
+    public const IMGTYPE_PALETTEALPHA = 5;
+    public const IMGTYPE_PALETTEBILEVELALPHA = 11;
+    public const IMGTYPE_PALETTEBILEVELMATTE = 11;
+    public const IMGTYPE_PALETTEMATTE = 5;
+    public const IMGTYPE_TRUECOLOR = 6;
+    public const IMGTYPE_TRUECOLORALPHA = 7;
+    public const IMGTYPE_TRUECOLORMATTE = 7;
+    public const IMGTYPE_UNDEFINED = 0;
+    public const INTERLACE_GIF = 5;
+    public const INTERLACE_JPEG = 6;
+    public const INTERLACE_LINE = 2;
+    public const INTERLACE_NO = 1;
+    public const INTERLACE_PARTITION = 4;
+    public const INTERLACE_PLANE = 3;
+    public const INTERLACE_PNG = 7;
+    public const INTERLACE_UNDEFINED = 0;
     public const INTERPOLATE_AVERAGE = 1;
-    public const INTERPOLATE_BICUBIC = 2;
-    public const INTERPOLATE_BILINEAR = 3;
-    public const INTERPOLATE_FILTER = 4;
-    public const INTERPOLATE_INTEGER = 5;
-    public const INTERPOLATE_MESH = 6;
-    public const INTERPOLATE_NEARESTNEIGHBOR = 7;
-    public const INTERPOLATE_SPLINE = 8;
-    public const LAYERMETHOD_UNDEFINED = 0;
+    public const INTERPOLATE_AVERAGE_16 = 3;
+    public const INTERPOLATE_AVERAGE_9 = 2;
+    public const INTERPOLATE_BACKGROUND_COLOR = 4;
+    public const INTERPOLATE_BILINEAR = 5;
+    public const INTERPOLATE_BLEND = 6;
+    public const INTERPOLATE_CATROM = 7;
+    public const INTERPOLATE_INTEGER = 8;
+    public const INTERPOLATE_MESH = 9;
+    public const INTERPOLATE_NEAREST_PIXEL = 10;
+    public const INTERPOLATE_SPLINE = 11;
+    public const INTERPOLATE_UNDEFINED = 0;
+    public const KERNEL_BINOMIAL = 7;
+    public const KERNEL_BLUR = 5;
+    public const KERNEL_CHEBYSHEV = 33;
+    public const KERNEL_COMET = 6;
+    public const KERNEL_COMPASS = 13;
+    public const KERNEL_CONVEX_HULL = 30;
+    public const KERNEL_CORNERS = 25;
+    public const KERNEL_CROSS = 21;
+    public const KERNEL_DIAGONALS = 26;
+    public const KERNEL_DIAMOND = 15;
+    public const KERNEL_DIFFERENCE_OF_GAUSSIANS = 3;
+    public const KERNEL_DISK = 19;
+    public const KERNEL_EDGES = 24;
+    public const KERNEL_EUCLIDEAN = 36;
+    public const KERNEL_FREI_CHEN = 10;
+    public const KERNEL_GAUSSIAN = 2;
+    public const KERNEL_KIRSCH = 14;
+    public const KERNEL_LAPLACIAN = 8;
+    public const KERNEL_LAPLACIAN_OF_GAUSSIANS = 4;
+    public const KERNEL_LINE_ENDS = 27;
+    public const KERNEL_LINE_JUNCTIONS = 28;
+    public const KERNEL_MANHATTAN = 34;
+    public const KERNEL_OCTAGON = 18;
+    public const KERNEL_OCTAGONAL = 35;
+    public const KERNEL_PEAKS = 23;
+    public const KERNEL_PLUS = 20;
+    public const KERNEL_PREWITT = 12;
+    public const KERNEL_RECTANGLE = 17;
+    public const KERNEL_RIDGES = 29;
+    public const KERNEL_RING = 22;
+    public const KERNEL_ROBERTS = 11;
+    public const KERNEL_SKELETON = 32;
+    public const KERNEL_SOBEL = 9;
+    public const KERNEL_SQUARE = 16;
+    public const KERNEL_THIN_SE = 31;
+    public const KERNEL_UNITY = 1;
+    public const KERNEL_USER_DEFINED = 37;
     public const LAYERMETHOD_COALESCE = 1;
     public const LAYERMETHOD_COMPAREANY = 2;
     public const LAYERMETHOD_COMPARECLEAR = 3;
     public const LAYERMETHOD_COMPAREOVERLAY = 4;
+    public const LAYERMETHOD_COMPOSITE = 12;
     public const LAYERMETHOD_DISPOSE = 5;
+    public const LAYERMETHOD_FLATTEN = 14;
+    public const LAYERMETHOD_MERGE = 13;
+    public const LAYERMETHOD_MOSAIC = 15;
     public const LAYERMETHOD_OPTIMIZE = 6;
+    public const LAYERMETHOD_OPTIMIZEIMAGE = 7;
     public const LAYERMETHOD_OPTIMIZEPLUS = 8;
     public const LAYERMETHOD_OPTIMIZETRANS = 9;
-    public const LAYERMETHOD_COMPOSITE = 12;
-    public const LAYERMETHOD_OPTIMIZEIMAGE = 7;
     public const LAYERMETHOD_REMOVEDUPS = 10;
     public const LAYERMETHOD_REMOVEZERO = 11;
     public const LAYERMETHOD_TRIMBOUNDS = 16;
-    public const ORIENTATION_UNDEFINED = 0;
+    public const LAYERMETHOD_UNDEFINED = 0;
+    public const LINECAP_BUTT = 1;
+    public const LINECAP_ROUND = 2;
+    public const LINECAP_SQUARE = 3;
+    public const LINECAP_UNDEFINED = 0;
+    public const LINEJOIN_BEVEL = 3;
+    public const LINEJOIN_MITER = 1;
+    public const LINEJOIN_ROUND = 2;
+    public const LINEJOIN_UNDEFINED = 0;
+    public const METRIC_ABSOLUTEERRORMETRIC = 1;
+    public const METRIC_FUZZERROR = 2;
+    public const METRIC_MEANABSOLUTEERROR = 3;
+    public const METRIC_MEANERRORPERPIXELMETRIC = 4;
+    public const METRIC_MEANSQUAREERROR = 5;
+    public const METRIC_NORMALIZEDCROSSCORRELATIONERRORMETRIC = 6;
+    public const METRIC_PEAKABSOLUTEERROR = 7;
+    public const METRIC_PEAKSIGNALTONOISERATIO = 8;
+    public const METRIC_PERCEPTUALHASH_ERROR = 9;
+    public const METRIC_ROOTMEANSQUAREDERROR = 10;
+    public const METRIC_STRUCTURAL_DISSIMILARITY_ERROR = 12;
+    public const METRIC_STRUCTURAL_SIMILARITY_ERROR = 11;
+    public const MONTAGEMODE_CONCATENATE = 3;
+    public const MONTAGEMODE_FRAME = 1;
+    public const MONTAGEMODE_UNFRAME = 2;
+    public const MORPHOLOGY_BOTTOM_HAT = 17;
+    public const MORPHOLOGY_CLOSE = 9;
+    public const MORPHOLOGY_CLOSE_INTENSITY = 11;
+    public const MORPHOLOGY_CONVOLVE = 1;
+    public const MORPHOLOGY_CORRELATE = 2;
+    public const MORPHOLOGY_DILATE = 4;
+    public const MORPHOLOGY_DILATE_INTENSITY = 6;
+    public const MORPHOLOGY_DISTANCE = 21;
+    public const MORPHOLOGY_EDGE = 15;
+    public const MORPHOLOGY_EDGE_IN = 13;
+    public const MORPHOLOGY_EDGE_OUT = 14;
+    public const MORPHOLOGY_ERODE = 3;
+    public const MORPHOLOGY_ERODE_INTENSITY = 5;
+    public const MORPHOLOGY_HIT_AND_MISS = 18;
+    public const MORPHOLOGY_ITERATIVE = 7;
+    public const MORPHOLOGY_OPEN = 8;
+    public const MORPHOLOGY_OPEN_INTENSITY = 10;
+    public const MORPHOLOGY_SMOOTH = 12;
+    public const MORPHOLOGY_THICKEN = 20;
+    public const MORPHOLOGY_THINNING = 19;
+    public const MORPHOLOGY_TOP_HAT = 16;
+    public const MORPHOLOGY_VORONOI = 22;
+    public const NOISE_GAUSSIAN = 2;
+    public const NOISE_IMPULSE = 4;
+    public const NOISE_LAPLACIAN = 5;
+    public const NOISE_MULTIPLICATIVEGAUSSIAN = 3;
+    public const NOISE_POISSON = 6;
+    public const NOISE_RANDOM = 7;
+    public const NOISE_UNIFORM = 1;
+    public const NORMALIZE_KERNEL_CORRELATE = 65536;
+    public const NORMALIZE_KERNEL_NONE = 0;
+    public const NORMALIZE_KERNEL_PERCENT = 4096;
+    public const NORMALIZE_KERNEL_VALUE = 8192;
+    public const ORIENTATION_BOTTOMLEFT = 4;
+    public const ORIENTATION_BOTTOMRIGHT = 3;
+    public const ORIENTATION_LEFTBOTTOM = 8;
+    public const ORIENTATION_LEFTTOP = 5;
+    public const ORIENTATION_RIGHTBOTTOM = 7;
+    public const ORIENTATION_RIGHTTOP = 6;
     public const ORIENTATION_TOPLEFT = 1;
     public const ORIENTATION_TOPRIGHT = 2;
-    public const ORIENTATION_BOTTOMRIGHT = 3;
-    public const ORIENTATION_BOTTOMLEFT = 4;
-    public const ORIENTATION_LEFTTOP = 5;
-    public const ORIENTATION_RIGHTTOP = 6;
-    public const ORIENTATION_RIGHTBOTTOM = 7;
-    public const ORIENTATION_LEFTBOTTOM = 8;
-    public const DISTORTION_UNDEFINED = 0;
-    public const DISTORTION_AFFINE = 1;
-    public const DISTORTION_AFFINEPROJECTION = 2;
-    public const DISTORTION_ARC = 9;
-    public const DISTORTION_BILINEAR = 6;
-    public const DISTORTION_PERSPECTIVE = 4;
-    public const DISTORTION_PERSPECTIVEPROJECTION = 5;
-    public const DISTORTION_SCALEROTATETRANSLATE = 3;
-    public const DISTORTION_POLYNOMIAL = 8;
-    public const DISTORTION_POLAR = 10;
-    public const DISTORTION_DEPOLAR = 11;
-    public const DISTORTION_BARREL = 14;
-    public const DISTORTION_SHEPARDS = 16;
-    public const DISTORTION_SENTINEL = 18;
-    public const DISTORTION_BARRELINVERSE = 15;
-    public const DISTORTION_BILINEARFORWARD = 6;
-    public const DISTORTION_BILINEARREVERSE = 7;
-    public const DISTORTION_RESIZE = 17;
-    public const DISTORTION_CYLINDER2PLANE = 12;
-    public const DISTORTION_PLANE2CYLINDER = 13;
-    public const LAYERMETHOD_MERGE = 13;
-    public const LAYERMETHOD_FLATTEN = 14;
-    public const LAYERMETHOD_MOSAIC = 15;
-    public const ALPHACHANNEL_ACTIVATE = 1;
-    public const ALPHACHANNEL_RESET = 7;
-    public const ALPHACHANNEL_SET = 8;
-    public const ALPHACHANNEL_UNDEFINED = 0;
-    public const ALPHACHANNEL_COPY = 3;
-    public const ALPHACHANNEL_DEACTIVATE = 4;
-    public const ALPHACHANNEL_EXTRACT = 5;
-    public const ALPHACHANNEL_OPAQUE = 6;
-    public const ALPHACHANNEL_SHAPE = 9;
-    public const ALPHACHANNEL_TRANSPARENT = 10;
-    public const SPARSECOLORMETHOD_UNDEFINED = 0;
+    public const ORIENTATION_UNDEFINED = 0;
+    public const PAINT_FILLTOBORDER = 4;
+    public const PAINT_FLOODFILL = 3;
+    public const PAINT_POINT = 1;
+    public const PAINT_REPLACE = 2;
+    public const PAINT_RESET = 5;
+    public const PATHUNITS_OBJECTBOUNDINGBOX = 3;
+    public const PATHUNITS_UNDEFINED = 0;
+    public const PATHUNITS_USERSPACE = 1;
+    public const PATHUNITS_USERSPACEONUSE = 2;
+    public const PIXELMASK_COMPOSITE = 4;
+    public const PIXELMASK_READ = 1;
+    public const PIXELMASK_WRITE = 2;
+    public const PIXELSTORAGE_CHAR = 1;
+    public const PIXELSTORAGE_DOUBLE = 2;
+    public const PIXELSTORAGE_FLOAT = 3;
+    public const PIXELSTORAGE_LONG = 4;
+    public const PIXELSTORAGE_QUANTUM = 6;
+    public const PIXELSTORAGE_SHORT = 7;
+    public const PIXEL_CHAR = 1;
+    public const PIXEL_DOUBLE = 2;
+    public const PIXEL_FLOAT = 3;
+    public const PIXEL_LONG = 4;
+    public const PIXEL_QUANTUM = 6;
+    public const PIXEL_SHORT = 7;
+    public const PREVIEW_ADDNOISE = 14;
+    public const PREVIEW_BLUR = 16;
+    public const PREVIEW_BRIGHTNESS = 6;
+    public const PREVIEW_CHARCOALDRAWING = 28;
+    public const PREVIEW_DESPECKLE = 12;
+    public const PREVIEW_DULL = 9;
+    public const PREVIEW_EDGEDETECT = 18;
+    public const PREVIEW_GAMMA = 7;
+    public const PREVIEW_GRAYSCALE = 10;
+    public const PREVIEW_HUE = 4;
+    public const PREVIEW_IMPLODE = 25;
+    public const PREVIEW_JPEG = 29;
+    public const PREVIEW_OILPAINT = 27;
+    public const PREVIEW_QUANTIZE = 11;
+    public const PREVIEW_RAISE = 22;
+    public const PREVIEW_REDUCENOISE = 13;
+    public const PREVIEW_ROLL = 3;
+    public const PREVIEW_ROTATE = 1;
+    public const PREVIEW_SATURATION = 5;
+    public const PREVIEW_SEGMENT = 23;
+    public const PREVIEW_SHADE = 21;
+    public const PREVIEW_SHARPEN = 15;
+    public const PREVIEW_SHEAR = 2;
+    public const PREVIEW_SOLARIZE = 20;
+    public const PREVIEW_SPIFF = 8;
+    public const PREVIEW_SPREAD = 19;
+    public const PREVIEW_SWIRL = 24;
+    public const PREVIEW_THRESHOLD = 17;
+    public const PREVIEW_UNDEFINED = 0;
+    public const PREVIEW_WAVE = 26;
+    public const QUANTUM_RANGE = 65535;
+    public const RENDERINGINTENT_ABSOLUTE = 3;
+    public const RENDERINGINTENT_PERCEPTUAL = 2;
+    public const RENDERINGINTENT_RELATIVE = 4;
+    public const RENDERINGINTENT_SATURATION = 1;
+    public const RENDERINGINTENT_UNDEFINED = 0;
+    public const RESOLUTION_PIXELSPERCENTIMETER = 2;
+    public const RESOLUTION_PIXELSPERINCH = 1;
+    public const RESOLUTION_UNDEFINED = 0;
+    public const RESOURCETYPE_AREA = 1;
+    public const RESOURCETYPE_DISK = 2;
+    public const RESOURCETYPE_FILE = 3;
+    public const RESOURCETYPE_HEIGHT = 4;
+    public const RESOURCETYPE_LISTLENGTH = 11;
+    public const RESOURCETYPE_MAP = 5;
+    public const RESOURCETYPE_MEMORY = 6;
+    public const RESOURCETYPE_THREAD = 7;
+    public const RESOURCETYPE_THROTTLE = 8;
+    public const RESOURCETYPE_TIME = 9;
+    public const RESOURCETYPE_UNDEFINED = 0;
+    public const RESOURCETYPE_WIDTH = 10;
     public const SPARSECOLORMETHOD_BARYCENTRIC = 1;
     public const SPARSECOLORMETHOD_BILINEAR = 7;
+    public const SPARSECOLORMETHOD_INVERSE = 19;
+    public const SPARSECOLORMETHOD_MANHATTAN = 20;
     public const SPARSECOLORMETHOD_POLYNOMIAL = 8;
     public const SPARSECOLORMETHOD_SPEPARDS = 16;
+    public const SPARSECOLORMETHOD_UNDEFINED = 0;
     public const SPARSECOLORMETHOD_VORONOI = 18;
-    public const SPARSECOLORMETHOD_INVERSE = 19;
-    public const DITHERMETHOD_UNDEFINED = 0;
-    public const DITHERMETHOD_NO = 1;
-    public const DITHERMETHOD_RIEMERSMA = 2;
-    public const DITHERMETHOD_FLOYDSTEINBERG = 3;
-    public const FUNCTION_UNDEFINED = 0;
-    public const FUNCTION_POLYNOMIAL = 1;
-    public const FUNCTION_SINUSOID = 2;
-    public const ALPHACHANNEL_BACKGROUND = 2;
-    public const FUNCTION_ARCSIN = 3;
-    public const FUNCTION_ARCTAN = 4;
-    public const ALPHACHANNEL_FLATTEN = 11;
-    public const ALPHACHANNEL_REMOVE = 12;
+    public const STATISTIC_CONTRAST = 10;
     public const STATISTIC_GRADIENT = 1;
     public const STATISTIC_MAXIMUM = 2;
     public const STATISTIC_MEAN = 3;
@@ -511,72 +618,41 @@ class Imagick implements Iterator, Countable
     public const STATISTIC_MINIMUM = 5;
     public const STATISTIC_MODE = 6;
     public const STATISTIC_NONPEAK = 7;
-    public const STATISTIC_STANDARD_DEVIATION = 8;
-    public const MORPHOLOGY_CONVOLVE = 1;
-    public const MORPHOLOGY_CORRELATE = 2;
-    public const MORPHOLOGY_ERODE = 3;
-    public const MORPHOLOGY_DILATE = 4;
-    public const MORPHOLOGY_ERODE_INTENSITY = 5;
-    public const MORPHOLOGY_DILATE_INTENSITY = 6;
-    public const MORPHOLOGY_DISTANCE = 7;
-    public const MORPHOLOGY_OPEN = 8;
-    public const MORPHOLOGY_CLOSE = 9;
-    public const MORPHOLOGY_OPEN_INTENSITY = 10;
-    public const MORPHOLOGY_CLOSE_INTENSITY = 11;
-    public const MORPHOLOGY_SMOOTH = 12;
-    public const MORPHOLOGY_EDGE_IN = 13;
-    public const MORPHOLOGY_EDGE_OUT = 14;
-    public const MORPHOLOGY_EDGE = 15;
-    public const MORPHOLOGY_TOP_HAT = 16;
-    public const MORPHOLOGY_BOTTOM_HAT = 17;
-    public const MORPHOLOGY_HIT_AND_MISS = 18;
-    public const MORPHOLOGY_THINNING = 19;
-    public const MORPHOLOGY_THICKEN = 20;
-    public const MORPHOLOGY_VORONOI = 21;
-    public const MORPHOLOGY_ITERATIVE = 22;
-    public const KERNEL_UNITY = 1;
-    public const KERNEL_GAUSSIAN = 2;
-    public const KERNEL_DIFFERENCE_OF_GAUSSIANS = 3;
-    public const KERNEL_LAPLACIAN_OF_GAUSSIANS = 4;
-    public const KERNEL_BLUR = 5;
-    public const KERNEL_COMET = 6;
-    public const KERNEL_LAPLACIAN = 7;
-    public const KERNEL_SOBEL = 8;
-    public const KERNEL_FREI_CHEN = 9;
-    public const KERNEL_ROBERTS = 10;
-    public const KERNEL_PREWITT = 11;
-    public const KERNEL_COMPASS = 12;
-    public const KERNEL_KIRSCH = 13;
-    public const KERNEL_DIAMOND = 14;
-    public const KERNEL_SQUARE = 15;
-    public const KERNEL_RECTANGLE = 16;
-    public const KERNEL_OCTAGON = 17;
-    public const KERNEL_DISK = 18;
-    public const KERNEL_PLUS = 19;
-    public const KERNEL_CROSS = 20;
-    public const KERNEL_RING = 21;
-    public const KERNEL_PEAKS = 22;
-    public const KERNEL_EDGES = 23;
-    public const KERNEL_CORNERS = 24;
-    public const KERNEL_DIAGONALS = 25;
-    public const KERNEL_LINE_ENDS = 26;
-    public const KERNEL_LINE_JUNCTIONS = 27;
-    public const KERNEL_RIDGES = 28;
-    public const KERNEL_CONVEX_HULL = 29;
-    public const KERNEL_THIN_SE = 30;
-    public const KERNEL_SKELETON = 31;
-    public const KERNEL_CHEBYSHEV = 32;
-    public const KERNEL_MANHATTAN = 33;
-    public const KERNEL_OCTAGONAL = 34;
-    public const KERNEL_EUCLIDEAN = 35;
-    public const KERNEL_USER_DEFINED = 36;
-    public const KERNEL_BINOMIAL = 37;
-    public const DIRECTION_LEFT_TO_RIGHT = 2;
-    public const DIRECTION_RIGHT_TO_LEFT = 1;
-    public const NORMALIZE_KERNEL_NONE = 0;
-    public const NORMALIZE_KERNEL_VALUE = 8192;
-    public const NORMALIZE_KERNEL_CORRELATE = 65536;
-    public const NORMALIZE_KERNEL_PERCENT = 4096;
+    public const STATISTIC_ROOT_MEAN_SQUARE = 8;
+    public const STATISTIC_STANDARD_DEVIATION = 9;
+    public const STRETCH_ANY = 10;
+    public const STRETCH_CONDENSED = 4;
+    public const STRETCH_EXPANDED = 7;
+    public const STRETCH_EXTRACONDENSED = 3;
+    public const STRETCH_EXTRAEXPANDED = 8;
+    public const STRETCH_NORMAL = 1;
+    public const STRETCH_SEMICONDENSED = 5;
+    public const STRETCH_SEMIEXPANDED = 6;
+    public const STRETCH_ULTRACONDENSED = 2;
+    public const STRETCH_ULTRAEXPANDED = 9;
+    public const STYLE_ANY = 4;
+    public const STYLE_BOLD = 5;
+    public const STYLE_ITALIC = 2;
+    public const STYLE_NORMAL = 1;
+    public const STYLE_OBLIQUE = 3;
+    public const USE_ZEND_MM = 0;
+    public const VIRTUALPIXELMETHOD_BACKGROUND = 1;
+    public const VIRTUALPIXELMETHOD_BLACK = 9;
+    public const VIRTUALPIXELMETHOD_CHECKERTILE = 16;
+    public const VIRTUALPIXELMETHOD_DITHER = 2;
+    public const VIRTUALPIXELMETHOD_EDGE = 3;
+    public const VIRTUALPIXELMETHOD_GRAY = 10;
+    public const VIRTUALPIXELMETHOD_HORIZONTALTILE = 12;
+    public const VIRTUALPIXELMETHOD_HORIZONTALTILEEDGE = 14;
+    public const VIRTUALPIXELMETHOD_MASK = 8;
+    public const VIRTUALPIXELMETHOD_MIRROR = 4;
+    public const VIRTUALPIXELMETHOD_RANDOM = 5;
+    public const VIRTUALPIXELMETHOD_TILE = 6;
+    public const VIRTUALPIXELMETHOD_TRANSPARENT = 7;
+    public const VIRTUALPIXELMETHOD_UNDEFINED = 0;
+    public const VIRTUALPIXELMETHOD_VERTICALTILE = 13;
+    public const VIRTUALPIXELMETHOD_VERTICALTILEEDGE = 15;
+    public const VIRTUALPIXELMETHOD_WHITE = 11;
 
     /**
      * (PECL imagick 2.0.0)<br/>
@@ -1780,10 +1856,10 @@ class Imagick implements Iterator, Countable
     /**
      * @link https://www.php.net/manual/en/imagick.blueshiftimage.php
      * @param float $factor [optional]
-     * @return bool
+     * @return bool Returns true on success.
      * @throws ImagickException on error.
      */
-    public function blueShiftImage($factor) {}
+    public function blueShiftImage($factor = 1.5) {}
 
     /**
      * (No version information available, might only be in SVN)<br/>
@@ -1854,7 +1930,7 @@ class Imagick implements Iterator, Countable
     /**
      * @param bool $stack
      * @param int $offset
-     * @return Imagick
+     * @return Imagick The new smushed image.
      * @throws ImagickException on error.
      */
     public function smushImages($stack, $offset) {}
@@ -1872,7 +1948,7 @@ class Imagick implements Iterator, Countable
     public function __construct($files = null) {}
 
     /**
-     * @return string
+     * @return string Returns the string content on success or an empty string on failure.
      */
     public function __toString() {}
 
@@ -2660,7 +2736,7 @@ class Imagick implements Iterator, Countable
     /**
      * @param string $key
      * @param string $value
-     * @return bool
+     * @return bool Returns true on success.
      * @throws ImagickException on error.
      */
     #[Deprecated]
@@ -3608,7 +3684,7 @@ class Imagick implements Iterator, Countable
      * bitwise operators. Refer to this
      * list of channel constants.
      * </p>
-     * @return int[]
+     * @return int[] Returns true on success.
      * @throws ImagickException on error.
      */
     #[ArrayShape(["minima" => "int", "maxima" => "int"])]
@@ -3626,7 +3702,7 @@ class Imagick implements Iterator, Countable
      * bitwise operators. Refer to this
      * list of channel constants.
      * </p>
-     * @return float[]
+     * @return float[] Returns an array with "mean" and "standardDeviation" members.
      * @throws ImagickException on error.
      */
     #[ArrayShape(["mean" => "float", "standardDeviation" => "float"])]
@@ -3637,7 +3713,7 @@ class Imagick implements Iterator, Countable
      * (PECL imagick 2.0.0)<br/>
      * Returns statistics for each channel in the image
      * @link https://php.net/manual/en/imagick.getimagechannelstatistics.php
-     * @return array
+     * @return array Returns true on success.
      * @throws ImagickException on error.
      */
     #[Pure]
@@ -4199,8 +4275,8 @@ class Imagick implements Iterator, Countable
      * (PECL imagick 2.0.0)<br/>
      * Adds or removes a profile from an image
      * @link https://php.net/manual/en/imagick.profileimage.php
-     * @param string $name
-     * @param string $profile
+     * @param string $name The profile name.
+     * @param string $profile The profile data. If null, the specified profile will be deleted.
      * @return bool <b>TRUE</b> on success.
      * @throws ImagickException on error.
      */
@@ -4259,7 +4335,9 @@ class Imagick implements Iterator, Countable
      * (PECL imagick 2.0.0)<br/>
      * Separates a channel from the image
      * @link https://php.net/manual/en/imagick.separateimagechannel.php
-     * @param int $channel
+     * @param int $channel Which 'channel' to return. For colorspaces other than RGB, you can still
+     * use the CHANNEL_RED, CHANNEL_GREEN, CHANNEL_BLUE constants to indicate the 1st, 2nd and 3rd
+     * channels.
      * @return bool <b>TRUE</b> on success.
      * @throws ImagickException on error.
      */
@@ -4440,9 +4518,11 @@ class Imagick implements Iterator, Countable
      * (PECL imagick 2.0.0)<br/>
      * Adjusts the contrast of an image
      * @link https://php.net/manual/en/imagick.sigmoidalcontrastimage.php
-     * @param bool $sharpen
-     * @param float $alpha
-     * @param float $beta
+     * @param bool $sharpen If true increase the contrast, if false decrease the contrast.
+     * @param float $alpha The amount of contrast to apply. 1 is very little, 5 is a significant
+     * amount, 20 is extreme.
+     * @param float $beta Where the midpoint of the gradient will be. This value should be in the
+     * range 0 to 1 - multiplied by the quantum value for ImageMagick.
      * @param int $channel [optional]
      * @return bool <b>TRUE</b> on success.
      * @throws ImagickException on error.
@@ -4463,7 +4543,7 @@ class Imagick implements Iterator, Countable
      * (PECL imagick 2.0.0)<br/>
      * Repeatedly tiles the texture image
      * @link https://php.net/manual/en/imagick.textureimage.php
-     * @param Imagick $texture_wand
+     * @param Imagick $texture_wand Imagick object to use as texture image
      * @return Imagick a new Imagick object that has the repeated texture applied.
      * @throws ImagickException on error.
      */
@@ -4760,7 +4840,7 @@ class Imagick implements Iterator, Countable
      * (PECL imagick 2.0.0)<br/>
      * Sets the object's default compression type
      * @link https://php.net/manual/en/imagick.setcompression.php
-     * @param int $compression
+     * @param int $compression The compression type. See the Imagick::COMPRESSION_* constants.
      * @return bool <b>TRUE</b> on success.
      * @throws ImagickException on error.
      */
@@ -4770,7 +4850,7 @@ class Imagick implements Iterator, Countable
      * (PECL imagick 0.9.10-0.9.9)<br/>
      * Sets the object's default compression quality
      * @link https://php.net/manual/en/imagick.setcompressionquality.php
-     * @param int $quality
+     * @param int $quality An integer between 1 and 100, 1 = high compression, 100 low compression.
      * @return bool <b>TRUE</b> on success.
      * @throws ImagickException on error.
      */
@@ -4920,7 +5000,7 @@ class Imagick implements Iterator, Countable
      * @param float $brightness
      * @param float $contrast
      * @param int $CHANNEL [optional]
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -4933,7 +5013,7 @@ class Imagick implements Iterator, Countable
      * @param int $iterations The number of iteration to apply the morphology function. A value of -1 means loop until no change found. How this is applied may depend on the morphology method. Typically this is a value of 1.
      * @param ImagickKernel $ImagickKernel
      * @param int $CHANNEL [optional]
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @throws ImagickKernelException on error.
      * @since 3.3.0
@@ -4945,7 +5025,7 @@ class Imagick implements Iterator, Countable
      * @link https://php.net/manual/en/imagick.filter.php
      * @param ImagickKernel $ImagickKernel An instance of ImagickKernel that represents either a single kernel or a linked series of kernels.
      * @param int $CHANNEL [optional] Provide any channel constant that is valid for your channel mode. To apply to more than one channel, combine channel constants using bitwise operators. Defaults to Imagick::CHANNEL_DEFAULT. Refer to this list of channel constants
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -4956,7 +5036,7 @@ class Imagick implements Iterator, Countable
      * The matrix is similar to those used by Adobe Flash except offsets are in column 6 rather than 5 (in support of CMYKA images) and offsets are normalized (divide Flash offset by 255)
      * @link https://php.net/manual/en/imagick.colormatriximage.php
      * @param array $color_matrix
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -4966,7 +5046,7 @@ class Imagick implements Iterator, Countable
      * Deletes an image property.
      * @link https://php.net/manual/en/imagick.deleteimageproperty.php
      * @param string $name The name of the property to delete.
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -4985,7 +5065,7 @@ class Imagick implements Iterator, Countable
     /**
      * Gets the current image's compression type.
      * @link https://php.net/manual/en/imagick.getimagecompression.php
-     * @return int
+     * @return int Returns the compression constant
      * @since 3.3.0
      */
     #[Pure]
@@ -4994,7 +5074,7 @@ class Imagick implements Iterator, Countable
     /**
      * Get the StringRegistry entry for the named key or false if not set.
      * @link https://php.net/manual/en/imagick.getregistry.php
-     * @param string $key
+     * @param string $key The entry to get.
      * @return string|false
      * @throws ImagickException Since version >= 3.4.3. Throws an exception if the key does not exist, rather than terminating the program.
      * @since 3.3.0
@@ -5014,7 +5094,7 @@ class Imagick implements Iterator, Countable
      * @link https://php.net/manual/en/imagick.identifyformat.php
      * @see https://www.imagemagick.org/script/escape.php
      * @param string $embedText A string containing formatting sequences e.g. "Trim box: %@ number of unique colors: %k".
-     * @return bool
+     * @return bool Returns format or false on failure.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -5042,9 +5122,9 @@ class Imagick implements Iterator, Countable
     /**
      * Rotational blurs an image.
      * @link https://php.net/manual/en/imagick.rotationalblurimage.php
-     * @param float $angle
+     * @param float $angle The angle to apply the blur over.
      * @param int $CHANNEL
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -5057,7 +5137,7 @@ class Imagick implements Iterator, Countable
      * @param float $sigma
      * @param float $threshold
      * @param int $CHANNEL Provide any channel constant that is valid for your channel mode. To apply to more than one channel, combine channel constants using bitwise operators. Defaults to Imagick::CHANNEL_DEFAULT. Refer to this list of channel constants
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -5088,7 +5168,7 @@ class Imagick implements Iterator, Countable
      * <pre> bool callback ( mixed $offset , mixed $span ) </pre>
      * <b>Caution</b>
      * The values passed to the callback function are not consistent. In particular the span parameter can increase during image processing. Because of this calculating the percentage complete of an image operation is not trivial.
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -5099,7 +5179,7 @@ class Imagick implements Iterator, Countable
      * @link https://php.net/manual/en/imagick.setregistry.php
      * @param string $key
      * @param string $value
-     * @return void
+     * @return void Returns true on success.
      * @since 3.3.0
      */
     public static function setRegistry($key, $value) {}
@@ -5111,7 +5191,7 @@ class Imagick implements Iterator, Countable
      * @param int $width
      * @param int $height
      * @param int $channel [optional]
-     * @return void
+     * @return void Returns true on success.
      * @throws ImagickException on error.
      * @since 3.3.0
      */
@@ -5319,7 +5399,7 @@ class ImagickDraw
      * Sets the image resolution
      * @param float $x_resolution <p>The horizontal resolution.</p>
      * @param float $y_resolution <p>The vertical resolution.</p>
-     * @return bool
+     * @return bool Returns true on success.
      * @throws ImagickDrawException on error.
      */
     public function setResolution($x_resolution, $y_resolution) {}
@@ -6715,12 +6795,12 @@ class ImagickDraw
      * (PECL imagick 2.0.0)<br/>
      * Specifies the pattern of dashes and gaps used to stroke paths
      * @link https://php.net/manual/en/imagickdraw.setstrokedasharray.php
-     * @param array $dashArray <p>
-     * array of floats
+     * @param array|null $dashArray <p>
+     * array of floats, use NULL to reset
      * </p>
      * @return bool <b>TRUE</b> on success.
      */
-    public function setStrokeDashArray(array $dashArray) {}
+    public function setStrokeDashArray(?array $dashArray) {}
 
     /**
      * Sets the opacity to use when drawing using the fill or stroke color or texture. Fully opaque is 1.0.
@@ -7299,7 +7379,7 @@ class ImagickKernel
      * @see https://www.imagemagick.org/Usage/morphology/#kernel
      * @param array $matrix A matrix (i.e. 2d array) of values that define the kernel. Each element should be either a float value, or FALSE if that element shouldn't be used by the kernel.
      * @param array $origin [optional] Which element of the kernel should be used as the origin pixel. e.g. For a 3x3 matrix specifying the origin as [2, 2] would specify that the bottom right element should be the origin pixel.
-     * @return ImagickKernel
+     * @return ImagickKernel The generated ImagickKernel.
      * @throws ImagickKernelException on error
      * @since 3.3.0
      */

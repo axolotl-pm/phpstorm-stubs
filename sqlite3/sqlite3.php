@@ -7,6 +7,8 @@ use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Internal\TentativeType;
 
 /**
+ * Represents a SQLite3 specific exception.
+ * @link https://php.net/manual/en/class.sqlite3exception.php
  * @since 8.3
  */
 class SQLite3Exception extends \Exception {}
@@ -17,42 +19,115 @@ class SQLite3Exception extends \Exception {}
  */
 class SQLite3
 {
+    /** @since 8.0 */
     public const OK = 0;
+
+    /** @since 8.0 */
     public const DENY = 1;
+
+    /** @since 8.0 */
     public const IGNORE = 2;
+
+    /** @since 8.0 */
     public const CREATE_INDEX = 1;
+
+    /** @since 8.0 */
     public const CREATE_TABLE = 2;
+
+    /** @since 8.0 */
     public const CREATE_TEMP_INDEX = 3;
+
+    /** @since 8.0 */
     public const CREATE_TEMP_TABLE = 4;
+
+    /** @since 8.0 */
     public const CREATE_TEMP_TRIGGER = 5;
+
+    /** @since 8.0 */
     public const CREATE_TEMP_VIEW = 6;
+
+    /** @since 8.0 */
     public const CREATE_TRIGGER = 7;
+
+    /** @since 8.0 */
     public const CREATE_VIEW = 8;
+
+    /** @since 8.0 */
     public const DELETE = 9;
+
+    /** @since 8.0 */
     public const DROP_INDEX = 10;
+
+    /** @since 8.0 */
     public const DROP_TABLE = 11;
+
+    /** @since 8.0 */
     public const DROP_TEMP_INDEX = 12;
+
+    /** @since 8.0 */
     public const DROP_TEMP_TABLE = 13;
+
+    /** @since 8.0 */
     public const DROP_TEMP_TRIGGER = 14;
+
+    /** @since 8.0 */
     public const DROP_TEMP_VIEW = 15;
+
+    /** @since 8.0 */
     public const DROP_TRIGGER = 16;
+
+    /** @since 8.0 */
     public const DROP_VIEW = 17;
+
+    /** @since 8.0 */
     public const INSERT = 18;
+
+    /** @since 8.0 */
     public const PRAGMA = 19;
+
+    /** @since 8.0 */
     public const READ = 20;
+
+    /** @since 8.0 */
     public const SELECT = 21;
+
+    /** @since 8.0 */
     public const TRANSACTION = 22;
+
+    /** @since 8.0 */
     public const UPDATE = 23;
+
+    /** @since 8.0 */
     public const ATTACH = 24;
+
+    /** @since 8.0 */
     public const DETACH = 25;
+
+    /** @since 8.0 */
     public const ALTER_TABLE = 26;
+
+    /** @since 8.0 */
     public const REINDEX = 27;
+
+    /** @since 8.0 */
     public const ANALYZE = 28;
+
+    /** @since 8.0 */
     public const CREATE_VTABLE = 29;
+
+    /** @since 8.0 */
     public const DROP_VTABLE = 30;
+
+    /** @since 8.0 */
     public const FUNCTION = 31;
+
+    /** @since 8.0 */
     public const SAVEPOINT = 32;
+
+    /** @since 8.0 */
     public const COPY = 0;
+
+    /** @since 8.0 */
     public const RECURSIVE = 33;
 
     /**
@@ -78,8 +153,8 @@ class SQLite3
     #[TentativeType]
     public function open(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename,
-        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags,
-        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey,
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags = 6,
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey = '',
         #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = SQLITE3_OPEN_READWRITE|SQLITE3_OPEN_CREATE,
         #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = ''
     ): void {}
@@ -147,7 +222,7 @@ class SQLite3
      * or equal to zero, will turn off an already set timeout handler.
      * </p>
      * @return bool <b>TRUE</b> on success, <b>FALSE</b> on failure.
-     * @since 5.3.3
+     * @since 5.3
      */
     #[TentativeType]
     public function busyTimeout(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $milliseconds): bool {}
@@ -311,7 +386,7 @@ class SQLite3
      * equal to the second.
      * </p>
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
-     * @since 5.3.11
+     * @since 5.3
      */
     #[TentativeType]
     public function createCollation(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name, callable $callback): bool {}
@@ -338,12 +413,16 @@ class SQLite3
     /**
      * Enable throwing exceptions
      * @link https://www.php.net/manual/en/sqlite3.enableexceptions
-     * @param bool $enable
+     * @param bool $enable When true, the SQLite3 instance, and SQLite3Stmt and SQLite3Result
+     * instances derived from it, will throw exceptions on error. When false, the SQLite3 instance,
+     * and SQLite3Stmt and SQLite3Result instances derived from it, will raise warnings on error.
+     * For either mode, the error code and message, if any, will be available via
+     * SQLite3::lastErrorCode and SQLite3::lastErrorMsg respectively.
      * @return bool Returns the old value; true if exceptions were enabled, false otherwise.
      */
     #[TentativeType]
     public function enableExceptions(
-        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $enable,
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $enable = false,
         #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $enable = false
     ): bool {}
 
@@ -365,11 +444,12 @@ class SQLite3
      * An optional encryption key used when encrypting and decrypting an
      * SQLite database.
      * </p>
+     * @throws \Exception Throws an Exception on failure.
      */
     public function __construct(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filename,
-        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags,
-        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey,
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $flags = 6,
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $encryptionKey = '',
         #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = SQLITE3_OPEN_READWRITE|SQLITE3_OPEN_CREATE,
         #[PhpStormStubsElementAvailable(from: '7.0')] #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $encryptionKey = ''
     ) {}
@@ -387,23 +467,45 @@ class SQLite3
      */
     #[TentativeType]
     public function enableExtendedResultCodes(
-        #[PhpStormStubsElementAvailable(from: '7.4', to: '7.4')] bool $enable,
+        #[PhpStormStubsElementAvailable(from: '7.4', to: '7.4')] bool $enable = true,
         #[PhpStormStubsElementAvailable(from: '8.0')] bool $enable = true
     ): bool {}
 
     /**
-     * @param SQLite3 $destination
-     * @param string $sourceDatabase
-     * @param string $destinationDatabase
-     * @return bool
+     * Backup one database to another database
+     *
+     * SQLite3::backup copies the contents of one database into another, overwriting the contents of
+     * the destination database. It is useful either for creating backups of databases or for
+     * copying in-memory databases to or from persistent files.
+     *
+     * @link https://php.net/manual/en/sqlite3.backup.php
+     * @param SQLite3 $destination A database connection opened with SQLite3::open.
+     * @param string $sourceDatabase The database name is "main" for the main database, "temp" for
+     * the temporary database, or the name specified after the AS keyword in an ATTACH statement for
+     * an attached database.
+     * @param string $destinationDatabase Analogous to sourceDatabase but for the destination.
+     * @return bool Returns true on success or false on failure.
      * @since 7.4
      */
     #[TentativeType]
     public function backup(SQLite3 $destination, string $sourceDatabase = 'main', string $destinationDatabase = 'main'): bool {}
 
     /**
-     * @param null|callable $callback
-     * @return bool
+     * Configures a callback to be used as an authorizer to limit what a statement can do
+     *
+     * Sets a callback that will be called by SQLite every time an action is performed (reading,
+     * deleting, updating, etc.). This is used when preparing a SQL statement from an untrusted
+     * source to ensure that the SQL statements do not try to access data they are not allowed to
+     * see, or that they do not try to execute malicious statements that damage the database. For
+     * example, an application may allow a user to enter arbitrary SQL queries for evaluation by a
+     * database. But the application does not want the user to be able to make arbitrary changes to
+     * the database. An authorizer could then be put in place while the user-entered SQL is being
+     * prepared that disallows everything except SELECT statements.
+     *
+     * @link https://php.net/manual/en/sqlite3.setauthorizer.php
+     * @param null|callable $callback The callable to be called. If null is passed instead, this
+     * will disable the current authorizer callback.
+     * @return bool Returns true on success or false on failure.
      * @since 8.0
      */
     #[TentativeType]
@@ -416,8 +518,13 @@ class SQLite3
  */
 class SQLite3Stmt
 {
-    public const EXPLAIN_MODE_EXPLAIN_QUERY_PLAN = 0;
-    public const EXPLAIN_MODE_EXPLAIN = 0;
+    /** @since 8.5 */
+    public const EXPLAIN_MODE_EXPLAIN_QUERY_PLAN = 2;
+
+    /** @since 8.5 */
+    public const EXPLAIN_MODE_EXPLAIN = 1;
+
+    /** @since 8.5 */
     public const EXPLAIN_MODE_PREPARED = 0;
 
     /**
@@ -432,6 +539,7 @@ class SQLite3Stmt
      * Closes the prepared statement
      * @link https://php.net/manual/en/sqlite3stmt.close.php
      * @return bool <b>TRUE</b>
+     * @throws \Error An Error is thrown if the method is called on an uninitialized object.
      */
     #[TentativeType]
     #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
@@ -519,10 +627,25 @@ class SQLite3Stmt
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $type = SQLITE3_TEXT
     ): bool {}
 
+    /**
+     * Returns whether a statement is definitely read only
+     *
+     * Returns whether a statement is definitely read only. A statement is considered read only, if
+     * it makes no direct changes to the content of the database file. Note that user defined SQL
+     * functions might change the database indirectly as a side effect.
+     *
+     * @link https://php.net/manual/en/sqlite3stmt.readonly.php
+     * @return bool Returns true if a statement is definitely read only, false otherwise.
+     */
     #[TentativeType]
     public function readOnly(): bool {}
 
     /**
+     * Constructs an SQLite3Stmt object
+     *
+     * SQLite3Stmt instances are created by SQLite3::prepare.
+     *
+     * @link https://php.net/manual/en/sqlite3stmt.construct.php
      * @param SQLite3 $sqlite3
      * @param string $query
      */
@@ -534,9 +657,12 @@ class SQLite3Stmt
     /**
      * Retrieves the SQL of the prepared statement. If expanded is FALSE, the unmodified SQL is retrieved.
      * If expanded is TRUE, all query parameters are replaced with their bound values, or with an SQL NULL, if not already bound.
+     * @link https://php.net/manual/en/sqlite3stmt.getsql.php
      * @param bool $expand Whether to retrieve the expanded SQL. Passing TRUE is only supported as of libsqlite 3.14.
      * @return string|false Returns the SQL of the prepared statement, or FALSE on failure.
      * @since 7.4
+     * @throws \Exception If expand is true, but the libsqlite version is less than 3.14, an error
+     * of level E_WARNING or an Exception is issued, according to SQLite3::enableExceptions.
      */
     #[TentativeType]
     public function getSQL(bool $expand = false): string|false {}
@@ -629,11 +755,19 @@ class SQLite3Result
      * Closes the result set
      * @link https://php.net/manual/en/sqlite3result.finalize.php
      * @return bool <b>TRUE</b>.
+     * @throws \Error An Error is thrown if the method is called on an uninitialized object.
      */
     #[LanguageLevelTypeAware(['8.4' => 'true'], default: 'bool')]
     #[TentativeType]
     public function finalize() {}
 
+    /**
+     * Constructs an SQLite3Result
+     *
+     * SQLite3Result instances are created by SQLite3::query and SQLite3Stmt::execute.
+     *
+     * @link https://php.net/manual/en/sqlite3result.construct.php
+     */
     private function __construct() {}
 
     /**
@@ -719,7 +853,7 @@ define('SQLITE3_OPEN_CREATE', 4);
  * Specifies that a function created with {@see SQLite3::createFunction()} is deterministic,
  * i.e. it always returns the same result given the same inputs within a single SQL statement.
  * @since 7.1.4
- * @link https://php.net/manual/en/sqlite.constants.php
+ * @link https://php-legacy-docs.zend.com/manual/php5/en/sqlite.constants
  */
 define('SQLITE3_DETERMINISTIC', 2048);
 

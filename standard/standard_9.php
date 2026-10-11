@@ -44,7 +44,8 @@ function array_merge_recursive(
  * @param array ...$replacements <p>
  * The array from which elements will be extracted.
  * </p>
- * @return array or null if an error occurs.
+ * @return array Prior to PHP 8.0, passing a value that was not an array raised a warning and
+ * returned null; since 8.0 a TypeError is thrown instead.
  */
 #[Pure]
 function array_replace(
@@ -62,7 +63,8 @@ function array_replace(
  * @param array ...$replacements <p>
  * The array from which elements will be extracted.
  * </p>
- * @return array an array, or null if an error occurs.
+ * @return array an array. Prior to PHP 8.0, passing a value that was not an array raised a warning
+ * and returned null; since 8.0 a TypeError is thrown instead.
  */
 #[Pure]
 function array_replace_recursive(
@@ -114,7 +116,7 @@ function array_count_values(array $array): array {}
 
 /**
  * Return the values from a single column in the input array
- * @link https://secure.php.net/manual/en/function.array-column.php
+ * @link https://php.net/manual/en/function.array-column.php
  * @param array $array <p>A multi-dimensional array (record set) from which to pull a column of values.</p>
  * @param string|int|null $column_key <p>The column of values to return. This value may be the integer key of the column you wish to retrieve, or it may be the string key name for an associative array. It may also be NULL to return complete arrays (useful together with index_key to reindex the array).</p>
  * @param string|int|null $index_key [optional] <p>The column to use as the index/keys for the returned array. This value may be the integer key of the column, or it may be the string key name.</p>
@@ -142,20 +144,22 @@ function array_reverse(array $array, bool $preserve_keys = false): array {}
 /**
  * Iteratively reduce the array to a single value using a callback function
  * @link https://php.net/manual/en/function.array-reduce.php
- * @param array $array <p>
+ * @template TCarry
+ * @template TValue
+ * @param array<TValue> $array <p>
  * The input array.
  * </p>
- * @param callable $callback <p>
+ * @param callable(TCarry, TValue): TCarry $callback <p>
  * The callback function. Signature is <pre>callback ( mixed $carry , mixed $item ) : mixed</pre>
  * <blockquote>mixed <var>$carry</var> <p>The return value of the previous iteration; on the first iteration it holds the value of <var>$initial</var>.</p></blockquote>
  * <blockquote>mixed <var>$item</var> <p>Holds the current iteration value of the <var>$input</var></p></blockquote>
  * </p>
- * @param mixed $initial [optional] <p>
+ * @param TCarry $initial [optional] <p>
  * If the optional initial is available, it will
  * be used at the beginning of the process, or as a final result in case
  * the array is empty.
  * </p>
- * @return mixed the resulting value.
+ * @return TCarry|null the resulting value.
  * <p>
  * If the array is empty and initial is not passed,
  * array_reduce returns null.
@@ -236,6 +240,7 @@ function array_change_key_case(array $array, int $case = CASE_LOWER): array {}
  * returns the key for a random entry. Otherwise, it returns an array
  * of keys for the random entries. This is done so that you can pick
  * random keys as well as values out of the array.
+ * @throws \ValueError Throws a ValueError if array is empty, or if num is out of range.
  */
 function array_rand(array $array, int $num = 1): array|string|int {}
 
@@ -294,7 +299,7 @@ function array_intersect(array $array, #[PhpStormStubsElementAvailable(from: '5.
  * @param array $array <p>
  * The array with main keys to check.
  * </p>
- * @param array ...$arrays
+ * @param array ...$arrays Arrays to compare keys against.
  * @return array an array containing all the entries of
  * <code>array</code>  which have keys that are present in all the
  * arguments.
@@ -364,7 +369,7 @@ function array_uintersect(
  * @param array $array <p>
  * The array with main values to check.
  * </p>
- * @param array $arrays
+ * @param array $arrays Arrays to compare values against.
  * @return array an associative array containing all the values in
  * <code>array</code> that are present in all of the arguments.
  * @meta
@@ -461,7 +466,7 @@ function array_uintersect_uassoc(
  * @param array $array <p>
  * The array to compare from
  * </p>
- * @param array ...$arrays
+ * @param array ...$arrays Arrays to compare against
  * @return array an array containing all the entries from
  * <code>array</code> that are not present in any of the other
  * arrays. Keys in the array <code>array</code> are preserved.
@@ -738,7 +743,8 @@ function array_filter(array $array, ?callable $callback = null, int $mode = 0): 
  * @param array $array <p>
  * An array to run through the callback function.
  * </p>
- * @param array ...$arrays
+ * @param array ...$arrays Supplementary variable list of array arguments to run through the
+ * callback function.
  * @return array an array containing all the elements of arr1
  * after applying the callback function to each one.
  * @meta
@@ -765,6 +771,7 @@ function array_map(
  * </p>
  * @return array a multidimensional numerically indexed array, starting with zero,
  * with each dimension containing size elements.
+ * @throws \ValueError If length is less than 1, a ValueError will be thrown.
  */
 #[Pure]
 function array_chunk(array $array, int $length, bool $preserve_keys = false): array {}
@@ -825,7 +832,7 @@ function array_key_exists($key, #[LanguageLevelTypeAware(["8.0" => "array"], def
  *
  * Get the first key of the given array without affecting the internal array pointer.
  *
- * @link https://secure.php.net/array_key_first
+ * @link https://php.net/array_key_first
  * @param array $array An array
  * @return string|int|null Returns the first key of array if the array is not empty; NULL otherwise.
  * @since 7.3
@@ -838,7 +845,7 @@ function array_key_first(array $array): string|int|null {}
  *
  * Get the last key of the given array without affecting the internal array pointer.
  *
- * @link https://secure.php.net/array_key_last
+ * @link https://php.net/array_key_last
  * @param array $array An array
  * @return string|int|null Returns the last key of array if the array is not empty; NULL otherwise.
  * @since 7.3
@@ -847,7 +854,12 @@ function array_key_first(array $array): string|int|null {}
 function array_key_last(array $array): string|int|null {}
 
 /**
- * @link https://secure.php.net/array_is_list
+ * Checks whether a given array is a list
+ *
+ * Determines if the given array is a list. An array is considered a list if its keys consist of
+ * consecutive numbers from 0 to count($array)-1.
+ *
+ * @link https://php.net/array_is_list
  * @param array $array An array
  * @return bool return true if the array keys are 0 .. count($array)-1 in that order.
  * For other arrays, it returns false. For non-arrays, it throws a TypeError.
@@ -894,7 +906,7 @@ function key_exists($key, array $array): bool {}
 /**
  * Checks if assertion is <b>FALSE</b>
  * @link https://php.net/manual/en/function.assert.php
- * @param Throwable|string|null $assertion <p>
+ * @param mixed $assertion <p>
  * The assertion.
  * In PHP 5, this must be either a string to be evaluated or a boolean to be tested.
  * In PHP 7, this may also be any expression that returns a value,
@@ -968,6 +980,7 @@ class AssertionError extends Error {}
  * An optional new value for the option.
  * </p>
  * @return mixed The original setting of any option.
+ * @throws \ValueError If option is not a valid option a ValueError is thrown.
  */
 #[Deprecated(since: "8.3")]
 function assert_options(int $option, mixed $value): mixed {}
@@ -1028,7 +1041,7 @@ function version_compare(
                "!=",
                "<>",
                "ne"
-           ])] ?string $operator
+           ])] ?string $operator = null
 ): int|bool {}
 
 /**
@@ -1087,7 +1100,7 @@ function version_compare(
         "!=",
         "<>",
         "ne"
-    ])] ?string $operator
+    ])] ?string $operator = null
 ): int|bool|null {}
 
 /**
@@ -1129,7 +1142,7 @@ function stream_get_filters(): array {}
  * Check if a stream is a TTY
  * @link https://php.net/manual/en/function.stream-isatty.php
  * @param resource $stream
- * @return bool
+ * @return bool Returns true on success or false on failure.
  * @since 7.2
  */
 #[Pure]
@@ -1254,8 +1267,8 @@ function stream_filter_register(string $filter_name, string $class): bool {}
 /**
  * Return a bucket object from the brigade for operating on
  * @link https://php.net/manual/en/function.stream-bucket-make-writeable.php
- * @param resource $brigade
- * @return object|null
+ * @param resource $brigade The brigade to return a bucket object from.
+ * @return object|null Returns a bucket object or null.
  */
 #[LanguageLevelTypeAware(["8.4" => "StreamBucket|null"], default: "object|null")]
 function stream_bucket_make_writeable($brigade) {}
@@ -1263,9 +1276,10 @@ function stream_bucket_make_writeable($brigade) {}
 /**
  * Prepend bucket to brigade
  * @link https://php.net/manual/en/function.stream-bucket-prepend.php
- * @param resource $brigade
- * @param object $bucket
- * @return void
+ * @param resource $brigade brigade is a resource pointing to a bucket brigade which contains one or
+ * more bucket objects.
+ * @param object $bucket A bucket object.
+ * @return void No value is returned.
  */
 function stream_bucket_prepend($brigade, #[LanguageLevelTypeAware(['8.4' => 'StreamBucket'], default: 'object')] $bucket): void {}
 
@@ -1336,7 +1350,7 @@ function output_reset_rewrite_vars(): bool {}
  * Returns directory path used for temporary files
  * @link https://php.net/manual/en/function.sys-get-temp-dir.php
  * @return string the path of the temporary directory.
- * @since 5.2.1
+ * @since 5.2
  */
 function sys_get_temp_dir(): string {}
 
@@ -1347,7 +1361,7 @@ function sys_get_temp_dir(): string {}
  * original path entries, and the values are arrays of data items,
  * containing the resolved path, expiration date, and other options kept in
  * the cache.
- * @since 5.3.2
+ * @since 5.3
  */
 #[Pure(true)]
 function realpath_cache_get(): array {}
@@ -1356,7 +1370,7 @@ function realpath_cache_get(): array {}
  * Get the amount of memory used by the realpath cache.
  * @link https://php.net/manual/en/function.realpath-cache-size.php
  * @return int Returns how much memory realpath cache is using.
- * @since 5.3.2
+ * @since 5.3
  */
 #[Pure(true)]
 function realpath_cache_size(): int {}
@@ -1365,7 +1379,8 @@ function realpath_cache_size(): int {}
  * It returns the same result as (array) $object, with the
  * exception that it ignores overloaded array casts, such as used by
  * ArrayObject.
- * @param object $object
+ * @link https://php.net/manual/en/function.get-mangled-object-vars.php
+ * @param object $object An object instance.
  * @return array returns the mangled object properties
  * @since 7.4
  */
@@ -1374,6 +1389,7 @@ function get_mangled_object_vars(object $object): array {}
 /**
  * Get the type or object name of a variable
  *
+ * @link https://php.net/manual/en/function.get-debug-type.php
  * @param mixed $value The variable being type checked.
  * @return string Possibles values for the returned string are:
  *  - "int"
@@ -1394,9 +1410,25 @@ function get_debug_type(mixed $value): string {}
 /**
  * A more obvious and type-safe form of "(int) $resource"
  *
- * @param resource $resource
- * @return int
+ * @link https://php.net/manual/en/function.get-resource-id.php
+ * @param resource $resource The evaluated resource handle.
+ * @return int The int identifier for the given resource. This function is essentially an int cast
+ * of resource to make it easier to retrieve the resource ID.
  * @since 8.0
  */
 #[Pure]
 function get_resource_id($resource): int {}
+
+/**
+ * @since 8.6
+ */
+define("ARRAY_FILTER_USE_VALUE", 0);
+
+/**
+ * @since 8.6
+ */
+enum SortDirection implements \UnitEnum
+{
+    case Ascending;
+    case Descending;
+}

@@ -51,7 +51,7 @@ class Table implements \Iterator, \ArrayAccess, \Countable
     /**
      * @return mixed
      */
-    public function get(string $key, string $field = null) {}
+    public function get(string $key, ?string $field = null) {}
 
     /**
      * This method has an alias of \Swoole\Table::delete().
@@ -86,13 +86,13 @@ class Table implements \Iterator, \ArrayAccess, \Countable
     public function exist(string $key) {}
 
     /**
-     * @param mixed $incrby
+     * @param mixed $incrby Increment value.
      * @return int
      */
     public function incr(string $key, string $column, $incrby = 1) {}
 
     /**
-     * @param mixed $decrby
+     * @param mixed $decrby Decrement value.
      * @return int
      */
     public function decr(string $key, string $column, $decrby = 1) {}

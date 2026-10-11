@@ -238,8 +238,17 @@ function pcntl_wifsignaled(int $status): bool {}
 function pcntl_wexitstatus(int $status): int|false {}
 
 /**
- * @param int $status
- * @return bool
+ * Checks whether the child process has continued from a job control stop
+ *
+ * Checks whether the child process which caused the return of pcntl_waitpid has continued from a
+ * job control stop. This function is only useful if the call to pcntl_waitpid was done using the
+ * WCONTINUED option.
+ *
+ * @link https://php.net/manual/en/function.pcntl-wifcontinued.php
+ * @param int $status The status parameter is the status parameter supplied to a successful call to
+ * pcntl_waitpid.
+ * @return bool Returns true if the child process which caused the return of pcntl_waitpid has
+ * continued from a job control stop, false otherwise.
  */
 #[Pure]
 function pcntl_wifcontinued(int $status): bool {}
@@ -307,7 +316,7 @@ function pcntl_alarm(int $seconds): int {}
  * Retrieve the error number set by the last pcntl function which failed
  * @link https://php.net/manual/en/function.pcntl-get-last-error.php
  * @return int error code.
- * @since 5.3.4
+ * @since 5.3
  */
 #[Pure(true)]
 function pcntl_get_last_error(): int {}
@@ -316,7 +325,7 @@ function pcntl_get_last_error(): int {}
  * Alias of <b>pcntl_get_last_error</b>
  * @link https://php.net/manual/en/function.pcntl-errno.php
  * @return int error code.
- * @since 5.3.4
+ * @since 5.3
  */
 #[Pure(true)]
 function pcntl_errno(): int {}
@@ -327,11 +336,11 @@ function pcntl_errno(): int {}
  * @param int $error_code <p>
  * </p>
  * @return string|false error description on success or <b>FALSE</b> on failure.
- * @since 5.3.4
+ * @since 5.3
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
-function pcntl_strerror(int $error_code): false|string {}
+function pcntl_strerror(int $error_code) {}
 
 /**
  * Get the priority of any process
@@ -348,7 +357,7 @@ function pcntl_strerror(int $error_code): false|string {}
  * scheduling.
  */
 #[Pure]
-function pcntl_getpriority(?int $process_id, int $mode = PRIO_PROCESS): int|false {}
+function pcntl_getpriority(?int $process_id = null, int $mode = PRIO_PROCESS): int|false {}
 
 /**
  * Change the priority of any process
@@ -370,7 +379,7 @@ function pcntl_getpriority(?int $process_id, int $mode = PRIO_PROCESS): int|fals
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function pcntl_setpriority(int $priority, ?int $process_id, int $mode = PRIO_PROCESS): bool {}
+function pcntl_setpriority(int $priority, ?int $process_id = null, int $mode = PRIO_PROCESS): bool {}
 
 /**
  * Sets and retrieves blocked signals
@@ -394,7 +403,7 @@ function pcntl_setpriority(int $priority, ?int $process_id, int $mode = PRIO_PRO
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function pcntl_sigprocmask(int $mode, array $signals, &$old_signals): bool {}
+function pcntl_sigprocmask(int $mode, array $signals, &$old_signals = null): bool {}
 
 /**
  * Waits for signals
@@ -467,11 +476,13 @@ function pcntl_sigtimedwait(array $signals, &$info = [], int $seconds = 0, int $
  * Whether asynchronous signal handling should be enabled.
  * </p>
  *
- * @return bool
+ * @return bool When used as getter (enable parameter is null) it returns whether asynchronous
+ * signal handling is enabled. When used as setter (enable parameter is not null), it returns
+ * whether asynchronous signal handling was enabled before the function call.
  * @since 7.1
  */
 function pcntl_async_signals(
-    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] ?bool $enable,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '7.4')] ?bool $enable = null,
     #[PhpStormStubsElementAvailable(from: '8.0')] ?bool $enable = null
 ): bool {}
 
@@ -483,31 +494,71 @@ function pcntl_async_signals(
  * The signal number.
  * </p>
  *
- * @return bool|resource
+ * @return bool|resource This function may return an integer value that refers to SIG_DFL or
+ * SIG_IGN. If a custom handler has been set, that callable is returned.
  * @since 7.1
  */
 function pcntl_signal_get_handler(int $signal) {}
 
 /**
- * @param int $flags
- * @return bool
+ * Dissociates parts of the process execution context
+ *
+ * pcntl_unshare allows a process to disassociate parts of its execution context that are currently
+ * being shared with other processes. The main use of pcntl_unshare is to allow a process to control
+ * its shared execution context without creating a new process.
+ *
+ * @link https://php.net/manual/en/function.pcntl-unshare.php
+ * @param int $flags The flags parameter is a bitmask that specifies which parts of the execution
+ * context should be unshared. This parameter is specified by ORing together zero or more of the
+ * CLONE_* constants: CLONE_NEWNS CLONE_NEWIPC CLONE_NEWUTS CLONE_NEWNET CLONE_NEWPID CLONE_NEWUSER
+ * CLONE_NEWCGROUP
+ * @return bool Returns 0 on success, -1 otherwise. On failure it sets an error code, that can be
+ * retrieved with pcntl_get_last_error.
  * @since 7.4
  */
 function pcntl_unshare(int $flags): bool {}
 
 /**
+ * Waits for a child process to change state
+ *
+ * Obtains status information pertaining to termination, stop, and/or continue events in one of the
+ * caller's child processes.
+ *
+ * @link https://php.net/manual/en/function.pcntl-waitid.php
  * @since 8.4
  */
 function pcntl_waitid(int $idtype = P_ALL, ?int $id = null, &$info = [], int $flags = WEXITED, #[PhpStormStubsElementAvailable(from: '8.5')] &$resource_usage = []): bool {}
 /**
+ * Get the cpu affinity of a process
+ *
+ * Retrieve the cpu affinity of the process_id.
+ *
+ * @link https://php.net/manual/en/function.pcntl-getcpuaffinity.php
  * @since 8.4
+ * @throws \ValueError A ValueError is thrown when process_id is an invalid process id or the cpu
+ * mask had failed to be created. If process_id is a process for which the current user has no
+ * allowed permission, a E_WARNING is emitted.
  */
 function pcntl_getcpuaffinity(?int $process_id = null): array|false {}
 /**
+ * Set the cpu affinity of a process
+ *
+ * Sets the cpu affinity for the process_id with the cpu affinity mask given by cpu_ids.
+ *
+ * @link https://php.net/manual/en/function.pcntl-setcpuaffinity.php
  * @since 8.4
+ * @throws \TypeError A TypeError is thrown if one of the cpu id from the cpu_ids is invalid.
+ * @throws \ValueError A ValueError is thrown if process_id is an invalid process id or the cpu mask had failed to be
+ * created.
  */
 function pcntl_setcpuaffinity(?int $process_id = null, array $cpu_ids = []): bool {}
 /**
+ * Get the CPU number on which the calling process last executed
+ *
+ * pcntl_getcpu returns the number of the CPU on which the calling process was last executed. This
+ * function uses the sched_getcpu(3) system call available on Linux.
+ *
+ * @link https://php.net/manual/en/function.pcntl-getcpu.php
  * @since 8.4
  */
 function pcntl_getcpu(): int {}

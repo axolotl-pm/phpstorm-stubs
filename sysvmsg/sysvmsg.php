@@ -22,9 +22,10 @@ function msg_get_queue(int $key, int $permissions = 0666) {}
 /**
  * Send a message to a message queue
  * @link https://php.net/manual/en/function.msg-send.php
- * @param SysvMessageQueue|resource $queue
- * @param int $message_type
- * @param mixed $message
+ * @param SysvMessageQueue|resource $queue The message queue.
+ * @param int $message_type The type of the message (MUST be greater than 0)
+ * @param mixed $message The body of the message. If serialize set to false is supplied, MUST be of
+ * type: string, int, float or bool. In other case a warning will be issued.
  * @param bool $serialize [optional] <p>
  * The optional <i>serialize</i> controls how the
  * <i>message</i> is sent. <i>serialize</i>
@@ -55,12 +56,12 @@ function msg_get_queue(int $key, int $permissions = 0666) {}
  * <i>msg_stime</i> is set to the current time.
  * </p>
  */
-function msg_send(#[LanguageLevelTypeAware(["8.0" => "SysvMessageQueue"], default: "resource")] $queue, int $message_type, $message, bool $serialize = true, bool $blocking = true, &$error_code): bool {}
+function msg_send(#[LanguageLevelTypeAware(["8.0" => "SysvMessageQueue"], default: "resource")] $queue, int $message_type, $message, bool $serialize = true, bool $blocking = true, &$error_code = null): bool {}
 
 /**
  * Receive a message from a message queue
  * @link https://php.net/manual/en/function.msg-receive.php
- * @param SysvMessageQueue|resource $queue
+ * @param SysvMessageQueue|resource $queue The message queue.
  * @param int $desired_message_type <p>
  * If <i>desiredmsgtype</i> is 0, the message from the front
  * of the queue is returned. If <i>desiredmsgtype</i> is
@@ -142,7 +143,7 @@ function msg_send(#[LanguageLevelTypeAware(["8.0" => "SysvMessageQueue"], defaul
  * msg_rtime is set to the current time.
  * </p>
  */
-function msg_receive(#[LanguageLevelTypeAware(["8.0" => "SysvMessageQueue"], default: "resource")] $queue, int $desired_message_type, &$received_message_type, int $max_message_size, mixed & $message, bool $unserialize = true, int $flags = 0, &$error_code): bool {}
+function msg_receive(#[LanguageLevelTypeAware(["8.0" => "SysvMessageQueue"], default: "resource")] $queue, int $desired_message_type, &$received_message_type, int $max_message_size, mixed & $message, bool $unserialize = true, int $flags = 0, &$error_code = null): bool {}
 
 /**
  * Destroy a message queue
@@ -273,6 +274,8 @@ define('MSG_NOERROR', 2);
 define('MSG_EXCEPT', 4);
 
 /**
+ * A fully opaque class which replaces a sysvmsg queue resource as of PHP 8.0.0.
+ * @link https://php.net/manual/en/class.sysvmessagequeue.php
  * @since 8.0
  */
 final class SysvMessageQueue

@@ -27,7 +27,7 @@ use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
  * @return string|false the name of the current session.
  */
 #[LanguageLevelTypeAware(['8.0' => 'string|false'], default: 'string')]
-function session_name(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $name) {}
+function session_name(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $name = null) {}
 
 /**
  * Get and/or set the current session module.<br/>
@@ -40,7 +40,7 @@ function session_name(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default
  * @return string|false the name of the current session module.
  */
 #[LanguageLevelTypeAware(['8.0' => 'string|false'], default: 'string')]
-function session_module_name(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $module) {}
+function session_module_name(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $module = null) {}
 
 /**
  * Get and/or set the current session save path
@@ -60,7 +60,7 @@ function session_module_name(#[LanguageLevelTypeAware(['8.0' => 'null|string'], 
  * @return string|false the path of the current directory used for data storage.
  */
 #[LanguageLevelTypeAware(['8.0' => 'string|false'], default: 'string')]
-function session_save_path(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $path) {}
+function session_save_path(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $path = null) {}
 
 /**
  * Get and/or set the current session id
@@ -82,7 +82,7 @@ function session_save_path(#[LanguageLevelTypeAware(['8.0' => 'null|string'], de
  * session (no current session id exists).
  */
 #[LanguageLevelTypeAware(['8.0' => 'string|false'], default: 'string')]
-function session_id(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $id) {}
+function session_id(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $id = null) {}
 
 /**
  * Update the current session id with a newly generated one
@@ -97,8 +97,8 @@ function session_regenerate_id(bool $delete_old_session = false): bool {}
 /**
  * PHP > 5.4.0 <br/>
  * Session shutdown function
- * @link https://secure.php.net/manual/en/function.session-register-shutdown.php
- * @return void
+ * @link https://php.net/manual/en/function.session-register-shutdown.php
+ * @return void No value is returned.
  */
 function session_register_shutdown(): void {}
 
@@ -114,7 +114,7 @@ function session_decode(string $data): bool {}
 
 /**
  * Register one or more global variables with the current session
- * @link https://php.net/manual/en/function.session-register.php
+ * @link https://php-legacy-docs.zend.com/manual/php5/en/function.session-register
  * @param mixed $name <p>
  * A string holding the name of a variable or an array consisting of
  * variable names or other arrays.
@@ -128,7 +128,7 @@ function session_register(mixed $name, ...$_): bool {}
 
 /**
  * Unregister a global variable from the current session
- * @link https://php.net/manual/en/function.session-unregister.php
+ * @link https://php-legacy-docs.zend.com/manual/php5/en/function.session-unregister
  * @param string $name <p>
  * The variable name.
  * </p>
@@ -140,7 +140,7 @@ function session_unregister(string $name): bool {}
 
 /**
  * Find out whether a global variable is registered in a session
- * @link https://php.net/manual/en/function.session-is-registered.php
+ * @link https://php-legacy-docs.zend.com/manual/php5/en/function.session-is-registered
  * @param string $name <p>
  * The variable name.
  * </p>
@@ -185,6 +185,7 @@ function session_create_id(string $prefix = '') {}
 
 /**
  * Perform session data garbage collection
+ * @link https://php.net/manual/en/function.session-gc.php
  * @return int|false number of deleted session data for success, false for failure.
  * @since 7.1
  */
@@ -324,7 +325,7 @@ function session_set_save_handler(SessionHandlerInterface $sessionhandler, bool 
  * @return string|false the name of the current cache limiter.
  */
 #[LanguageLevelTypeAware(["8.0" => "string|false"], default: "string")]
-function session_cache_limiter(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $value) {}
+function session_cache_limiter(#[LanguageLevelTypeAware(['8.0' => 'null|string'], default: 'string')] $value = null) {}
 
 /**
  * Return current cache expire
@@ -342,7 +343,7 @@ function session_cache_limiter(#[LanguageLevelTypeAware(['8.0' => 'null|string']
  * The value returned should be read in minutes, defaults to 180.
  */
 #[LanguageLevelTypeAware(["8.0" => "int|false"], default: "int")]
-function session_cache_expire(#[LanguageLevelTypeAware(['8.0' => 'null|int'], default: 'int')] $value) {}
+function session_cache_expire(#[LanguageLevelTypeAware(['8.0' => 'null|int'], default: 'int')] $value = null) {}
 
 /**
  * Set the session cookie parameters

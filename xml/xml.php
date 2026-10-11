@@ -25,7 +25,7 @@ use JetBrains\PhpStorm\Pure;
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "XMLParser"], default: "resource")]
-function xml_parser_create(?string $encoding) {}
+function xml_parser_create(?string $encoding = null) {}
 
 /**
  * Create an XML parser with namespace support
@@ -50,7 +50,7 @@ function xml_parser_create(?string $encoding) {}
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "XMLParser"], default: "resource")]
-function xml_parser_create_ns(?string $encoding, string $separator = ':') {}
+function xml_parser_create_ns(?string $encoding = null, string $separator = ':') {}
 
 /**
  * Use XML Parser within an object
@@ -402,7 +402,7 @@ function xml_parse(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], default: "re
  * operators such as ===.
  */
 #[LanguageLevelTypeAware(['8.1' => 'int|false'], default: 'int')]
-function xml_parse_into_struct(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], default: "resource")] $parser, string $data, &$values, &$index) {}
+function xml_parse_into_struct(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], default: "resource")] $parser, string $data, &$values, &$index = null) {}
 
 /**
  * Get XML parser error code
@@ -424,7 +424,8 @@ function xml_get_error_code(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], def
  * An error code from <b>xml_get_error_code</b>.
  * </p>
  * @return string|null a string with a textual description of the error
- * <i>code</i>, or <b>FALSE</b> if no description was found.
+ * <i>code</i>, or <b>NULL</b> if no description was found. Prior to PHP 8.0, <b>FALSE</b> was
+ * returned instead of <b>NULL</b>.
  */
 #[Pure]
 function xml_error_string(int $error_code): ?string {}
@@ -480,7 +481,7 @@ function xml_get_current_byte_index(#[LanguageLevelTypeAware(["8.0" => "XMLParse
  * @return bool This function returns <b>FALSE</b> if <i>parser</i> does not
  * refer to a valid parser, or else it frees the parser and returns <b>TRUE</b>.
  */
-#[Deprecated(since: '8.5')]
+#[Deprecated('Deprecated: it has no effect', since: '8.5')]
 function xml_parser_free(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], default: "resource")] $parser): bool {}
 
 /**
@@ -543,6 +544,9 @@ function xml_parser_free(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], defaul
  * @return bool This function returns <b>FALSE</b> if <i>parser</i> does not
  * refer to a valid parser, or if the option could not be set. Else the
  * option is set and <b>TRUE</b> is returned.
+ * @throws \ValueError Throws a ValueError when an invalid value is passed to option. Prior to PHP
+ * 8.0.0, passing an invalid value to option generated an E_WARNING and made the function return
+ * false.
  */
 function xml_parser_set_option(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], default: "resource")] $parser, int $option, $value): bool {}
 
@@ -557,6 +561,9 @@ function xml_parser_set_option(#[LanguageLevelTypeAware(["8.0" => "XMLParser"], 
  * not refer to a valid parser or if <i>option</i> isn't
  * valid (generates also a <b>E_WARNING</b>).
  * Else the option's value is returned.
+ * @throws \ValueError Throws a ValueError when an invalid value is passed to option. Prior to PHP
+ * 8.0.0, passing an invalid value to option generated a E_WARNING as well as making the function
+ * return false.
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.3" => "string|int|bool"], default: "string|int")]
@@ -601,6 +608,8 @@ define('XML_OPTION_PARSE_HUGE', 5);
 define('XML_SAX_IMPL', "libxml");
 
 /**
+ * A fully opaque class which replaces xml resources as of PHP 8.0.0.
+ * @link https://php.net/manual/en/class.xmlparser.php
  * @since 8.0
  */
 final class XMLParser {}

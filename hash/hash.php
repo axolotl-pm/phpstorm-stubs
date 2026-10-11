@@ -20,9 +20,12 @@ use JetBrains\PhpStorm\Pure;
  * When set to <b>TRUE</b>, outputs raw binary data.
  * <b>FALSE</b> outputs lowercase hexits.
  * </p>
+ * @param array $options An array of options for the various hashing algorithms. Currently, only the
+ * "seed" parameter is supported by the MurmurHash variants.
  * @return string a string containing the calculated message digest as lowercase hexits
  * unless <i>binary</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
+ * @throws \ValueError Throws a ValueError exception if algo is unknown.
  */
 #[Pure]
 function hash(string $algo, string $data, bool $binary = false, #[PhpStormStubsElementAvailable('8.1')] array $options = []): string {}
@@ -52,6 +55,8 @@ function hash_equals(string $known_string, string $user_string): bool {}
  * When set to <b>TRUE</b>, outputs raw binary data.
  * <b>FALSE</b> outputs lowercase hexits.
  * </p>
+ * @param array $options An array of options for the various hashing algorithms. Currently, only the
+ * "seed" parameter is supported by the MurmurHash variants.
  * @return string|false a string containing the calculated message digest as lowercase hexits
  * unless <i>binary</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
@@ -80,6 +85,8 @@ function hash_file(string $algo, string $filename, bool $binary = false, #[PhpSt
  * @return string a string containing the calculated message digest as lowercase hexits
  * unless <i>binary</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
+ * @throws \ValueError Throws a ValueError exception if algo is unknown or is a non-cryptographic
+ * hash function.
  */
 #[Pure]
 function hash_hmac(string $algo, string $data, string $key, bool $binary = false): string {}
@@ -105,6 +112,8 @@ function hash_hmac(string $algo, string $data, string $key, bool $binary = false
  * @return string|false a string containing the calculated message digest as lowercase hexits
  * unless <i>binary</i> is set to true in which case the raw
  * binary representation of the message digest is returned.
+ * @throws \ValueError Throws a ValueError exception if algo is unknown or is a non-cryptographic
+ * hash function.
  */
 #[Pure]
 function hash_hmac_file(string $algo, string $filename, string $key, bool $binary = false): string|false {}
@@ -127,9 +136,15 @@ function hash_hmac_file(string $algo, string $filename, string $key, bool $binar
  * a shared secret key to be used with the HMAC hashing method must be supplied in this
  * parameter.
  * </p>
+ * @param array $options An array of options for the various hashing algorithms. Currently, only the
+ * "seed" parameter is supported by the MurmurHash variants.
  * @return HashContext|resource a Hashing Context resource for use with <b>hash_update</b>,
  * <b>hash_update_stream</b>, <b>hash_update_file</b>,
  * and <b>hash_final</b>.
+ * @throws \ValueError Throws a ValueError exception if algo is unknown or is a non-cryptographic
+ * hash function, or if key is empty. Passing configurations options of the wrong type in options
+ * will now emit an E_DEPRECATED error because they can be interpreted incorrectly. This will become
+ * a ValueError in the future.
  */
 #[Pure]
 #[LanguageLevelTypeAware(["7.2" => "HashContext"], default: "resource")]
@@ -183,7 +198,7 @@ function hash_update_stream(#[LanguageLevelTypeAware(["7.2" => "HashContext"], d
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function hash_update_file(#[LanguageLevelTypeAware(["7.2" => "HashContext"], default: "resource")] $context, string $filename, $stream_context): bool {}
+function hash_update_file(#[LanguageLevelTypeAware(["7.2" => "HashContext"], default: "resource")] $context, string $filename, $stream_context = null): bool {}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL hash &gt;= 1.1)<br/>
@@ -240,9 +255,12 @@ function hash_algos(): array {}
  * @param string $info [optional] <p>Application/context-specific info string.</p>
  * @param string $salt [optional] <p>Salt to use during derivation. While optional, adding random salt significantly improves the strength of HKDF.</p>
  * @return string|false <p>Returns a string containing a raw binary representation of the derived key (also known as output keying material - OKM); or <b>FALSE</b> on failure.</p>
- * @since 7.1.2
+ * @since 7.1
  * Generate a HKDF key derivation of a supplied key input
  * @link https://php.net/manual/en/function.hash-hkdf.php
+ * @throws \ValueError Throws a ValueError exception if key is empty, algo is
+ * unknown/non-cryptographic, length is less than 0 or too large (greater than 255 times the size of
+ * the hash function).
  */
 #[Pure]
 #[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
@@ -250,6 +268,7 @@ function hash_hkdf(string $algo, string $key, int $length = 0, string $info = ''
 
 /**
  * Return a list of registered hashing algorithms suitable for hash_hmac
+ * @link https://php.net/manual/en/function.hash-hmac-algos.php
  * @since 7.2
  * Return a list of registered hashing algorithms suitable for hash_hmac
  * @return string[] Returns a numerically indexed array containing the list of supported hashing algorithms suitable for {@see hash_hmac()}.
@@ -288,6 +307,9 @@ function hash_hmac_algos(): array {}
  * <i>binary</i> is set to <b>TRUE</b> in which case the raw
  * binary representation of the derived key is returned.
  * @since 5.5
+ * @throws \ValueError Throws a ValueError exception if the algorithm is unknown, the iterations
+ * parameter is less than or equal to 0, the length is less than 0 or the salt is too long (greater
+ * than INT_MAX - 4).
  */
 #[Pure]
 function hash_pbkdf2(
@@ -321,7 +343,6 @@ function hash_pbkdf2(
  * The key length, in bytes.
  * </p>
  * @return string|false the generated key as a string, or <b>FALSE</b> on error.
- * @deprecated 8.1
  */
 #[Pure]
 #[Deprecated(since: '8.1')]
@@ -335,7 +356,6 @@ function mhash_keygen_s2k(int $algo, string $password, string $salt, int $length
  * </p>
  * @return int|false the size in bytes or <b>FALSE</b>, if the <i>hash</i>
  * does not exist.
- * @deprecated 8.1
  */
 #[Pure]
 #[Deprecated(since: '8.1')]
@@ -348,7 +368,6 @@ function mhash_get_block_size(int $algo): int|false {}
  * The hash ID. One of the <b>MHASH_hashname</b> constants.
  * </p>
  * @return string|false the name of the hash or <b>FALSE</b>, if the hash does not exist.
- * @deprecated 8.1
  */
 #[Pure]
 #[Deprecated(since: '8.1')]
@@ -359,7 +378,6 @@ function mhash_get_hash_name(int $algo): string|false {}
  * @link https://php.net/manual/en/function.mhash-count.php
  * @return int<0, max> the highest available hash ID. Hashes are numbered from 0 to this
  * hash ID.
- * @deprecated 8.1
  */
 #[Pure]
 #[Deprecated(since: '8.1')]
@@ -382,11 +400,10 @@ function mhash_count(): int {}
  * </p>
  * @return string|false the resulting hash (also called digest) or HMAC as a string, or
  * <b>FALSE</b> on error.
- * @deprecated 8.1
  */
 #[Pure]
 #[Deprecated(since: '8.1')]
-function mhash(int $algo, string $data, ?string $key): string|false {}
+function mhash(int $algo, string $data, ?string $key = null): string|false {}
 
 /**
  * Optional flag for <b>hash_init</b>.
@@ -464,16 +481,33 @@ define('MHASH_XXH128', 41);
  */
 final class HashContext
 {
+    /**
+     * Private constructor to disallow direct instantiation
+     * @link https://php.net/manual/en/hashcontext.construct.php
+     */
     private function __construct() {}
 
+    /**
+     * Serializes the HashContext object
+     * @link https://php.net/manual/en/hashcontext.serialize.php
+     * @return array
+     */
     public function __serialize(): array {}
 
     /**
-     * @param array $data
+     * Deserializes the data parameter into a HashContext object
+     * @link https://php.net/manual/en/hashcontext.unserialize.php
+     * @param array $data The value being deserialized.
      */
     public function __unserialize(#[LanguageLevelTypeAware(['8.0' => 'array'], default: '')] $data): void {}
 
     /**
+     * Returns debugging information about the hashing context
+     *
+     * This method is not meant to be called directly; it is invoked by var_dump and related
+     * functions when inspecting a HashContext instance.
+     *
+     * @link https://php.net/manual/en/hashcontext.debuginfo.php
      * @since 8.4
      */
     public function __debugInfo(): array {}

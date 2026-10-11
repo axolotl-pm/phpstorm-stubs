@@ -2,12 +2,14 @@
 
 use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\ExpectedValues;
+use JetBrains\PhpStorm\FileReference;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use JetBrains\PhpStorm\Pure;
 
 /**
  * (PHP 5.5.0)<br/>
  * Get the boolean value of a variable
+ * @link https://php.net/manual/en/function.boolval.php
  * @param mixed $value <p>the scalar value being converted to a boolean.</p>
  * @return bool The boolean value of var.
  * @since 5.5
@@ -139,6 +141,8 @@ function gettype(mixed $value): string {}
  * </li>
  * </ul>
  * @return bool true on success or false on failure.
+ * @throws \ValueError Throws a ValueError if the value of type is not a valid type, as of PHP
+ * 8.0.0. Prior to PHP 8.0.0, a E_WARNING was emitted and false was returned.
  */
 function settype(mixed &$var, #[ExpectedValues(["bool", "boolean", "int", "integer", "float", "double", "string", "array", "object", "null"])] string $type): bool {}
 
@@ -338,11 +342,11 @@ function is_scalar(mixed $value): bool {}
  * @return bool <b>TRUE</b> if $var is callable, <b>FALSE</b>
  * otherwise.
  */
-function is_callable(mixed $value, bool $syntax_only = false, &$callable_name): bool {}
+function is_callable(mixed $value, bool $syntax_only = false, &$callable_name = null): bool {}
 
 /**
  * Verify that the contents of a variable is a countable value
- * @link https://secure.php.net/is_countable
+ * @link https://php.net/is_countable
  *
  * @param mixed $value The value to check
  * @return bool <b>TRUE</b> if $var is countable, <b>FALSE</b> otherwise.
@@ -401,7 +405,7 @@ function popen(string $command, string $mode) {}
  * </p>
  * @return false|int the number of bytes read from the file, or FALSE on failure
  */
-function readfile(string $filename, bool $use_include_path = false, $context): int|false {}
+function readfile(#[FileReference] string $filename, bool $use_include_path = false, $context = null): int|false {}
 
 /**
  * Rewind the position of a file pointer
@@ -423,7 +427,7 @@ function rewind($stream): bool {}
  * @param resource $context [optional]
  * @return bool true on success or false on failure.
  */
-function rmdir(string $directory, $context): bool {}
+function rmdir(#[FileReference] string $directory, $context = null): bool {}
 
 /**
  * Changes the current umask
@@ -434,7 +438,7 @@ function rmdir(string $directory, $context): bool {}
  * @return int umask without arguments simply returns the
  * current umask otherwise the old umask is returned.
  */
-function umask(?int $mask): int {}
+function umask(?int $mask = null): int {}
 
 /**
  * Closes an open file pointer
@@ -488,7 +492,7 @@ function fgetc($stream): string|false {}
  * <p>
  * If an error occurs, returns false.
  */
-function fgets($stream, ?int $length): string|false {}
+function fgets($stream, ?int $length = null): string|false {}
 
 /**
  * Gets line from file pointer and strip HTML tags
@@ -704,7 +708,7 @@ function fread($stream, int $length): string|false {}
  * @param resource $context [optional]
  * @return resource|false a file pointer resource on success, or false on error.
  */
-function fopen(string $filename, string $mode, bool $use_include_path = false, $context) {}
+function fopen(#[FileReference] string $filename, string $mode, bool $use_include_path = false, $context = null) {}
 
 /**
  * Output all remaining data on a file pointer
@@ -808,14 +812,18 @@ function fflush($stream): bool {}
 
 /**
  * Sync file to storage. Similar to fflush() but blocks until OS buffers have flushed.
- * @param resource $stream
+ * @link https://php.net/manual/en/function.fsync.php
+ * @param resource $stream The file pointer must be valid, and must point to a file successfully
+ * opened by fopen or fsockopen (and not yet closed by fclose).
  * @since 8.1
  */
 function fsync($stream): bool {}
 
 /**
  * Sync file data only to storage. Similar to fsync but does not flush modified metadata. POSIX only, aliased to fsync on Win32.
- * @param resource $stream
+ * @link https://php.net/manual/en/function.fdatasync.php
+ * @param resource $stream The file pointer must be valid, and must point to a file successfully
+ * opened by fopen or fsockopen (and not yet closed by fclose).
  * @since 8.1
  */
 function fdatasync($stream): bool {}
@@ -841,7 +849,7 @@ function fdatasync($stream): bool {}
  * </p>
  * @return int|false the number of bytes written, or <b>FALSE</b> on error.
  */
-function fwrite($stream, string $data, ?int $length): int|false {}
+function fwrite($stream, string $data, ?int $length = null): int|false {}
 
 /**
  * Alias:
@@ -867,7 +875,7 @@ function fwrite($stream, string $data, ?int $length): int|false {}
  * @link https://php.net/manual/en/function.fputs.php
  * Binary-safe file write
  */
-function fputs($stream, string $data, ?int $length): int|false {}
+function fputs($stream, string $data, ?int $length = null): int|false {}
 
 /**
  * Attempts to create the directory specified by pathname.
@@ -895,7 +903,7 @@ function fputs($stream, string $data, ?int $length): int|false {}
  * @param resource $context [optional]
  * @return bool true on success or false on failure.
  */
-function mkdir(string $directory, int $permissions = 0777, bool $recursive = false, $context): bool {}
+function mkdir(#[FileReference] string $directory, int $permissions = 0777, bool $recursive = false, $context = null): bool {}
 
 /**
  * Renames a file or directory
@@ -913,7 +921,7 @@ function mkdir(string $directory, int $permissions = 0777, bool $recursive = fal
  * @param resource $context [optional]
  * @return bool true on success or false on failure.
  */
-function rename(string $from, string $to, $context): bool {}
+function rename(#[FileReference] string $from, #[FileReference] string $to, $context = null): bool {}
 
 /**
  * Copies file
@@ -935,7 +943,7 @@ function rename(string $from, string $to, $context): bool {}
  * </p>
  * @return bool true on success or false on failure.
  */
-function copy(string $from, string $to, $context): bool {}
+function copy(#[FileReference] string $from, #[FileReference] string $to, $context = null): bool {}
 
 /**
  * Create file with unique file name
@@ -950,7 +958,7 @@ function copy(string $from, string $to, $context): bool {}
  * @return string|false the new temporary filename, or false on
  * failure.
  */
-function tempnam(string $directory, string $prefix): string|false {}
+function tempnam(#[FileReference] string $directory, string $prefix): string|false {}
 
 /**
  * Creates a temporary file
@@ -988,9 +996,11 @@ function tmpfile() {}
  * use rtrim if you do not want the line ending
  * present.
  * </p>
+ * @throws \ValueError As of PHP 8.3.0, throws a ValueError if flags includes any invalid values,
+ * such as FILE_APPEND. Emits an E_WARNING level error if the file does not exist.
  */
 #[Pure(true)]
-function file(string $filename, int $flags = 0, $context): array|false {}
+function file(#[FileReference] string $filename, int $flags = 0, $context = null): array|false {}
 
 /**
  * Reads entire file into a string
@@ -1017,7 +1027,7 @@ function file(string $filename, int $flags = 0, $context): array|false {}
  * @return string|false The function returns the read data or false on failure.
  */
 #[Pure(true)]
-function file_get_contents(string $filename, bool $use_include_path = false, $context, int $offset = 0, ?int $length): string|false {}
+function file_get_contents(#[FileReference] string $filename, bool $use_include_path = false, $context = null, int $offset = 0, ?int $length = null): string|false {}
 
 /**
  * Write a string to a file
@@ -1090,4 +1100,4 @@ function file_get_contents(string $filename, bool $use_include_path = false, $co
  * @return int|false The function returns the number of bytes that were written to the file, or
  * false on failure.
  */
-function file_put_contents(string $filename, mixed $data, int $flags = 0, $context): int|false {}
+function file_put_contents(#[FileReference] string $filename, mixed $data, int $flags = 0, $context = null): int|false {}

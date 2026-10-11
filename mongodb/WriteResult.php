@@ -8,6 +8,61 @@ namespace MongoDB\Driver;
  */
 final class WriteResult
 {
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?int $insertedCount;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?int $matchedCount;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?int $modifiedCount;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?int $deletedCount;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?int $upsertedCount;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly Server $server;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly array $upsertedIds;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly array $writeErrors;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?WriteConcernError $writeConcernError;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?WriteConcern $writeConcern;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly array $errorReplies;
+
     final private function __construct() {}
 
     final public function __wakeup() {}
@@ -63,7 +118,9 @@ final class WriteResult
     /**
      * Returns any write errors that occurred
      * @link https://php.net/manual/en/mongodb-driver-writeresult.getwriteerrors.php
-     * @return WriteError[]
+     * @return WriteError[] Returns an array of MongoDB\Driver\WriteError objects for any write
+     * errors encountered during the write operation. The array will be empty if no write errors
+     * occurred.
      */
     final public function getWriteErrors(): array {}
 

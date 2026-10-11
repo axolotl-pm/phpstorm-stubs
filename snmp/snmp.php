@@ -10,7 +10,7 @@ class SNMP
 {
     /**
      * @var int Maximum OID per GET/SET/GETBULK request
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.max-oids
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.max-oids
      */
     public $max_oids;
 
@@ -21,21 +21,21 @@ class SNMP
      * <dt>SNMP_VALUE_PLAIN</dt><dd>The return values will be the plain value without the SNMP type hint.</dd>
      * <dt>SNMP_VALUE_OBJECT</dt><dd>The return values will be objects with the properties "value" and "type", where the latter is one of the SNMP_OCTET_STR, SNMP_COUNTER etc. constants. The way "value" is returned is based on which one of SNMP_VALUE_LIBRARY, SNMP_VALUE_PLAIN is set</dd>
      * <dl>
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.max-oids
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.max-oids
      */
     public $valueretrieval;
 
     /**
      * @var bool Value of quick_print within the NET-SNMP library
      * <p>Sets the value of quick_print within the NET-SNMP library. When this is set (1), the SNMP library will return 'quick printed' values. This means that just the value will be printed. When quick_print is not enabled (default) the UCD SNMP library prints extra information including the type of the value (i.e. IpAddress or OID). Additionally, if quick_print is not enabled, the library prints additional hex values for all strings of three characters or less.
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.quick-print
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.quick-print
      */
     public $quick_print;
 
     /**
      * @var bool Controls the way enum values are printed
      * <p>Parameter toggles if walk/get etc. should automatically lookup enum values in the MIB and return them together with their human readable string.
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.enum-print
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.enum-print
      */
     public $enum_print;
 
@@ -50,26 +50,26 @@ class SNMP
      * <dt>SNMP_OID_OUTPUT_UCD</dt><dd>system.sysUpTime.sysUpTimeInstance</dd>
      * <dt>SNMP_OID_OUTPUT_NONE</dt><dd>Undefined</dd>
      * </dl>
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.oid-output-format
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.oid-output-format
      */
     public $oid_output_format;
 
     /**
      * @var bool Controls disabling check for increasing OID while walking OID tree
      * <p> Some SNMP agents are known for returning OIDs out of order but can complete the walk anyway. Other agents return OIDs that are out of order and can cause SNMP::walk() to loop indefinitely until memory limit will be reached. PHP SNMP library by default performs OID increasing check and stops walking on OID tree when it detects possible loop with issuing warning about non-increasing OID faced. Set oid_increasing_check to <b>FALSE</b> to disable this check.
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.oid-increasing-check
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.oid-increasing-check
      */
     public $oid_increasing_check;
 
     /**
      * @var int Controls which failures will raise SNMPException instead of warning. Use bitwise OR'ed SNMP::ERRNO_* constants. By default all SNMP exceptions are disabled.
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.exceptions-enabled
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.exceptions-enabled
      */
     public $exceptions_enabled;
 
     /**
      * @var array Read-only property with remote agent configuration: hostname, port, default timeout, default retries count
-     * @link https://secure.php.net/manual/en/class.snmp.php#snmp.props.info
+     * @link https://php.net/manual/en/class.snmp.php#snmp.props.info
      */
     public $info;
     public const VERSION_1 = 0;
@@ -146,7 +146,7 @@ class SNMP
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      * @since 5.4
      */
-    public function setSecurity($sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, $contextName, $contextEngineID) {}
+    public function setSecurity($sec_level, $auth_protocol = "", $auth_passphrase = "", $priv_protocol = "", $priv_passphrase = "", $contextName = "", $contextEngineID = "") {}
 
     /**
      * Fetch an SNMP object
@@ -323,7 +323,7 @@ function snmpget($hostname, $community, $object_id, $timeout = 1000000, $retries
 /**
  * Fetch the SNMP object which follows the given object id
  * @link https://php.net/manual/en/function.snmpgetnext.php
- * @param string $host <p>The hostname of the SNMP agent (server).</p>
+ * @param string $hostname <p>The hostname of the SNMP agent (server).</p>
  * @param string $community <p>The read community.</p>
  * @param string $object_id <p>The SNMP object id which precedes the wanted one.</p>
  * @param int $timeout [optional] <p>The number of microseconds until the first timeout.</p>
@@ -331,7 +331,7 @@ function snmpget($hostname, $community, $object_id, $timeout = 1000000, $retries
  * @return string|false SNMP object value on success or <b>FALSE</b> on error.
  * In case of an error, an E_WARNING message is shown.
  */
-function snmpgetnext($host, $community, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmpgetnext($hostname, $community, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Fetch all the SNMP objects from an agent
@@ -363,7 +363,7 @@ function snmpwalk($hostname, $community, $object_id, $timeout = 1000000, $retrie
 /**
  * Return all objects including their respective object ID within the specified one
  * @link https://php.net/manual/en/function.snmprealwalk.php
- * @param string $host <p>The hostname of the SNMP agent (server).</p>
+ * @param string $hostname <p>The hostname of the SNMP agent (server).</p>
  * @param string $community <p>The read community.</p>
  * @param string $object_id <p>The SNMP object id which precedes the wanted one.</p>
  * @param int $timeout [optional] <p>The number of microseconds until the first timeout.</p>
@@ -371,7 +371,7 @@ function snmpwalk($hostname, $community, $object_id, $timeout = 1000000, $retrie
  * @return array|false an associative array of the SNMP object ids and their values on success or <b>FALSE</b> on error.
  * In case of an error, an E_WARNING message is shown.
  */
-function snmprealwalk($host, $community, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmprealwalk($hostname, $community, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Query for a tree of information about a network entity
@@ -406,7 +406,7 @@ function snmpwalkoid($hostname, $community, $object_id, $timeout = 1000000, $ret
 /**
  * Set the value of an SNMP object
  * @link https://php.net/manual/en/function.snmpset.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the SNMP agent (server).
  * </p>
  * @param string $community <p>
@@ -466,7 +466,7 @@ function snmpwalkoid($hostname, $community, $object_id, $timeout = 1000000, $ret
  * If an unknown or invalid OID is specified the warning probably reads "Could not add variable".
  * </p>
  */
-function snmpset($host, $community, $object_id, $type, $value, $timeout = 1000000, $retries = 5) {}
+function snmpset($hostname, $community, $object_id, $type, $value, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Fetches the current value of the UCD library's quick_print setting
@@ -489,7 +489,7 @@ function snmp_set_quick_print($quick_print) {}
  * @param int $enum_print <p>
  * As the value is interpreted as boolean by the Net-SNMP library, it can only be "0" or "1".
  * </p>
- * @return bool
+ * @return bool Always returns true.
  */
 function snmp_set_enum_print($enum_print) {}
 
@@ -524,7 +524,7 @@ function snmp_set_oid_numeric_print($oid_format) {}
 /**
  * Fetch an SNMP object
  * @link https://php.net/manual/en/function.snmp2-get.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The SNMP agent.
  * </p>
  * @param string $community <p>
@@ -541,12 +541,12 @@ function snmp_set_oid_numeric_print($oid_format) {}
  * </p>
  * @return string|false SNMP object value on success or <b>FALSE</b> on error.
  */
-function snmp2_get($host, $community, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmp2_get($hostname, $community, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Fetch the SNMP object which follows the given object id
  * @link https://php.net/manual/en/function.snmp2-getnext.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the SNMP agent (server).
  * </p>
  * @param string $community <p>
@@ -564,12 +564,12 @@ function snmp2_get($host, $community, $object_id, $timeout = 1000000, $retries =
  * @return string|false SNMP object value on success or <b>FALSE</b> on error.
  * In case of an error, an E_WARNING message is shown.
  */
-function snmp2_getnext($host, $community, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmp2_getnext($hostname, $community, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Fetch all the SNMP objects from an agent
  * @link https://php.net/manual/en/function.snmp2-walk.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The SNMP agent (server).
  * </p>
  * @param string $community <p>
@@ -593,12 +593,12 @@ function snmp2_getnext($host, $community, $object_id, $timeout = 1000000, $retri
  * @return array an array of SNMP object values starting from the
  * <i>object_id</i> as root or <b>FALSE</b> on error.
  */
-function snmp2_walk($host, $community, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmp2_walk($hostname, $community, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Return all objects including their respective object ID within the specified one
  * @link https://php.net/manual/en/function.snmp2-real-walk.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the SNMP agent (server).
  * </p>
  * @param string $community <p>
@@ -616,12 +616,12 @@ function snmp2_walk($host, $community, $object_id, $timeout = 1000000, $retries 
  * @return array|false an associative array of the SNMP object ids and their values on success or <b>FALSE</b> on error.
  * In case of an error, an E_WARNING message is shown.
  */
-function snmp2_real_walk($host, $community, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmp2_real_walk($hostname, $community, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Set the value of an SNMP object
  * @link https://php.net/manual/en/function.snmp2-set.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the SNMP agent (server).
  * </p>
  * @param string $community <p>
@@ -683,18 +683,18 @@ function snmp2_real_walk($host, $community, $object_id, $timeout = 1000000, $ret
  * If an unknown or invalid OID is specified the warning probably reads "Could not add variable".
  * </p>
  */
-function snmp2_set($host, $community, $object_id, $type, $value, $timeout = 1000000, $retries = 5) {}
+function snmp2_set($hostname, $community, $object_id, $type, $value, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Fetch an SNMP object
  * @link https://php.net/manual/en/function.snmp3-get.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the SNMP agent (server).
  * </p>
- * @param string $sec_name <p>
+ * @param string $security_name <p>
  * the security name, usually some kind of username
  * </p>
- * @param string $sec_level <p>
+ * @param string $security_level <p>
  * the security level (noAuthNoPriv|authNoPriv|authPriv)
  * </p>
  * @param string $auth_protocol <p>
@@ -703,10 +703,10 @@ function snmp2_set($host, $community, $object_id, $type, $value, $timeout = 1000
  * @param string $auth_passphrase <p>
  * the authentication pass phrase
  * </p>
- * @param string $priv_protocol <p>
+ * @param string $privacy_protocol <p>
  * the privacy protocol (DES or AES)
  * </p>
- * @param string $priv_passphrase <p>
+ * @param string $privacy_passphrase <p>
  * the privacy pass phrase
  * </p>
  * @param string $object_id <p>
@@ -720,19 +720,19 @@ function snmp2_set($host, $community, $object_id, $type, $value, $timeout = 1000
  * </p>
  * @return string|false SNMP object value on success or <b>FALSE</b> on error.
  */
-function snmp3_get($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmp3_get($hostname, $security_name, $security_level, $auth_protocol, $auth_passphrase, $privacy_protocol, $privacy_passphrase, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Fetch the SNMP object which follows the given object id
  * @link https://php.net/manual/en/function.snmp3-getnext.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the
  * SNMP agent (server).
  * </p>
- * @param string $sec_name <p>
+ * @param string $security_name <p>
  * the security name, usually some kind of username
  * </p>
- * @param string $sec_level <p>
+ * @param string $security_level <p>
  * the security level (noAuthNoPriv|authNoPriv|authPriv)
  * </p>
  * @param string $auth_protocol <p>
@@ -741,10 +741,10 @@ function snmp3_get($host, $sec_name, $sec_level, $auth_protocol, $auth_passphras
  * @param string $auth_passphrase <p>
  * the authentication pass phrase
  * </p>
- * @param string $priv_protocol <p>
+ * @param string $privacy_protocol <p>
  * the privacy protocol (DES or AES)
  * </p>
- * @param string $priv_passphrase <p>
+ * @param string $privacy_passphrase <p>
  * the privacy pass phrase
  * </p>
  * @param string $object_id <p>
@@ -759,18 +759,18 @@ function snmp3_get($host, $sec_name, $sec_level, $auth_protocol, $auth_passphras
  * @return string|false SNMP object value on success or <b>FALSE</b> on error.
  * In case of an error, an E_WARNING message is shown.
  */
-function snmp3_getnext($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmp3_getnext($hostname, $security_name, $security_level, $auth_protocol, $auth_passphrase, $privacy_protocol, $privacy_passphrase, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Fetch all the SNMP objects from an agent
  * @link https://php.net/manual/en/function.snmp3-walk.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the SNMP agent (server).
  * </p>
- * @param string $sec_name <p>
+ * @param string $security_name <p>
  * the security name, usually some kind of username
  * </p>
- * @param string $sec_level <p>
+ * @param string $security_level <p>
  * the security level (noAuthNoPriv|authNoPriv|authPriv)
  * </p>
  * @param string $auth_protocol <p>
@@ -779,10 +779,10 @@ function snmp3_getnext($host, $sec_name, $sec_level, $auth_protocol, $auth_passp
  * @param string $auth_passphrase <p>
  * the authentication pass phrase
  * </p>
- * @param string $priv_protocol <p>
+ * @param string $privacy_protocol <p>
  * the privacy protocol (DES or AES)
  * </p>
- * @param string $priv_passphrase <p>
+ * @param string $privacy_passphrase <p>
  * the privacy pass phrase
  * </p>
  * @param string $object_id <p>
@@ -803,19 +803,19 @@ function snmp3_getnext($host, $sec_name, $sec_level, $auth_protocol, $auth_passp
  * @return array an array of SNMP object values starting from the
  * <i>object_id</i> as root or <b>FALSE</b> on error.
  */
-function snmp3_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, $object_id, $timeout = 1000000, $retries = 5) {}
+function snmp3_walk($hostname, $security_name, $security_level, $auth_protocol, $auth_passphrase, $privacy_protocol, $privacy_passphrase, $object_id, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Return all objects including their respective object ID within the specified one
  * @link https://php.net/manual/en/function.snmp3-real-walk.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the
  * SNMP agent (server).
  * </p>
- * @param string $sec_name <p>
+ * @param string $security_name <p>
  * the security name, usually some kind of username
  * </p>
- * @param string $sec_level <p>
+ * @param string $security_level <p>
  * the security level (noAuthNoPriv|authNoPriv|authPriv)
  * </p>
  * @param string $auth_protocol <p>
@@ -824,10 +824,10 @@ function snmp3_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_passphra
  * @param string $auth_passphrase <p>
  * the authentication pass phrase
  * </p>
- * @param string $priv_protocol <p>
+ * @param string $privacy_protocol <p>
  * the privacy protocol (DES or AES)
  * </p>
- * @param string $priv_passphrase <p>
+ * @param string $privacy_passphrase <p>
  * the privacy pass phrase
  * </p>
  * @param string $object_id <p>
@@ -843,18 +843,18 @@ function snmp3_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_passphra
  * SNMP object ids and their values on success or <b>FALSE</b> on error.
  * In case of an error, an E_WARNING message is shown.
  */
-function snmp3_real_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, $object_id, $timeout = null, $retries = null) {}
+function snmp3_real_walk($hostname, $security_name, $security_level, $auth_protocol, $auth_passphrase, $privacy_protocol, $privacy_passphrase, $object_id, $timeout = null, $retries = null) {}
 
 /**
  * Set the value of an SNMP object
  * @link https://php.net/manual/en/function.snmp3-set.php
- * @param string $host <p>
+ * @param string $hostname <p>
  * The hostname of the SNMP agent (server).
  * </p>
- * @param string $sec_name <p>
+ * @param string $security_name <p>
  * the security name, usually some kind of username
  * </p>
- * @param string $sec_level <p>
+ * @param string $security_level <p>
  * the security level (noAuthNoPriv|authNoPriv|authPriv)
  * </p>
  * @param string $auth_protocol <p>
@@ -863,10 +863,10 @@ function snmp3_real_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_pas
  * @param string $auth_passphrase <p>
  * the authentication pass phrase
  * </p>
- * @param string $priv_protocol <p>
+ * @param string $privacy_protocol <p>
  * the privacy protocol (DES or AES)
  * </p>
- * @param string $priv_passphrase <p>
+ * @param string $privacy_passphrase <p>
  * the privacy pass phrase
  * </p>
  * @param string $object_id <p>
@@ -927,7 +927,7 @@ function snmp3_real_walk($host, $sec_name, $sec_level, $auth_protocol, $auth_pas
  * If an unknown or invalid OID is specified the warning probably reads "Could not add variable".
  * </p>
  */
-function snmp3_set($host, $sec_name, $sec_level, $auth_protocol, $auth_passphrase, $priv_protocol, $priv_passphrase, $object_id, $type, $value, $timeout = 1000000, $retries = 5) {}
+function snmp3_set($hostname, $security_name, $security_level, $auth_protocol, $auth_passphrase, $privacy_protocol, $privacy_passphrase, $object_id, $type, $value, $timeout = 1000000, $retries = 5) {}
 
 /**
  * Specify the method how the SNMP values will be returned
@@ -952,7 +952,7 @@ function snmp3_set($host, $sec_name, $sec_level, $auth_protocol, $auth_passphras
  * </td>
  * </tr>
  * </table>
- * @return bool
+ * @return bool Always returns true.
  */
 function snmp_set_valueretrieval($method) {}
 
@@ -969,7 +969,7 @@ function snmp_get_valueretrieval() {}
  * Reads and parses a MIB file into the active MIB tree
  * @link https://php.net/manual/en/function.snmp-read-mib.php
  * @param string $filename <p>The filename of the MIB.</p>
- * @return bool
+ * @return bool Returns true on success or false on failure.
  */
 function snmp_read_mib($filename) {}
 

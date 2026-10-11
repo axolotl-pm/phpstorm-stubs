@@ -182,7 +182,7 @@ class OCI_Lob
     /**
      * (PHP 5, PECL OCI8 &gt;= 1.1.0)<br/>
      * Alias of {@see OCI_Lob::export}
-     * @link https://php.net/manual/en/oci-lob.writetofile.php
+     * @link https://php-legacy-docs.zend.com/manual/php5/en/oci-lob.writetofile
      * @param $filename
      * @param $start [optional]
      * @param $length [optional]
@@ -260,7 +260,7 @@ class OCI_Lob
     /**
      * (PHP 5, PECL OCI8 &gt;= 1.1.0)<br/>
      * Alias of {@see OCI_Lob::import}
-     * @link https://php.net/manual/en/oci-lob.savefile.php
+     * @link https://php-legacy-docs.zend.com/manual/php5/en/oci-lob.savefile
      * @param $filename
      * @return bool Return true on success and false on failure
      */
@@ -711,6 +711,7 @@ function oci_fetch($statement) {}
  * identifier created by {@see oci_parse} and executed
  * by {@see oci_execute}, or a REF
  * CURSOR statement identifier.</p>
+ * @param int $mode
  * @return object|false <p>An object. Each attribute of the object corresponds to a
  * column of the row. If there are no more rows in
  * the <i>statement</i> then <b>FALSE</b> is returned.
@@ -737,7 +738,7 @@ function oci_fetch($statement) {}
  * data fields.
  * </p>
  */
-function oci_fetch_object($statement) {}
+function oci_fetch_object($statement, int $mode = OCI_ASSOC|OCI_RETURN_NULLS): object|false {}
 
 /**
  * (PHP 5, PECL OCI8 &gt;= 1.1.0)<br/>
@@ -1361,7 +1362,7 @@ function oci_new_connect($username, $password, $connection_string = null, $chara
  * @param string $password <p>
  * The password for <i>username</i>.
  * </p>
- * @param string $connection_string [optional] <p>Contains
+ * @param string|null $connection_string [optional] <p>Contains
  * the Oracle instance to connect to. It can be
  * an Easy Connect
  * string, or a Connect Name from
@@ -1395,7 +1396,7 @@ function oci_new_connect($username, $password, $connection_string = null, $chara
  * that $TNS_ADMIN/tnsnames.ora is read. Make sure
  * the web daemon has read access to the file.
  * </p>
- * @param string $character_set [optional] <p>Determines
+ * @param string $encoding [optional] <p>Determines
  * the character set used by the Oracle Client libraries. The character
  * set does not need to match the character set used by the database. If
  * it doesn't match, Oracle will do its best to convert data to and from
@@ -1442,7 +1443,7 @@ function oci_new_connect($username, $password, $connection_string = null, $chara
  * </p>
  * @return resource|false A connection identifier or <b>FALSE</b> on error.
  */
-function oci_pconnect($username, $password, $connection_string = null, $character_set = null, $session_mode = null) {}
+function oci_pconnect($username, $password, $connection_string = null, $encoding = '', $session_mode = null) {}
 
 /**
  * (PHP 5, PECL OCI8 &gt;= 1.1.0)<br/>

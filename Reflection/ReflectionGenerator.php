@@ -1,11 +1,11 @@
 <?php
 
-use JetBrains\PhpStorm\Internal\TentativeType;
 use JetBrains\PhpStorm\Pure;
 
 /**
  * The ReflectionGenerator class reports information about a generator.
  *
+ * @link https://php.net/manual/en/class.reflectiongenerator.php
  * @since 7.0
  */
 final class ReflectionGenerator
@@ -28,7 +28,6 @@ final class ReflectionGenerator
      * @since 7.0
      */
     #[Pure]
-    #[TentativeType]
     public function getExecutingLine(): int {}
 
     /**
@@ -40,7 +39,6 @@ final class ReflectionGenerator
      * @since 7.0
      */
     #[Pure]
-    #[TentativeType]
     public function getExecutingFile(): string {}
 
     /**
@@ -60,7 +58,6 @@ final class ReflectionGenerator
      * @since 7.0
      */
     #[Pure]
-    #[TentativeType]
     public function getTrace(int $options = DEBUG_BACKTRACE_PROVIDE_OBJECT): array {}
 
     /**
@@ -73,7 +70,6 @@ final class ReflectionGenerator
      * @since 7.0
      */
     #[Pure]
-    #[TentativeType]
     public function getFunction(): ReflectionFunctionAbstract {}
 
     /**
@@ -85,7 +81,6 @@ final class ReflectionGenerator
      * @since 7.0
      */
     #[Pure]
-    #[TentativeType]
     public function getThis(): ?object {}
 
     /**
@@ -96,10 +91,15 @@ final class ReflectionGenerator
      * @since 7.0
      */
     #[Pure]
-    #[TentativeType]
     public function getExecutingGenerator(): Generator {}
 
     /**
+     * Checks if execution finished
+     *
+     * Returns whether the execution reached the end of the function, a return statement or if an
+     * exception was thrown.
+     *
+     * @link https://php.net/manual/en/reflectiongenerator.isclosed.php
      * @since 8.4
      */
     public function isClosed(): bool {}

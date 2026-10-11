@@ -30,6 +30,11 @@ final class ReadConcern implements Serializable
     public const SNAPSHOT = 'snapshot';
 
     /**
+     * @since 2.3.0
+     */
+    public readonly string|null $level;
+
+    /**
      * Construct immutable ReadConcern
      * @link https://php.net/manual/en/mongodb-driver-readconcern.construct.php
      */
@@ -40,7 +45,7 @@ final class ReadConcern implements Serializable
     /**
      * Returns the ReadConcern's "level" option
      * @link https://php.net/manual/en/mongodb-driver-readconcern.getlevel.php
-     * @return string|null
+     * @return string|null Returns the ReadConcern's "level" option.
      * @since 1.0.0
      */
     final public function getLevel(): ?string {}

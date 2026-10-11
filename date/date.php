@@ -23,7 +23,7 @@ use JetBrains\PhpStorm\Pure;
  * this function would return -1 on failure.
  */
 #[Pure(true)]
-function strtotime(string $datetime, ?int $baseTimestamp): int|false {}
+function strtotime(string $datetime, ?int $baseTimestamp = null): int|false {}
 
 /**
  * Format a local time/date
@@ -295,7 +295,7 @@ function strtotime(string $datetime, ?int $baseTimestamp): int|false {}
  */
 #[Pure(true)]
 #[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
-function date(string $format, ?int $timestamp) {}
+function date(string $format, ?int $timestamp = null) {}
 
 /**
  * Format a local time/date as integer
@@ -392,7 +392,7 @@ function date(string $format, ?int $timestamp) {}
  * </p>
  */
 #[Pure(true)]
-function idate(string $format, ?int $timestamp): int|false {}
+function idate(string $format, ?int $timestamp = null): int|false {}
 
 /**
  * Format a GMT/UTC date/time
@@ -409,7 +409,7 @@ function idate(string $format, ?int $timestamp): int|false {}
  */
 #[Pure(true)]
 #[LanguageLevelTypeAware(["8.0" => "string"], default: "string|false")]
-function gmdate(string $format, ?int $timestamp) {}
+function gmdate(string $format, ?int $timestamp = null) {}
 
 /**
  * Get Unix timestamp for a date
@@ -778,7 +778,55 @@ function checkdate(int $month, int $day, int $year): bool {}
  * Contrary to ISO-9899:1999, Sun Solaris starts with Sunday as 1.
  * As a result, %u may not function as described in this manual.
  * @link https://php.net/manual/en/function.strftime.php
- * @param string $format
+ * @param string $format The following characters are recognized in the format parameter string
+ * format Description Example returned values Day --- --- %a An abbreviated textual representation
+ * of the day Sun through Sat %A A full textual representation of the day Sunday through Saturday %d
+ * Two-digit day of the month (with leading zeros) 01 to 31 %e Day of the month, with a space
+ * preceding single digits. Not implemented as described on Windows. See below for more information.
+ * 1 to 31 %j Day of the year, 3 digits with leading zeros 001 to 366 %u ISO-8601 numeric
+ * representation of the day of the week 1 (for Monday) through 7 (for Sunday) %w Numeric
+ * representation of the day of the week 0 (for Sunday) through 6 (for Saturday) Week --- --- %U
+ * Week number of the given year, starting with the first Sunday as the first week 13 (for the 13th
+ * full week of the year) %V ISO-8601:1988 week number of the given year, starting with the first
+ * week of the year with at least 4 weekdays, with Monday being the start of the week 01 through 53
+ * (where 53 accounts for an overlapping week) %W A numeric representation of the week of the year,
+ * starting with the first Monday as the first week 46 (for the 46th week of the year beginning with
+ * a Monday) Month --- --- %b Abbreviated month name, based on the locale Jan through Dec %B Full
+ * month name, based on the locale January through December %h Abbreviated month name, based on the
+ * locale (an alias of %b) Jan through Dec %m Two digit representation of the month 01 (for January)
+ * through 12 (for December) Year --- --- %C Two digit representation of the century (year divided
+ * by 100, truncated to an integer) 19 for the 20th Century %g Two digit representation of the year
+ * going by ISO-8601:1988 standards (see %V) Example: 09 for the week of January 6, 2009 %G The full
+ * four-digit version of %g Example: 2008 for the week of January 3, 2009 %y Two digit
+ * representation of the year Example: 09 for 2009, 79 for 1979 %Y Four digit representation for the
+ * year Example: 2038 Time --- --- %H Two digit representation of the hour in 24-hour format 00
+ * through 23 %k Hour in 24-hour format, with a space preceding single digits 0 through 23 %I Two
+ * digit representation of the hour in 12-hour format 01 through 12 %l (lower-case 'L') Hour in
+ * 12-hour format, with a space preceding single digits 1 through 12 %M Two digit representation of
+ * the minute 00 through 59 %p UPPER-CASE 'AM' or 'PM' based on the given time Example: AM for
+ * 00:31, PM for 22:23. The exact result depends on the Operating System, and they can also return
+ * lower-case variants, or variants with dots (such as a.m.). %P lower-case 'am' or 'pm' based on
+ * the given time Example: am for 00:31, pm for 22:23. Not supported by all Operating Systems. %r
+ * Same as "%I:%M:%S %p" Example: 09:34:17 PM for 21:34:17 %R Same as "%H:%M" Example: 00:35 for
+ * 12:35 AM, 16:44 for 4:44 PM %S Two digit representation of the second 00 through 59 %T Same as
+ * "%H:%M:%S" Example: 21:34:17 for 09:34:17 PM %X Preferred time representation based on locale,
+ * without the date Example: 03:59:16 or 15:59:16 %z The time zone offset. Not implemented as
+ * described on Windows. See below for more information. Example: -0500 for US Eastern Time %Z The
+ * time zone abbreviation. Not implemented as described on Windows. See below for more information.
+ * Example: EST for Eastern Time Time and Date Stamps --- --- %c Preferred date and time stamp based
+ * on locale Example: Tue Feb 5 00:45:10 2009 for February 5, 2009 at 12:45:10 AM %D Same as
+ * "%m/%d/%y" Example: 02/05/09 for February 5, 2009 %F Same as "%Y-%m-%d" (commonly used in
+ * database datestamps) Example: 2009-02-05 for February 5, 2009 %s Unix Epoch Time timestamp (same
+ * as the time function) Example: 305815200 for September 10, 1979 08:40:00 AM %x Preferred date
+ * representation based on locale, without the time Example: 02/05/09 for February 5, 2009
+ * Miscellaneous --- --- %n A newline character ("\n") --- %t A Tab character ("\t") --- %% A
+ * literal percentage character ("%") --- Contrary to ISO-9899:1999, Sun Solaris starts with Sunday
+ * as 1. As a result, %u may not function as described in this manual. Windows only: The %e modifier
+ * is not supported in the Windows implementation of this function. To achieve this value, the %#d
+ * modifier can be used instead. The example below illustrates how to write a cross platform
+ * compatible function. The %z and %Z modifiers both return the time zone name instead of the offset
+ * or abbreviation. macOS and musl only: The %P modifier is not supported in the macOS
+ * implementation of this function.
  * @param int|null $timestamp [optional] defaults to the value of time()
  * Unix timestamp that defaults to the current local time if a timestamp is not given..
  * @return string|false a string formatted according format
@@ -788,7 +836,7 @@ function checkdate(int $month, int $day, int $year): bool {}
  * with setlocale.
  */
 #[Deprecated(since: '8.1')]
-function strftime(string $format, ?int $timestamp): string|false {}
+function strftime(string $format, ?int $timestamp = null): string|false {}
 
 /**
  * Format a GMT/UTC time/date according to locale settings
@@ -802,10 +850,9 @@ function strftime(string $format, ?int $timestamp): string|false {}
  * local time if no timestamp is given. Month and weekday names and
  * other language dependent strings respect the current locale set
  * with setlocale.
- * @deprecated 8.1
  */
 #[Deprecated(since: '8.1')]
-function gmstrftime(string $format, ?int $timestamp): string|false {}
+function gmstrftime(string $format, ?int $timestamp = null): string|false {}
 
 /**
  * Return current Unix timestamp
@@ -827,7 +874,14 @@ function time(): int {}
  * the associative array are as follows:
  * </p>
  * "tm_sec" - seconds
- * @return array
+ * @return array If associative is set to false or not supplied then the array is returned as a
+ * regular, numerically indexed array. If associative is set to true then localtime returns an
+ * associative array containing the elements of the structure returned by the C function call to
+ * localtime. The keys of the associative array are as follows: "tm_sec" - seconds, 0 to 59 "tm_min"
+ * - minutes, 0 to 59 "tm_hour" - hours, 0 to 23 "tm_mday" - day of the month, 1 to 31 "tm_mon" -
+ * month of the year, 0 (Jan) to 11 (Dec) "tm_year" - years since 1900 "tm_wday" - day of the week,
+ * 0 (Sun) to 6 (Sat) "tm_yday" - day of the year, 0 to 365 "tm_isdst" - is daylight savings time in
+ * effect? Positive if yes, 0 if not, negative if unknown.
  */
 #[Pure(true)]
 #[ArrayShape([
@@ -841,7 +895,7 @@ function time(): int {}
     'tm_yday' => 'int',
     'tm_isdst' => 'int',
 ])]
-function localtime(?int $timestamp, bool $associative = false): array {}
+function localtime(?int $timestamp = null, bool $associative = false): array {}
 
 /**
  * Get date/time information
@@ -936,7 +990,7 @@ function localtime(?int $timestamp, bool $associative = false): array {}
     'month' => 'string',
     0 => 'int',
 ])]
-function getdate(?int $timestamp): array {}
+function getdate(?int $timestamp = null): array {}
 
 /**
  * Returns new DateTime object
@@ -950,7 +1004,7 @@ function getdate(?int $timestamp): array {}
  * @return DateTime|false DateTime object on success or false on failure.
  */
 #[Pure(true)]
-function date_create(string $datetime = 'now', ?DateTimeZone $timezone): DateTime|false {}
+function date_create(string $datetime = 'now', ?DateTimeZone $timezone = null): DateTime|false {}
 
 /**
  * (PHP 5.5)<br/>
@@ -968,7 +1022,7 @@ function date_create(string $datetime = 'now', ?DateTimeZone $timezone): DateTim
  * @return DateTimeImmutable|false DateTime object on success or false on failure.
  */
 #[Pure(true)]
-function date_create_immutable(string $datetime = 'now', ?DateTimeZone $timezone): DateTimeImmutable|false {}
+function date_create_immutable(string $datetime = 'now', ?DateTimeZone $timezone = null): DateTimeImmutable|false {}
 
 /**
  * Returns new DateTimeImmutable object formatted according to the specified format
@@ -985,10 +1039,82 @@ function date_create_immutable_from_format(string $format, string $datetime, ?Da
 /**
  * Returns new DateTimeImmutable object formatted according to the specified format
  * @link https://php.net/manual/en/function.date-create-immutable-from-format.php
- * @param string $format
- * @param string $datetime
+ * @param string $format The format that the passed in string should be in. See the formatting
+ * options below. In most cases, the same letters as for the date can be used. All fields are
+ * initialised with the current date/time. In most cases you would want to reset these to "zero"
+ * (the Unix epoch, 1970-01-01 00:00:00 UTC). You do that by including the ! character as first
+ * character in your format, or | as your last. Please see the documentation for each character
+ * below for more information. The format is parsed from left to right, which means that in some
+ * situations the order in which the format characters are present affects the result. In the case
+ * of z (the day of the year), it is required that a year has already been parsed, for example
+ * through the Y or y characters. Letters that are used for parsing numbers allow a wide range of
+ * values, outside of what the logical range would be. For example, the d (day of the month) accepts
+ * values in the range from 00 to 99. The only constraint is on the amount of digits. The date/time
+ * parser's overflow mechanism is used when out-of-range values are given. The examples below show
+ * some of this behaviour. This also means that the data parsed for a format letter is greedy, and
+ * will read up to the amount of digits its format allows for. That can then also mean that there
+ * are no longer enough characters in the datetime string for following format characters. An
+ * example on this page also illustrates this issue. The following characters are recognized in the
+ * format parameter string format character Description Example parsable values Day --- --- d and j
+ * Day of the month, 2 digits with or without leading zeros 01 to 31 or 1 to 31. (2 digit numbers
+ * higher than the number of days in the month are accepted, in which case they will make the month
+ * overflow. For example using 33 with January, means February 2nd) D and l A textual representation
+ * of a day Mon through Sun or Sunday through Saturday. If the day name given is different than the
+ * day name belonging to a parsed (or default) date is different, then an overflow occurs to the
+ * next date with the given day name. See the examples below for an explanation. S English ordinal
+ * suffix for the day of the month, 2 characters. It's ignored while processing. st, nd, rd or th. z
+ * The day of the year (starting from 0); must be preceded by Y or y. 0 through 365. (3 digit
+ * numbers higher than the numbers in a year are accepted, in which case they will make the year
+ * overflow. For example using 366 with 2022, means January 2nd, 2023) Month --- --- F and M A
+ * textual representation of a month, such as January or Sept January through December or Jan
+ * through Dec m and n Numeric representation of a month, with or without leading zeros 01 through
+ * 12 or 1 through 12. (2 digit numbers higher than 12 are accepted, in which case they will make
+ * the year overflow. For example using 13 means January in the next year) Year --- --- X and x A
+ * full numeric representation of a year, up to 19 digits, optionally prefixed by + or - Examples:
+ * 0055, 787, 1999, -2003, +10191 Y A full numeric representation of a year, up to 4 digits
+ * Examples: 25 (same as 0025), 787, 1999, 2003 y A two digit representation of a year (which is
+ * assumed to be in the range 1970-2069, inclusive) Examples: 99 or 03 (which will be interpreted as
+ * 1999 and 2003, respectively) Time --- --- a and A Ante meridiem and Post meridiem am or pm g and
+ * h 12-hour format of an hour with or without leading zero 1 through 12 or 01 through 12 (2 digit
+ * numbers higher than 12 are accepted, in which case they will make the day overflow. For example
+ * using 14 means 02 in the next AM/PM period) G and H 24-hour format of an hour with or without
+ * leading zeros 0 through 23 or 00 through 23 (2 digit numbers higher than 24 are accepted, in
+ * which case they will make the day overflow. For example using 26 means 02:00 the next day) i
+ * Minutes with leading zeros 00 to 59. (2 digit numbers higher than 59 are accepted, in which case
+ * they will make the hour overflow. For example using 66 means :06 the next hour) s Seconds, with
+ * leading zeros 00 through 59 (2 digit numbers higher than 59 are accepted, in which case they will
+ * make the minute overflow. For example using 90 means :30 the next minute) v Fraction in
+ * milliseconds (up to three digits) Example: 12 (0.12 seconds), 345 (0.345 seconds) u Fraction in
+ * microseconds (up to six digits) Example: 45 (0.45 seconds), 654321 (0.654321 seconds) Timezone
+ * --- --- e, O, p, P and T Timezone identifier, or difference to UTC in hours, or difference to UTC
+ * with colon between hours and minutes, or timezone abbreviation Examples: UTC, GMT,
+ * Atlantic/Azores or +0200 or +02:00 or EST, MDT Full Date/Time --- --- U Seconds since the Unix
+ * Epoch (January 1 1970 00:00:00 GMT) Example: 1292177455 Whitespace and Separators --- --- (space)
+ * Zero or more spaces, tabs, NBSP (U+A0), or NNBSP (U+202F) characters Example: "\t", " " # One of
+ * the following separation symbol: ;, :, /, ., ,, -, ( or ) Example: / ;, :, /, ., ,, -, ( or ) The
+ * specified character. Example: - ? A random byte Example: ^ (Be aware that for UTF-8 characters
+ * you might need more than one ?. In this case, using * is probably what you want instead) * Random
+ * bytes until the next separator or digit Example: * in Y-*-d with the string 2009-aWord-08 will
+ * match aWord ! Resets all fields (year, month, day, hour, minute, second, fraction and timezone
+ * information) to zero-like values ( 0 for hour, minute, second and fraction, 1 for month and day,
+ * 1970 for year and the default timezone) Without !, all fields will be set to the current date and
+ * time. | Resets all fields (year, month, day, hour, minute, second, fraction and timezone
+ * information) to zero-like values if they have not been parsed yet Y-m-d| will set the year, month
+ * and day to the information found in the string to parse, and sets the hour, minute and second to
+ * 0. + If this format specifier is present, trailing data in the string will not cause an error,
+ * but a warning instead Use DateTimeImmutable::getLastErrors to find out whether trailing data was
+ * present. Unrecognized characters in the format string will cause the parsing to fail and an error
+ * message is appended to the returned structure. You can query error messages with
+ * DateTimeImmutable::getLastErrors. To include literal characters in format, you have to escape
+ * them with a backslash (\). If format does not contain the character ! then portions of the
+ * generated date/time which are not specified in format will be set to the current system time. If
+ * format contains the character !, then portions of the generated date/time not provided in format,
+ * as well as values to the left-hand side of the !, will be set to corresponding values from the
+ * Unix epoch. If any time character is parsed, then all other time-related fields are set to "0",
+ * unless also parsed. The Unix epoch is 1970-01-01 00:00:00 UTC.
+ * @param string $datetime String representing the time.
  * @param DateTimeZone|null $timezone [optional]
- * @return DateTimeImmutable|false
+ * @return DateTimeImmutable|false Returns a new DateTimeImmutable instance or false on failure.
  * @throws ValueError when the datetime contains NULL-bytes.
  */
 #[Pure(true)]
@@ -1061,7 +1187,7 @@ function date_create_from_format(string $format, string $datetime, ?DateTimeZone
     "error_count" => "int",
     "errors" => "array"
 ])]
-function date_parse(string $datetime): false|array {}
+function date_parse(string $datetime) {}
 
 /**
  * Get info about given date formatted according to the specified format
@@ -1073,6 +1199,7 @@ function date_parse(string $datetime): false|array {}
  * String representing the date.
  * </p>
  * @return array associative array with detailed info about given date.
+ * @throws \ValueError This functions throws ValueError when the datetime contains NULL-bytes.
  */
 #[Pure(true)]
 #[ArrayShape([
@@ -1112,8 +1239,55 @@ function date_get_last_errors(): array|false {}
  * Alias:
  * {@see DateTime::format}
  * @link https://php.net/manual/en/function.date-format.php
- * @param DateTimeInterface $object
- * @param string $format
+ * @param DateTimeInterface $object Procedural style only: A DateTime object returned by date_create
+ * @param string $format The format of the outputted date string. See the formatting options below.
+ * There are also several predefined date constants that may be used instead, so for example
+ * DATE_RSS contains the format string 'D, d M Y H:i:s'. The following characters are recognized in
+ * the format parameter string format character Description Example returned values Day --- --- d
+ * Day of the month, 2 digits with leading zeros 01 to 31 D A textual representation of a day, three
+ * letters Mon through Sun j Day of the month without leading zeros 1 to 31 l (lowercase 'L') A full
+ * textual representation of the day of the week Sunday through Saturday N ISO 8601 numeric
+ * representation of the day of the week 1 (for Monday) through 7 (for Sunday) S English ordinal
+ * suffix for the day of the month, 2 characters st, nd, rd or th. Works well with j w Numeric
+ * representation of the day of the week 0 (for Sunday) through 6 (for Saturday) z The day of the
+ * year (starting from 0) 0 through 365 Week --- --- W ISO 8601 week number of year, weeks starting
+ * on Monday Example: 42 (the 42nd week in the year) Month --- --- F A full textual representation
+ * of a month, such as January or March January through December m Numeric representation of a
+ * month, with leading zeros 01 through 12 M A short textual representation of a month, three
+ * letters Jan through Dec n Numeric representation of a month, without leading zeros 1 through 12 t
+ * Number of days in the given month 28 through 31 Year --- --- L Whether it's a leap year 1 if it
+ * is a leap year, 0 otherwise. o ISO 8601 week-numbering year. This has the same value as Y, except
+ * that if the ISO week number (W) belongs to the previous or next year, that year is used instead.
+ * Examples: 1999 or 2003 X An expanded full numeric representation of a year, at least 4 digits,
+ * with - for years BCE, and + for years CE. Examples: -0055, +0787, +1999, +10191 x An expanded
+ * full numeric representation if required, or a standard full numeral representation if possible
+ * (like Y). At least four digits. Years BCE are prefixed with a -. Years beyond (and including)
+ * 10000 are prefixed by a +. Examples: -0055, 0787, 1999, +10191 Y A full numeric representation of
+ * a year, at least 4 digits, with - for years BCE. Examples: -0055, 0787, 1999, 2003, 10191 y A two
+ * digit representation of a year Examples: 99 or 03 Time --- --- a Lowercase Ante meridiem and Post
+ * meridiem am or pm A Uppercase Ante meridiem and Post meridiem AM or PM B Swatch Internet time 000
+ * through 999 g 12-hour format of an hour without leading zeros 1 through 12 G 24-hour format of an
+ * hour without leading zeros 0 through 23 h 12-hour format of an hour with leading zeros 01 through
+ * 12 H 24-hour format of an hour with leading zeros 00 through 23 i Minutes with leading zeros 00
+ * to 59 s Seconds with leading zeros 00 through 59 u Microseconds. Note that date will always
+ * generate 000000 since it takes an int parameter, whereas DateTimeInterface::format does support
+ * microseconds if an object of type DateTimeInterface was created with microseconds. Example:
+ * 654321 v Milliseconds. Same note applies as for u. Example: 654 Timezone --- --- e Timezone
+ * identifier Examples: UTC, GMT, Atlantic/Azores I (capital i) Whether or not the date is in
+ * daylight saving time 1 if Daylight Saving Time, 0 otherwise. O Difference to Greenwich time (GMT)
+ * without colon between hours and minutes Example: +0200 P Difference to Greenwich time (GMT) with
+ * colon between hours and minutes Example: +02:00 p The same as P, but returns Z instead of +00:00
+ * (available as of PHP 8.0.0) Examples: Z or +02:00 T Timezone abbreviation, if known; otherwise
+ * the GMT offset. Examples: EST, MDT, +05 Z Timezone offset in seconds. The offset for timezones
+ * west of UTC is always negative, and for those east of UTC is always positive. -43200 through
+ * 50400 Full Date/Time --- --- c ISO 8601 date. Only compatible with the non-expanded format (up to
+ * year 9999). Later dates will result in an invalid string. For later dates and expanded format,
+ * see x and X. 2004-02-12T15:19:21+00:00 r RFC 2822/RFC 5322 formatted date Example: Thu, 21 Dec
+ * 2000 16:01:07 +0200 U Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) See also time
+ * Unrecognized characters in the format string will be printed as-is. The Z format will always
+ * return 0 when using gmdate. Since this function only accepts int timestamps the u format
+ * character is only useful when using the date_format function with user based timestamps created
+ * with date_create.
  * @return string|false formatted date string on success or <b>FALSE</b> on failure.
  */
 #[Pure(true)]
@@ -1127,7 +1301,7 @@ function date_format(DateTimeInterface $object, string $format) {}
  * {@see DateTime::modify}
  * @link https://php.net/manual/en/function.date-modify.php
  * @param DateTime $object A DateTime object returned by date_create(). The function modifies this object.
- * @param string $modifier A date/time string. Valid formats are explained in {@link https://secure.php.net/manual/en/datetime.formats.php Date and Time Formats}.
+ * @param string $modifier A date/time string. Valid formats are explained in {@link https://php.net/manual/en/datetime.formats.php Date and Time Formats}.
  * @return DateTime|false Returns the DateTime object for method chaining or <b>FALSE</b> on failure.
  */
 function date_modify(DateTime $object, string $modifier): DateTime|false {}
@@ -1217,7 +1391,7 @@ function date_offset_get(DateTimeInterface $object) {}
  * @param DateTimeInterface $baseObject
  * @param DateTimeInterface $targetObject The date to compare to
  * @param bool $absolute [optional] Whether to return absolute difference.
- * @return DateInterval|false The DateInterval object representing the difference between the two dates or FALSE on failure.
+ * @return DateInterval|false The DateInterval object representing the difference between the two dates or FALSE (for PHP < 8.0) on failure.
  */
 #[Pure(true)]
 #[LanguageLevelTypeAware(["8.0" => "DateInterval"], default: "DateInterval|false")]
@@ -1227,13 +1401,15 @@ function date_diff(DateTimeInterface $baseObject, DateTimeInterface $targetObjec
  * Alias:
  * {@see DateTime::setTime}
  * @link https://php.net/manual/en/function.date-time-set.php
- * @param DateTime $object
- * @param int $hour
- * @param int $minute
+ * @param DateTime $object Procedural style only: A DateTime object returned by date_create. The
+ * function modifies this object.
+ * @param int $hour Hour of the time.
+ * @param int $minute Minute of the time.
  * @param int $second [optional]
  * @param int $microsecond [optional]
  * @return DateTime <p>Returns the
- * {@see DateTime} object for method chaining or <b>FALSE</b> on failure.</p>
+ * {@see DateTime} object for method chaining. Prior to PHP 8.0, <b>FALSE</b> was returned on
+ * failure.</p>
  */
 function date_time_set(
     DateTime $object,
@@ -1260,13 +1436,14 @@ function date_time_set(
  * </p>
  */
 #[LanguageLevelTypeAware(["8.0" => "DateTime"], default: "DateTime|false")]
-function date_date_set(DateTime $object, int $year, int $month, int $day): DateTime|false {}
+function date_date_set(DateTime $object, int $year, int $month, int $day) {}
 
 /**
  * Alias:
  * {@see DateTime::setISODate}
  * @link https://php.net/manual/en/function.date-isodate-set.php
- * @param DateTime $object
+ * @param DateTime $object Procedural style only: A DateTime object returned by date_create. The
+ * function modifies this object.
  * @param int $year <p>Year of the date</p>
  * @param int $week <p>Week of the date.</p>
  * @param int $dayOfWeek [optional] <p>Offset from the first day of the week.</p>
@@ -1290,7 +1467,7 @@ function date_isodate_set(DateTime $object, int $year, int $week, int $dayOfWeek
  * {@see DateTime} object for call chaining or <b>FALSE</b> on failure
  */
 #[LanguageLevelTypeAware(["8.0" => "DateTime"], default: "DateTime|false")]
-function date_timestamp_set(DateTime $object, int $timestamp): DateTime|false {}
+function date_timestamp_set(DateTime $object, int $timestamp) {}
 
 /**
  * Gets the unix timestamp
@@ -1344,7 +1521,7 @@ function timezone_name_get(DateTimeZone $object): string {}
  * offset and isdst.
  * </p>
  * @return string|false time zone name on success or false on failure.
- * @since 5.1.3
+ * @since 5.1
  */
 #[Pure(true)]
 function timezone_name_from_abbr(string $abbr, int $utcOffset = -1, int $isDST = -1): string|false {}
@@ -1377,7 +1554,7 @@ function timezone_offset_get(DateTimeZone $object, DateTimeInterface $datetime) 
  * @return array|false <p>Returns numerically indexed array containing associative array with all transitions on success or FALSE on failure.</p>
  */
 #[Pure(true)]
-function timezone_transitions_get(DateTimeZone $object, int $timestampBegin = PHP_INT_MIN, int $timestampEnd = PHP_INT_MAX): array|false {}
+function timezone_transitions_get(DateTimeZone $object, int $timestampBegin = PHP_INT_MIN, int $timestampEnd = 2147483647): array|false {}
 
 /**
  * Alias:
@@ -1407,7 +1584,7 @@ function timezone_location_get(DateTimeZone $object): array|false {}
  */
 #[Pure(true)]
 #[LanguageLevelTypeAware(["8.0" => "array"], default: "array|false")]
-function timezone_identifiers_list(int $timezoneGroup = DateTimeZone::ALL, ?string $countryCode) {}
+function timezone_identifiers_list(int $timezoneGroup = DateTimeZone::ALL, ?string $countryCode = null) {}
 
 /**
  * Returns associative array containing dst, offset and the timezone name
@@ -1521,12 +1698,10 @@ function date_default_timezone_get(): string {}
  * @param float|null $utcOffset [optional]
  * @return string|int|float|false the sunrise time in a specified format on
  * success or false on failure.
- * @deprecated 8.1
- * Use {@link date_sun_info} instead
  */
 #[Pure(true)]
 #[Deprecated(reason: 'in 8.1.  Use date_sun_info instead', since: '8.1')]
-function date_sunrise(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude, ?float $longitude, ?float $zenith, ?float $utcOffset): string|int|float|false {}
+function date_sunrise(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude = null, ?float $longitude = null, ?float $zenith = null, ?float $utcOffset = null): string|int|float|false {}
 
 /**
  * Returns time of sunset for a given day and location
@@ -1577,7 +1752,7 @@ function date_sunrise(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?
  */
 #[Pure(true)]
 #[Deprecated(reason: 'in 8.1.  Use date_sun_info instead', since: '8.1')]
-function date_sunset(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude, ?float $longitude, ?float $zenith, ?float $utcOffset): string|int|float|false {}
+function date_sunset(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?float $latitude = null, ?float $longitude = null, ?float $zenith = null, ?float $utcOffset = null): string|int|float|false {}
 /**
  * Returns an array with information about sunset/sunrise and twilight begin/end
  * @link https://php.net/manual/en/function.date-sun-info.php
@@ -1616,7 +1791,7 @@ function date_sunset(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?f
  * The values of the array elements are either UNIX timestamps, <strong><code>false</code></strong> if the
  * sun is below the respective zenith for the whole day, or <strong><code>true</code></strong> if the sun is
  * above the respective zenith for the whole day.
- * @since 5.1.2
+ * @since 5.1
  */
 #[Pure(true)]
 #[LanguageLevelTypeAware(["8.0" => "array"], default: "array|false")]
@@ -1631,6 +1806,6 @@ function date_sunset(int $timestamp, int $returnFormat = SUNFUNCS_RET_STRING, ?f
     "astronomical_twilight_begin" => "int",
     "astronomical_twilight_end" => "int"
 ])]
-function date_sun_info(int $timestamp, float $latitude, float $longitude): array|false {}
+function date_sun_info(int $timestamp, float $latitude, float $longitude) {}
 
 // End of date v.5.3.2-0.dotdeb.1

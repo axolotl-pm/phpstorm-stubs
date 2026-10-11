@@ -12,6 +12,51 @@ use MongoDB\Driver\Server;
  */
 class CommandStartedEvent
 {
+    /**
+     * @since 2.3.0
+     */
+    public readonly string $host;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly int $port;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly string $commandName;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly string $databaseName;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly object $command;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly string $operationId;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly string $requestId;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?ObjectId $serviceId;
+
+    /**
+     * @since 2.3.0
+     */
+    public readonly ?int $serverConnectionId;
+
     final private function __construct() {}
 
     final public function __wakeup() {}
@@ -47,7 +92,7 @@ class CommandStartedEvent
     /**
      * Returns the server hostname for the command
      * @link   https://www.php.net/manual/en/mongodb-driver-monitoring-commandstartedevent.gethost.php
-     * @return string
+     * @return string Returns the hostname of the server on which the command was executed.
      * @throws \InvalidArgumentException on argument parsing errors.
      * @since 1.20.0
      */
@@ -67,7 +112,7 @@ class CommandStartedEvent
     /**
      * Returns the server port for the command
      * @link   https://www.php.net/manual/en/mongodb-driver-monitoring-commandstartedevent.getport.php
-     * @return int
+     * @return int Returns the port of the server on which the command was executed.
      * @throws \InvalidArgumentException on argument parsing errors.
      * @since 1.20.0
      */

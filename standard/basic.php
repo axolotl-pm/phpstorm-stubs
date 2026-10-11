@@ -62,8 +62,8 @@ function cli_get_process_title(): ?string {}
 
 /**
  * Verify that the contents of a variable is accepted by the iterable pseudo-type, i.e. that it is an array or an object implementing Traversable
- * @param mixed $value
- * @return bool
+ * @param mixed $value The value to check
+ * @return bool Returns true if value is iterable, false otherwise.
  * @since 7.1
  * @link https://php.net/manual/en/function.is-iterable.php
  */
@@ -77,7 +77,6 @@ function is_iterable(mixed $value): bool {}
  * An ISO-8859-1 string.
  * </p>
  * @return string the UTF-8 translation of <i>data</i>.
- * @deprecated 8.2 Consider to use {@link mb_convert_encoding}, {@link UConverter::transcode()} or {@link iconv()}
  */
 #[Pure]
 #[Deprecated(replacement: "mb_convert_encoding(%parameter0%, 'UTF-8', 'ISO-8859-1')", since: "8.2")]
@@ -91,7 +90,6 @@ function utf8_encode(string $string): string {}
  * An UTF-8 encoded string.
  * </p>
  * @return string the ISO-8859-1 translation of <i>data</i>.
- * @deprecated 8.2 Consider to use {@link mb_convert_encoding}, {@link UConverter::transcode()} or {@link iconv()}
  */
 #[Pure]
 #[Deprecated(replacement: "mb_convert_encoding(%parameter0%, 'ISO-8859-1', 'UTF-8')", since: "8.2")]
@@ -100,7 +98,7 @@ function utf8_decode(string $string): string {}
 /**
  * Clear the most recent error
  * @link https://php.net/manual/en/function.error-clear-last.php
- * @return void
+ * @return void Clears the most recent errors, making it unable to be retrieved with error_get_last.
  * @since 7.0
  */
 function error_clear_last(): void {}
@@ -141,7 +139,7 @@ function sapi_windows_cp_conv(int|string $in_codepage, int|string $out_codepage,
 /**
  * Indicates whether the codepage is utf-8 compatible
  * @link https://www.php.net/manual/en/function.sapi-windows-cp-is-utf8.php
- * @return bool
+ * @return bool Returns whether the codepage of the current process is UTF-8 compatible.
  * @since 7.1
  */
 function sapi_windows_cp_is_utf8(): bool {}

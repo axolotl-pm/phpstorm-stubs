@@ -129,6 +129,8 @@ function floor(int|float $num) {}
  * PHP_ROUND_HALF_ODD.
  * </p>
  * @return float The rounded value
+ * @throws \ValueError The function throws a ValueError if mode is invalid. Prior to PHP 8.4.0, an
+ * invalid mode would silently default to PHP_ROUND_HALF_UP.
  */
 #[Pure]
 function round(
@@ -347,7 +349,7 @@ function is_nan(float $num): bool {}
  * @link https://php.net/manual/en/function.intdiv.php
  * @param int $num1 <p>Number to be divided.</p>
  * @param int $num2 <p>Number which divides the <b><i>dividend</i></b></p>
- * @return int
+ * @return int The integer quotient of the division of num1 by num2.
  * @since 7.0
  * @throws DivisionByZeroError <p>if divisor is 0</p>
  * @throws ArithmeticError <p>if the <b><i>dividend</i></b> is <b>PHP_INT_MIN</b> and the <b><i>divisor</i></b> is -1</p>
@@ -697,9 +699,10 @@ function fmod(float $num1, float $num2): float {}
  * Performs a floating-point division under
  * IEEE 754 semantics. Division by zero is considered well-defined and
  * will return one of Inf, -Inf or NaN.
- * @param float $num1
- * @param float $num2
- * @return float
+ * @link https://php.net/manual/en/function.fdiv.php
+ * @param float $num1 The dividend (numerator)
+ * @param float $num2 The divisor
+ * @return float The floating point result of num1/num2
  * @since 8.0
  */
 #[Pure]
@@ -798,14 +801,14 @@ function putenv(string $assignment): bool {}
  * option --opt.
  * Prior to PHP5.3.0 this parameter was only available on few systems
  * @param int &$rest_index [optional] If the optind parameter is present, then the index where argument parsing stopped will be written to this variable.
- * @return string[]|false[]|false This function will return an array of option / argument pairs or false on
+ * @return (string|false|string[]|false[])[]|false This function will return an array of option / argument pairs or false on
  * failure.
  */
 #[Pure(true)]
 function getopt(
     string $short_options,
     array $long_options = [],
-    #[PhpStormStubsElementAvailable(from: '7.1')] &$rest_index
+    #[PhpStormStubsElementAvailable(from: '7.1')] &$rest_index = null
 ): array|false {}
 
 /**
@@ -813,7 +816,7 @@ function getopt(
  * @link https://php.net/manual/en/function.sys-getloadavg.php
  * @return array{float, float, float}|false an array with three samples (last 1, 5 and 15
  * minutes).
- * @since 5.1.3
+ * @since 5.1
  */
 #[Pure(true)]
 function sys_getloadavg(): array|false {}
@@ -832,7 +835,11 @@ function sys_getloadavg(): array|false {}
  * If the optional get_as_float is set to
  * true then a float (in seconds) is returned.
  * </p>
- * @return string|float
+ * @return string|float By default, microtime returns a string in the form "msec sec", where sec is
+ * the number of seconds since the Unix epoch (0:00:00 January 1,1970 GMT), and msec measures
+ * microseconds that have elapsed since sec and is also expressed in seconds as a decimal fraction.
+ * If as_float is set to true, then microtime returns a float, which represents the current time in
+ * seconds since the Unix epoch accurate to the nearest microsecond.
  */
 #[Pure(true)]
 function microtime(#[TypeContract(true: "float", false: "string")] bool $as_float = false): string|float {}
@@ -970,7 +977,7 @@ function get_cfg_var(string $option): array|string|false {}
 /**
  * Alias:
  * {@see set_magic_quotes_runtime}
- * @link https://php.net/manual/en/function.magic-quotes-runtime.php
+ * @link https://php-legacy-docs.zend.com/manual/php5/en/function.magic-quotes-runtime
  * @param bool $new_setting
  * @removed 7.0
  */
@@ -979,7 +986,7 @@ function magic_quotes_runtime(bool $new_setting) {}
 
 /**
  * Sets the current active configuration setting of magic_quotes_runtime
- * @link https://php.net/manual/en/function.set-magic-quotes-runtime.php
+ * @link https://php-legacy-docs.zend.com/manual/php5/en/function.set-magic-quotes-runtime
  * @param bool $new_setting <p>
  * false for off, true for on.
  * </p>
@@ -1008,7 +1015,7 @@ function get_magic_quotes_runtime(): int {}
 
 /**
  * Import GET/POST/Cookie variables into the global scope
- * @link https://php.net/manual/en/function.import-request-variables.php
+ * @link https://php-legacy-docs.zend.com/manual/php5/en/function.import-request-variables
  * @param string $types <p>
  * Using the types parameter, you can specify
  * which request variables to import. You can use 'G', 'P' and 'C'
@@ -1108,4 +1115,14 @@ function import_request_variables(string $types, $prefix = null): bool {}
  * </p>
  * @return bool true on success or false on failure.
  */
-function error_log(string $message, int $message_type = 0, ?string $destination, ?string $additional_headers): bool {}
+function error_log(string $message, int $message_type = 0, ?string $destination = null, ?string $additional_headers = null): bool {}
+
+/**
+ * Restrict a value to a given range
+ * @param mixed $value
+ * @param mixed $min
+ * @param mixed $max
+ * @return mixed
+ * @since 8.6
+ */
+function clamp(mixed $value, mixed $min, mixed $max): mixed {}

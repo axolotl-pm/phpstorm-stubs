@@ -12,7 +12,7 @@ use JetBrains\PhpStorm\Pure;
  * The file name. This file will be opened from the filesystem and its
  * contents written to standard output.
  * </p>
- * @param int $use_include_path [optional] <p>
+ * @param int|bool $use_include_path [optional] <p>
  * You can set this optional parameter to 1, if you
  * want to search for the file in the include_path too.
  * </p>
@@ -129,7 +129,7 @@ function gzread($stream, int $length): string|false {}
  * in zlib.h for
  * more information about the strategy parameter.)
  * </p>
- * @param int $use_include_path [optional] <p>
+ * @param int|bool $use_include_path [optional] <p>
  * You can set this optional parameter to 1, if you
  * want to search for the file in the include_path too.
  * </p>
@@ -150,7 +150,7 @@ function gzopen(string $filename, string $mode, #[LanguageLevelTypeAware(['8.5' 
  * successfully opened by <b>gzopen</b>.
  * </p>
  * @return int The number of uncompressed characters read from <i>gz</i>
- * and passed through to the input, or <b>FALSE</b> on error.
+ * and passed through to the input. Prior to PHP 8.0, <b>FALSE</b> was returned on error.
  */
 function gzpassthru($stream): int {}
 
@@ -214,7 +214,7 @@ function gztell($stream): int|false {}
  * @return int|false the number of (uncompressed) bytes written to the given gz-file
  * stream.
  */
-function gzwrite($stream, string $data, ?int $length): int|false {}
+function gzwrite($stream, string $data, ?int $length = null): int|false {}
 
 /**
  * Alias of <b>gzwrite</b>
@@ -224,7 +224,7 @@ function gzwrite($stream, string $data, ?int $length): int|false {}
  * @param int|null $length [optional]
  * @return int|false
  */
-function gzputs($stream, string $data, ?int $length): int|false {}
+function gzputs($stream, string $data, ?int $length = null): int|false {}
 
 /**
  * Read entire gz-file into an array
@@ -232,7 +232,7 @@ function gzputs($stream, string $data, ?int $length): int|false {}
  * @param string $filename <p>
  * The file name.
  * </p>
- * @param int $use_include_path [optional] <p>
+ * @param int|bool $use_include_path [optional] <p>
  * You can set this optional parameter to 1, if you
  * want to search for the file in the include_path too.
  * </p>
@@ -507,6 +507,7 @@ function inflate_add(#[LanguageLevelTypeAware(["8.0" => "InflateContext"], defau
 
 /**
  * Get number of bytes read so far
+ * @link https://php.net/manual/en/function.inflate-get-read-len.php
  * @param InflateContext|resource $context
  * @return int
  * @since 7.2
@@ -516,14 +517,17 @@ function inflate_get_read_len(#[LanguageLevelTypeAware(["8.0" => "InflateContext
 
 /**
  * Get decompression status
+ * @link https://php.net/manual/en/function.inflate-get-status.php
  * @param InflateContext|resource $context
- * @return int
+ * @return int Returns decompression status.
  * @since 7.2
  */
 #[Pure]
 function inflate_get_status(#[LanguageLevelTypeAware(["8.0" => "InflateContext"], default: "resource")] $context): int {}
 
 /**
+ * A fully opaque class which replaces zlib.inflate resources as of PHP 8.0.0.
+ * @link https://php.net/manual/en/class.inflatecontext.php
  * @since 8.0
  */
 final class InflateContext
@@ -536,6 +540,8 @@ final class InflateContext
 }
 
 /**
+ * A fully opaque class which replaces zlib.deflate resources as of PHP 8.0.0.
+ * @link https://php.net/manual/en/class.deflatecontext.php
  * @since 8.0
  */
 final class DeflateContext

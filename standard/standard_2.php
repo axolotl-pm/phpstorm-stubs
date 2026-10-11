@@ -1,6 +1,7 @@
 <?php
 
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\FileReference;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
 use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Internal\ReturnTypeContract as TypeContract;
@@ -228,7 +229,7 @@ function ord(string $character): int {}
  * variables are stored in this variable as array elements instead.<br/>
  * Since 7.2.0 this parameter is not optional.
  * </p>
- * @return void
+ * @return void No value is returned.
  */
 function parse_str(
     string $string,
@@ -295,7 +296,7 @@ function str_pad(string $string, int $length, string $pad_string = " ", int $pad
  * @see rtrim()
  */
 #[Pure]
-function chop(string $string, string $characters = " \n\r\t\v\0"): string {}
+function chop(string $string, #[PhpStormStubsElementAvailable(to: '8.5')] string $characters = " \n\r\t\v\0", #[PhpStormStubsElementAvailable(from: '8.6')] string $characters = " \f\n\r\t\v\0"): string {}
 
 /**
  * Alias:
@@ -336,11 +337,18 @@ function strchr(string $haystack, string $needle, bool $before_needle = false): 
  * </p>
  * @return string a string produced according to the formatting string
  * format.
+ * @throws \ValueError As of PHP 8.0.0, a ValueError is thrown if the number of arguments is zero.
+ * Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError is thrown if
+ * [width] is less than zero or bigger than PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted
+ * instead. As of PHP 8.0.0, a ValueError is thrown if [precision] is less than zero or bigger than
+ * PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted instead.
+ * @throws \ArgumentCountError As of PHP 8.0.0, a ArgumentCountError is thrown when less arguments
+ * are given than required. Prior to PHP 8.0.0, false was returned and a E_WARNING emitted instead.
  */
 #[Pure]
 function sprintf(
     string $format,
-    #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $values,
+    #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $values = null,
     mixed ...$values
 ): string {}
 
@@ -354,6 +362,13 @@ function sprintf(
  * @param string|int|float ...$values [optional] <p>
  * </p>
  * @return int the length of the outputted string.
+ * @throws \ValueError As of PHP 8.0.0, a ValueError is thrown if the number of arguments is zero.
+ * Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError is thrown if
+ * [width] is less than zero or bigger than PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted
+ * instead. As of PHP 8.0.0, a ValueError is thrown if [precision] is less than zero or bigger than
+ * PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted instead.
+ * @throws \ArgumentCountError As of PHP 8.0.0, a ArgumentCountError is thrown when less arguments
+ * are given than required. Prior to PHP 8.0.0, false was returned and a E_WARNING emitted instead.
  */
 function printf(string $format, mixed ...$values): int {}
 
@@ -367,6 +382,13 @@ function printf(string $format, mixed ...$values): int {}
  * @param array $values <p>
  * </p>
  * @return int the length of the outputted string.
+ * @throws \ValueError As of PHP 8.0.0, a ValueError is thrown if the number of arguments is zero.
+ * Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError is thrown if
+ * [width] is less than zero or bigger than PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted
+ * instead. As of PHP 8.0.0, a ValueError is thrown if [precision] is less than zero or bigger than
+ * PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError
+ * is thrown when less arguments are given than required. Prior to PHP 8.0.0, false was returned and
+ * a E_WARNING emitted instead.
  */
 function vprintf(string $format, array $values): int {}
 
@@ -382,6 +404,13 @@ function vprintf(string $format, array $values): int {}
  * @return string Return array values as a formatted string according to
  * format (which is described in the documentation
  * for sprintf).
+ * @throws \ValueError As of PHP 8.0.0, a ValueError is thrown if the number of arguments is zero.
+ * Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError is thrown if
+ * [width] is less than zero or bigger than PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted
+ * instead. As of PHP 8.0.0, a ValueError is thrown if [precision] is less than zero or bigger than
+ * PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError
+ * is thrown when less arguments are given than required. Prior to PHP 8.0.0, false was returned and
+ * a E_WARNING emitted instead.
  */
 #[Pure]
 function vsprintf(string $format, array $values): string {}
@@ -397,6 +426,13 @@ function vsprintf(string $format, array $values): string {}
  * @param mixed ...$values [optional] <p>
  * </p>
  * @return int the length of the string written.
+ * @throws \ValueError As of PHP 8.0.0, a ValueError is thrown if the number of arguments is zero.
+ * Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError is thrown if
+ * [width] is less than zero or bigger than PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted
+ * instead. As of PHP 8.0.0, a ValueError is thrown if [precision] is less than zero or bigger than
+ * PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted instead.
+ * @throws \ArgumentCountError As of PHP 8.0.0, a ArgumentCountError is thrown when less arguments
+ * are given than required. Prior to PHP 8.0.0, false was returned and a E_WARNING emitted instead.
  */
 function fprintf($stream, string $format, mixed ...$values): int {}
 
@@ -412,6 +448,13 @@ function fprintf($stream, string $format, mixed ...$values): int {}
  * @param array $values <p>
  * </p>
  * @return int the length of the outputted string.
+ * @throws \ValueError As of PHP 8.0.0, a ValueError is thrown if the number of arguments is zero.
+ * Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError is thrown if
+ * [width] is less than zero or bigger than PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted
+ * instead. As of PHP 8.0.0, a ValueError is thrown if [precision] is less than zero or bigger than
+ * PHP_INT_MAX. Prior to PHP 8.0.0, a E_WARNING was emitted instead. As of PHP 8.0.0, a ValueError
+ * is thrown when less arguments are given than required. Prior to PHP 8.0.0, false was returned and
+ * a E_WARNING emitted instead.
  */
 function vfprintf($stream, string $format, array $values): int {}
 
@@ -595,7 +638,7 @@ function http_build_query(object|array $data, string $numeric_prefix = "", ?stri
  * @return string|false the contents of the symbolic link path or false on error.
  */
 #[Pure(true)]
-function readlink(string $path): string|false {}
+function readlink(#[FileReference] string $path): string|false {}
 
 /**
  * Gets information about a link
@@ -608,7 +651,7 @@ function readlink(string $path): string|false {}
  * system call. Returns 0 or false in case of error.
  */
 #[Pure(true)]
-function linkinfo(string $path): int|false {}
+function linkinfo(#[FileReference] string $path): int|false {}
 
 /**
  * Creates a symbolic link
@@ -621,7 +664,7 @@ function linkinfo(string $path): int|false {}
  * </p>
  * @return bool true on success or false on failure.
  */
-function symlink(string $target, string $link): bool {}
+function symlink(#[FileReference] string $target, #[FileReference] string $link): bool {}
 
 /**
  * Create a hard link
@@ -630,7 +673,7 @@ function symlink(string $target, string $link): bool {}
  * @param string $link The link name.
  * @return bool true on success or false on failure.
  */
-function link(string $target, string $link): bool {}
+function link(#[FileReference] string $target, #[FileReference] string $link): bool {}
 
 /**
  * Deletes a file
@@ -641,7 +684,7 @@ function link(string $target, string $link): bool {}
  * @param resource $context [optional]
  * @return bool true on success or false on failure.
  */
-function unlink(string $filename, $context): bool {}
+function unlink(#[FileReference] string $filename, $context = null): bool {}
 
 /**
  * Execute an external program
@@ -672,8 +715,10 @@ function unlink(string $filename, $context): bool {}
  * <p>
  * To get the output of the executed command, be sure to set and use the
  * output parameter.
+ * @throws \ValueError Emits an E_WARNING if exec is unable to execute the command. Throws a
+ * ValueError if command is empty or contains null bytes.
  */
-function exec(string $command, &$output, &$result_code): string|false {}
+function exec(string $command, &$output = null, &$result_code = null): string|false {}
 
 /**
  * Execute an external program and display the output
@@ -689,7 +734,7 @@ function exec(string $command, &$output, &$result_code): string|false {}
  * @return string|false the last line of the command output on success, and false
  * on failure.
  */
-function system(string $command, &$result_code): string|false {}
+function system(string $command, &$result_code = null): string|false {}
 
 /**
  * Escape shell metacharacters
@@ -724,9 +769,11 @@ function escapeshellarg(string $arg): string {}
  * return status of the Unix command will be placed here.
  * </p>
  * @return bool|null null on success or false on failure.
+ * @throws \ValueError Will emit an E_WARNING if passthru is unable to execute the command. Throws a
+ * ValueError if command is empty or contains null bytes.
  */
 #[LanguageLevelTypeAware(['8.2' => 'null|false'], default: 'null|bool')]
-function passthru(string $command, &$result_code): ?bool {}
+function passthru(string $command, &$result_code = null) {}
 
 /**
  * Execute command via shell and return the complete output as a string
@@ -807,8 +854,10 @@ function shell_exec(string $command): string|false|null {}
  * @return resource|false a resource representing the process, which should be freed using
  * proc_close when you are finished with it. On failure
  * returns false.
+ * @throws \ValueError As of PHP 8.3.0, throws a ValueError if command is an array without at least
+ * one non-empty element.
  */
-function proc_open(array|string $command, array $descriptor_spec, &$pipes, ?string $cwd, ?array $env_vars, ?array $options) {}
+function proc_open(array|string $command, array $descriptor_spec, &$pipes, ?string $cwd = null, ?array $env_vars = null, ?array $options = null) {}
 
 /**
  * Close a process opened by {@see proc_open} and return the exit code of that process

@@ -135,7 +135,7 @@ class SoapClient
      * <b>SOAP_SSL_METHOD_SSLv3</b> or
      * <b>SOAP_SSL_METHOD_SSLv23</b>.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      *
      * @removed 8.0
      */
@@ -263,7 +263,7 @@ class SoapClient
      * <b>SOAP_SSL_METHOD_SSLv23</b>.
      * </p>
      * @throws SoapFault A SoapFault exception will be thrown if the wsdl URI cannot be loaded.
-     * @since 5.0.1
+     * @since 5.0
      */
     public function __construct(
         #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $wsdl,
@@ -271,11 +271,23 @@ class SoapClient
     ) {}
 
     /**
+     * Calls a SOAP function (deprecated)
+     *
+     * Calling this method directly is deprecated. Usually, SOAP functions can be called as methods
+     * of the SoapClient object; in situations where this is not possible or additional options are
+     * needed, use SoapClient::__soapCall.
+     *
      * @link https://php.net/manual/en/soapclient.call.php
-     * @param string $name
-     * @param array $args
-     * @return mixed
-     * @since 5.0.1
+     * @param string $name The name of the SOAP function to call.
+     * @param array $args An array of the arguments to pass to the function. This can be either an
+     * ordered or an associative array. Note that most SOAP servers require parameter names to be
+     * provided, in which case this must be an associative array.
+     * @return mixed SOAP functions may return one, or multiple values. If only one value is
+     * returned by the SOAP function, the return value will be a scalar. If multiple values are
+     * returned, an associative array of named output parameters is returned instead. On error, if
+     * the SoapClient object was constructed with the exceptions option set to false, a SoapFault
+     * object will be returned.
+     * @since 5.0
      */
     #[Deprecated]
     #[TentativeType]
@@ -328,7 +340,7 @@ class SoapClient
      * @throws SoapFault A SoapFault exception will be thrown if an error occurs
      * and the SoapClient was constructed with the exceptions option not set, or
      * set to <b>TRUE</b>.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __soapCall(
@@ -343,7 +355,7 @@ class SoapClient
      * Returns last SOAP request
      * @link https://php.net/manual/en/soapclient.getlastrequest.php
      * @return string|null The last SOAP request, as an XML string.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __getLastRequest(): ?string {}
@@ -352,7 +364,7 @@ class SoapClient
      * Returns last SOAP response
      * @link https://php.net/manual/en/soapclient.getlastresponse.php
      * @return string|null The last SOAP response, as an XML string.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __getLastResponse(): ?string {}
@@ -361,7 +373,7 @@ class SoapClient
      * Returns the SOAP headers from the last request
      * @link https://php.net/manual/en/soapclient.getlastrequestheaders.php
      * @return string|null The last SOAP request headers.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __getLastRequestHeaders(): ?string {}
@@ -370,7 +382,7 @@ class SoapClient
      * Returns the SOAP headers from the last response
      * @link https://php.net/manual/en/soapclient.getlastresponseheaders.php
      * @return string|null The last SOAP response headers.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __getLastResponseHeaders(): ?string {}
@@ -380,7 +392,7 @@ class SoapClient
      * @link https://php.net/manual/en/soapclient.getfunctions.php
      * @return array|null The array of SOAP function prototypes, detailing the return type,
      * the function name and type-hinted parameters.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __getFunctions(): ?array {}
@@ -389,7 +401,7 @@ class SoapClient
      * Returns a list of SOAP types
      * @link https://php.net/manual/en/soapclient.gettypes.php
      * @return array|null The array of SOAP types, detailing all structures and types.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __getTypes(): ?array {}
@@ -398,7 +410,7 @@ class SoapClient
      * Returns a list of all cookies
      * @link https://php.net/manual/en/soapclient.getcookies.php
      * @return array The array of all cookies
-     * @since 5.4.3
+     * @since 5.4
      */
     #[TentativeType]
     public function __getCookies(): array {}
@@ -422,8 +434,11 @@ class SoapClient
      * If $oneWay is set to 1, this method returns nothing.
      * Use this where a response is not expected.
      * </p>
+     * @param string|null $uriParserClass The classname to use for parsing the redirection URI when
+     * a "Location" header is received in the response, or null to use the default, parse_url based
+     * parsing.
      * @return string|null The XML SOAP response.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __doRequest(
@@ -445,12 +460,12 @@ class SoapClient
      * The value of the cookie. If not specified, the cookie will be deleted.
      * </p>
      * @return void No value is returned.
-     * @since 5.0.4
+     * @since 5.0
      */
     #[TentativeType]
     public function __setCookie(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name,
-        #[LanguageLevelTypeAware(["8.0" => "string|null"], default: "string")] $value
+        #[LanguageLevelTypeAware(["8.0" => "string|null"], default: "string")] $value = null
     ): void {}
 
     /**
@@ -460,7 +475,7 @@ class SoapClient
      * The new endpoint URL.
      * </p>
      * @return string|null The old endpoint URL.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function __setLocation(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $location = null): ?string {}
@@ -474,11 +489,11 @@ class SoapClient
      * If not specified or set to <b>NULL</b>, the headers will be deleted.
      * </p>
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
-     * @since 5.0.5
+     * @since 5.0
      */
     #[TentativeType]
     public function __setSoapHeaders(
-        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $headers,
+        #[PhpStormStubsElementAvailable(from: '5.3', to: '5.6')] $headers = null,
         #[PhpStormStubsElementAvailable(from: '7.0')] $headers = null
     ): bool {}
 }
@@ -546,12 +561,12 @@ class SoapVar
      * @param string $nodeNamespace [optional] <p>
      * The XML node namespace.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      */
     public function __construct(
         #[LanguageLevelTypeAware(["8.0" => 'mixed'], default: '')] $data,
         #[LanguageLevelTypeAware(["7.1" => "int|null"], default: "int")] $encoding,
-        #[LanguageLevelTypeAware(["8.0" => "string|null"], default: "string")] $typeName,
+        #[LanguageLevelTypeAware(["8.0" => "string|null"], default: "string")] $typeName = null,
         #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $typeNamespace = null,
         #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $nodeName = null,
         #[LanguageLevelTypeAware(["8.0" => 'string|null'], default: '')] $nodeNamespace = null
@@ -578,7 +593,7 @@ class SoapVar
      * @param string $node_namespace [optional] <p>
      * The XML node namespace.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      * @removed 8.0
      */
     public function SoapVar($data, $encoding, $type_name = '', $type_namespace = '', $node_name = '', $node_namespace = '') {}
@@ -592,7 +607,7 @@ class SoapServer
 {
     /**
      * SoapServer constructor
-     * @link https://php.net/manual/en/soapserver.soapserver.php
+     * @link https://php.net/manual/en/soapserver.construct.php
      * @param mixed $wsdl <p>
      * To use the SoapServer in WSDL mode, pass the URI of a WSDL file.
      * Otherwise, pass <b>NULL</b> and set the uri option to the
@@ -628,7 +643,7 @@ class SoapServer
      * <b>SOAP_SINGLE_ELEMENT_ARRAYS</b>,
      * <b>SOAP_USE_XSI_ARRAY_TYPE</b>.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      */
     public function __construct(
         #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $wsdl,
@@ -637,7 +652,7 @@ class SoapServer
 
     /**
      * SoapServer constructor
-     * @link https://php.net/manual/en/soapserver.soapserver.php
+     * @link https://php.net/manual/en/soapserver.construct.php
      * @param mixed $wsdl <p>
      * To use the SoapServer in WSDL mode, pass the URI of a WSDL file.
      * Otherwise, pass <b>NULL</b> and set the uri option to the
@@ -673,7 +688,7 @@ class SoapServer
      * <b>SOAP_SINGLE_ELEMENT_ARRAYS</b>,
      * <b>SOAP_USE_XSI_ARRAY_TYPE</b>.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      * @removed 8.0
      */
     public function SoapServer($wsdl, array $options = null) {}
@@ -696,7 +711,7 @@ class SoapServer
      * <b>session_start</b> must be called before this persistence mode is set.
      * </p>
      * @return void No value is returned.
-     * @since 5.1.2
+     * @since 5.1
      */
     #[TentativeType]
     public function setPersistence(#[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $mode): void {}
@@ -709,7 +724,7 @@ class SoapServer
      * </p>
      * @param mixed ...$args [optional] These optional parameters will be passed to the default class constructor during object creation.
      * @return void No value is returned.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function setClass(
@@ -748,7 +763,7 @@ class SoapServer
      * return an array with named output parameters.
      * </p>
      * @return void No value is returned.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function addFunction($functions): void {}
@@ -757,7 +772,7 @@ class SoapServer
      * Returns list of defined functions
      * @link https://php.net/manual/en/soapserver.getfunctions.php
      * @return array An array of the defined functions.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function getFunctions(): array {}
@@ -770,7 +785,7 @@ class SoapServer
      * in the raw POST data of the HTTP request.
      * </p>
      * @return void No value is returned.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function handle(#[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $request = null): void {}
@@ -795,7 +810,7 @@ class SoapServer
      * @param string $lang [optional] since 8.5
      * </p>
      * @return void No value is returned.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function fault(
@@ -814,12 +829,17 @@ class SoapServer
      * The header to be returned.
      * </p>
      * @return void No value is returned.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[TentativeType]
     public function addSoapHeader(SoapHeader $header): void {}
 
     /**
+     * Returns last SOAP response
+     *
+     * Returns the XML sent in the last SOAP response.
+     *
+     * @link https://php.net/manual/en/soapserver.getlastresponse.php
      * @since 8.4
      */
     public function __getLastResponse(): ?string {}
@@ -886,7 +906,7 @@ class SoapFault extends Exception
 
     /**
      * SoapFault constructor
-     * @link https://php.net/manual/en/soapfault.soapfault.php
+     * @link https://php.net/manual/en/soapfault.construct.php
      * @param string $code <p>
      * The error code of the <b>SoapFault</b>.
      * </p>
@@ -906,7 +926,9 @@ class SoapFault extends Exception
      * Can be used during SOAP header handling to report an error in the
      * response header.
      * </p>
-     * @since 5.0.1
+     * @param string $lang The human language that the SoapFault is written in. This is only used
+     * for SOAP version 1.2.
+     * @since 5.0
      */
     #[Pure]
     public function __construct(
@@ -921,7 +943,7 @@ class SoapFault extends Exception
 
     /**
      * SoapFault constructor
-     * @link https://php.net/manual/en/soapfault.soapfault.php
+     * @link https://php.net/manual/en/soapfault.construct.php
      * @param string $faultcode <p>
      * The error code of the <b>SoapFault</b>.
      * </p>
@@ -941,7 +963,7 @@ class SoapFault extends Exception
      * Can be used during SOAP header handling to report an error in the
      * response header.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      * @removed 8.0
      */
     public function SoapFault($faultcode, $faultstring, $faultactor = null, $detail = null, $faultname = null, $headerfault = null) {}
@@ -950,7 +972,7 @@ class SoapFault extends Exception
      * Obtain a string representation of a SoapFault
      * @link https://php.net/manual/en/soapfault.tostring.php
      * @return string A string describing the SoapFault.
-     * @since 5.0.1
+     * @since 5.0
      */
     #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')]
     public function __toString() {}
@@ -976,7 +998,7 @@ class SoapParam
 
     /**
      * SoapParam constructor
-     * @link https://php.net/manual/en/soapparam.soapparam.php
+     * @link https://php.net/manual/en/soapparam.construct.php
      * @param mixed $data <p>
      * The data to pass or return. This parameter can be passed directly as PHP
      * value, but in this case it will be named as paramN and
@@ -985,7 +1007,7 @@ class SoapParam
      * @param string $name <p>
      * The parameter name.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      */
     public function __construct(
         #[LanguageLevelTypeAware(['8.0' => 'mixed'], default: '')] $data,
@@ -994,7 +1016,7 @@ class SoapParam
 
     /**
      * SoapParam constructor
-     * @link https://php.net/manual/en/soapparam.soapparam.php
+     * @link https://php.net/manual/en/soapparam.construct.php
      * @param mixed $data <p>
      * The data to pass or return. This parameter can be passed directly as PHP
      * value, but in this case it will be named as paramN and
@@ -1003,7 +1025,7 @@ class SoapParam
      * @param string $name <p>
      * The parameter name.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      * @removed 8.0
      */
     public function SoapParam($data, $name) {}
@@ -1047,7 +1069,7 @@ class SoapHeader
 
     /**
      * SoapHeader constructor
-     * @link https://www.php.net/manual/en/soapheader.construct.php
+     * @link https://php.net/manual/en/soapheader.construct.php
      * @param string $namespace <p>
      * The namespace of the SOAP header element.
      * </p>
@@ -1063,7 +1085,7 @@ class SoapHeader
      * Value of the actor attribute of the SOAP header
      * element.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      */
     public function __construct(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $namespace,
@@ -1075,7 +1097,7 @@ class SoapHeader
 
     /**
      * SoapHeader constructor
-     * @link https://php.net/manual/en/soapheader.soapheader.php
+     * @link https://php.net/manual/en/soapheader.construct.php
      * @param string $namespace <p>
      * The namespace of the SOAP header element.
      * </p>
@@ -1091,7 +1113,7 @@ class SoapHeader
      * Value of the actor attribute of the SOAP header
      * element.
      * </p>
-     * @since 5.0.1
+     * @since 5.0
      * @removed 8.0
      */
     public function SoapHeader($namespace, $name, $data = null, $mustunderstand = false, $actor = null) {}

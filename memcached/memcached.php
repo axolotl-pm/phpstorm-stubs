@@ -734,7 +734,7 @@ class Memcached
      * The <b>Memcached::getResultCode</b> will return
      * <b>Memcached::RES_NOTFOUND</b> if the key does not exist.
      */
-    public function get($key, callable $cache_cb = null, $flags = 0) {}
+    public function get($key, ?callable $cache_cb = null, $flags = 0) {}
 
     /**
      * (PECL memcached &gt;= 0.1.0)<br/>
@@ -756,7 +756,7 @@ class Memcached
      * The <b>Memcached::getResultCode</b> will return
      * <b>Memcached::RES_NOTFOUND</b> if the key does not exist.
      */
-    public function getByKey($server_key, $key, callable $cache_cb = null, $flags = 0) {}
+    public function getByKey($server_key, $key, ?callable $cache_cb = null, $flags = 0) {}
 
     /**
      * (PECL memcached &gt;= 0.1.0)<br/>
@@ -807,7 +807,7 @@ class Memcached
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      * Use <b>Memcached::getResultCode</b> if necessary.
      */
-    public function getDelayed(array $keys, $with_cas = null, callable $value_cb = null) {}
+    public function getDelayed(array $keys, $with_cas = null, ?callable $value_cb = null) {}
 
     /**
      * (PECL memcached &gt;= 0.1.0)<br/>
@@ -828,7 +828,7 @@ class Memcached
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      * Use <b>Memcached::getResultCode</b> if necessary.
      */
-    public function getDelayedByKey($server_key, array $keys, $with_cas = null, callable $value_cb = null) {}
+    public function getDelayedByKey($server_key, array $keys, $with_cas = null, ?callable $value_cb = null) {}
 
     /**
      * (PECL memcached &gt;= 0.1.0)<br/>
@@ -919,7 +919,7 @@ class Memcached
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      * Use <b>Memcached::getResultCode</b> if necessary.
      */
-    public function touchByKey($server_key, $key, $expiration) {}
+    public function touchByKey($server_key, $key, $expiration = 0) {}
 
     /**
      * (PECL memcached &gt;= 0.1.0)<br/>
@@ -1435,8 +1435,13 @@ class Memcached
      * (PECL memcached &gt;= 0.1.0)<br/>
      * Set a Memcached option
      * @link https://php.net/manual/en/memcached.setoption.php
-     * @param int $option
-     * @param mixed $value
+     * @param int $option One of the Memcached::OPT_* constant. See Memcached Constants for more
+     * information.
+     * @param mixed $value The value to be set. The options listed below require values specified
+     * via constants. Memcached::OPT_HASH requires Memcached::HASH_* values.
+     * Memcached::OPT_DISTRIBUTION requires Memcached::DISTRIBUTION_* values.
+     * Memcached::OPT_SERIALIZER requires Memcached::SERIALIZER_* values.
+     * Memcached::OPT_COMPRESSION_TYPE requires Memcached::COMPRESSION_* values.
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      */
     public function setOption($option, $value) {}
@@ -1463,7 +1468,7 @@ class Memcached
      * @param string $password <p>
      * The password to use for authentication.
      * </p>
-     * @return void
+     * @return void Returns true on success or false on failure.
      */
     public function setSaslAuthData(string $username, string $password) {}
 
@@ -1501,8 +1506,8 @@ class Memcached
     /**
      * Sets AES encryption key (libmemcached 1.0.6 and higher)
      * @link https://github.com/php-memcached-dev/php-memcached/blob/v3.1.5/php_memcached.c
-     * @param string $key
-     * @return bool
+     * @param string $key The AES key.
+     * @return bool Returns true on success or false on failure.
      */
     public function setEncodingKey($key) {}
 

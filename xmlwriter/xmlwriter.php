@@ -568,20 +568,21 @@ class XMLWriter
      * @param string $content <p>
      * The content of the entity.
      * </p>
-     * @param bool $pe
-     * @param string $pubid
-     * @param string $sysid
-     * @param string $ndataid
+     * @param bool $isParam
+     * @param string|null $publicId
+     * @param string|null $systemId
+     * @param string|null $notationData
      * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
      */
+    #[TentativeType]
     public function writeDtdEntity(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name,
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $content,
-        $pe,
-        $pubid,
-        $sysid,
-        $ndataid
-    ) {}
+        #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $isParam = false,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $publicId = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $systemId = null,
+        #[LanguageLevelTypeAware(['8.0' => 'string|null'], default: '')] $notationData = null
+    ): bool {}
 
     /**
      * (PHP 5 &gt;= 5.1.2, PECL xmlwriter &gt;= 0.1.0)<br/>
@@ -610,17 +611,33 @@ class XMLWriter
     public function flush(#[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $empty = true): string|int {}
 
     /**
+     * Create new XMLWriter using a URI for output
+     *
+     * Creates a new XMLWriter using a URI for output.
+     *
+     * @link https://php.net/manual/en/xmlwriter.touri.php
      * @since 8.4
      */
     public static function toUri(string $uri): static {}
 
     /**
+     * Create new XMLWriter using memory for string output
+     *
+     * Creates a new XMLWriter using memory for string output.
+     *
+     * @link https://php.net/manual/en/xmlwriter.tomemory.php
      * @since 8.4
      */
     public static function toMemory(): static {}
 
     /**
+     * Create new XMLWriter using a stream for output
+     *
+     * Creates a new XMLWriter using a stream for output.
+     *
+     * @link https://php.net/manual/en/xmlwriter.tostream.php
      * @since 8.4
+     * @throws \TypeError Passing a resource that is not a stream to stream will throw a TypeError.
      */
     public static function toStream($stream): static {}
 }
@@ -885,7 +902,7 @@ function xmlwriter_start_element_ns(#[LanguageLevelTypeAware(["8.0" => "XMLWrite
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function xmlwriter_write_element(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, string $name, ?string $content): bool {}
+function xmlwriter_write_element(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, string $name, ?string $content = null): bool {}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL xmlwriter &gt;= 0.1.0)<br/>
@@ -910,7 +927,7 @@ function xmlwriter_write_element(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"]
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function xmlwriter_write_element_ns(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, ?string $prefix, string $name, ?string $namespace, ?string $content): bool {}
+function xmlwriter_write_element_ns(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, ?string $prefix, string $name, ?string $namespace, ?string $content = null): bool {}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL xmlwriter &gt;= 0.1.0)<br/>
@@ -1054,7 +1071,7 @@ function xmlwriter_write_raw(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], de
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function xmlwriter_start_document(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, ?string $version = '1.0', ?string $encoding, ?string $standalone): bool {}
+function xmlwriter_start_document(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, ?string $version = '1.0', ?string $encoding = null, ?string $standalone = null): bool {}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL xmlwriter &gt;= 0.1.0)<br/>
@@ -1105,7 +1122,7 @@ function xmlwriter_write_comment(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"]
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function xmlwriter_start_dtd(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, string $qualifiedName, ?string $publicId, ?string $systemId): bool {}
+function xmlwriter_start_dtd(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, string $qualifiedName, ?string $publicId = null, ?string $systemId = null): bool {}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL xmlwriter &gt;= 0.1.0)<br/>
@@ -1142,7 +1159,7 @@ function xmlwriter_end_dtd(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], defa
  * </p>
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
-function xmlwriter_write_dtd(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, string $name, ?string $publicId, ?string $systemId, ?string $content): bool {}
+function xmlwriter_write_dtd(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer, string $name, ?string $publicId = null, ?string $systemId = null, ?string $content = null): bool {}
 
 /**
  * (PHP 5 &gt;= 5.1.2, PECL xmlwriter &gt;= 0.1.0)<br/>
@@ -1164,7 +1181,8 @@ function xmlwriter_start_dtd_element(#[LanguageLevelTypeAware(["8.0" => "XMLWrit
  * (PHP 5 &gt;= 5.1.2, PECL xmlwriter &gt;= 0.1.0)<br/>
  * End current DTD element
  * @link https://php.net/manual/en/function.xmlwriter-enddtdelement.php
- * @param $writer
+ * @param $writer Only for procedural calls. The XMLWriter instance that is being modified. This
+ * object is returned from a call to xmlwriter_open_uri or xmlwriter_open_memory.
  * @return bool <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
 function xmlwriter_end_dtd_element(#[LanguageLevelTypeAware(["8.0" => "XMLWriter"], default: "resource")] $writer): bool {}

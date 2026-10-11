@@ -51,7 +51,7 @@ function mailparse_msg_create() {}
  * Returns FALSE on error.
  * </p>
  */
-function mailparse_msg_extract_part_file($mimemail, $filename, $callbackfunc) {}
+function mailparse_msg_extract_part_file($mimemail, $filename, $callbackfunc = null) {}
 
 /**
  * (PECL mailparse >= 0.9.0)<br/>
@@ -64,7 +64,7 @@ function mailparse_msg_extract_part_file($mimemail, $filename, $callbackfunc) {}
  * @param callable $callbackfunc [optional]
  * @return void
  */
-function mailparse_msg_extract_part($mimemail, $msgbody, $callbackfunc) {}
+function mailparse_msg_extract_part($mimemail, $msgbody, $callbackfunc = null) {}
 
 /**
  * (PECL mailparse >= 0.9.0)<br/>
@@ -77,7 +77,7 @@ function mailparse_msg_extract_part($mimemail, $msgbody, $callbackfunc) {}
  * @param callable $callbackfunc [optional]
  * @return string
  */
-function mailparse_msg_extract_whole_part_file($mimemail, $filename, $callbackfunc) {}
+function mailparse_msg_extract_whole_part_file($mimemail, $filename, $callbackfunc = null) {}
 
 /**
  * (PECL mailparse >= 0.9.0)<br/>
@@ -145,7 +145,8 @@ function mailparse_msg_parse_file($filename) {}
  * @param resource $mimemail <p>
  * A valid MIME resource.
  * </p>
- * @param string $data
+ * @param string $data The final chunk of data is supposed to end with a newline (CRLF); otherwise
+ * the last line of the message will not be parsed.
  * @return bool Returns <b>TRUE</b> on success or <b>FALSE</b> on failure.
  */
 function mailparse_msg_parse($mimemail, $data) {}

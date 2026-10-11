@@ -3,6 +3,7 @@
 // Start of zip v.1.14.0
 use JetBrains\PhpStorm\Deprecated;
 use JetBrains\PhpStorm\Internal\LanguageLevelTypeAware;
+use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
 use JetBrains\PhpStorm\Internal\TentativeType;
 
 /**
@@ -14,7 +15,7 @@ class ZipArchive implements Countable
     /**
      * Zip library version
      * @link https://php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @since 7.4
      */
     public const LIBZIP_VERSION = '1.7.3';
 
@@ -66,12 +67,40 @@ class ZipArchive implements Countable
      * @link https://php.net/manual/en/zip.constants.php
      */
     public const FL_UNCHANGED = 8;
+
+    /**
+     * @since 8.0
+     */
     public const FL_RECOMPRESS = 16;
+
+    /**
+     * @since 8.0
+     */
     public const FL_ENCRYPTED = 32;
+
+    /**
+     * @since 8.0
+     */
     public const FL_OVERWRITE = 8192;
+
+    /**
+     * @since 8.0
+     */
     public const FL_LOCAL = 256;
+
+    /**
+     * @since 8.0
+     */
     public const FL_CENTRAL = 512;
+
+    /**
+     * @since 8.0
+     */
     public const EM_TRAD_PKWARE = 1;
+
+    /**
+     * @since 8.0
+     */
     public const EM_UNKNOWN = 65535;
 
     /**
@@ -297,148 +326,148 @@ class ZipArchive implements Countable
 
     /**
      * No encryption
-     * @link https://secure.php.net/manual/en/zip.constants.php
+     * @link https://php.net/manual/en/zip.constants.php
      * @since 7.2
      */
     public const EM_NONE = 0;
 
     /**
      * AES 128 encryption
-     * @link https://secure.php.net/manual/en/zip.constants.php
+     * @link https://php.net/manual/en/zip.constants.php
      * @since 7.2
      */
     public const EM_AES_128 = 257;
 
     /**
      * AES 192 encryption
-     * @link https://secure.php.net/manual/en/zip.constants.php
+     * @link https://php.net/manual/en/zip.constants.php
      * @since 7.2
      */
     public const EM_AES_192 = 258;
 
     /**
      * AES 256 encryption
-     * @link https://secure.php.net/manual/en/zip.constants.php
+     * @link https://php.net/manual/en/zip.constants.php
      * @since 7.2
      */
     public const EM_AES_256 = 259;
 
     /**
      * Open archive in read only mode
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const RDONLY = 16;
 
     /**
      * Guess string encoding (is default)
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.0.8
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.0
      */
     public const FL_ENC_GUESS = 0;
 
     /**
      * Get unmodified string
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.0.8
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.0
      */
     public const FL_ENC_RAW = 64;
 
     /**
      * Follow specification strictly
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.0.8
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.0
      */
     public const FL_ENC_STRICT = 128;
 
     /**
      * String is UTF-8 encoded
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.0.8
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.0
      */
     public const FL_ENC_UTF_8 = 2048;
 
     /**
      * String is CP437 encoded
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.0.8
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.0
      */
     public const FL_ENC_CP437 = 4096;
 
     /**
      * LZMA2 algorithm
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const CM_LZMA2 = 33;
 
     /**
      * XZ algorithm
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const CM_XZ = 95;
 
     /**
      * Encryption method not support
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_ENCRNOTSUPP = 24;
 
     /**
      * Read-only archive
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_RDONLY = 25;
 
     /**
      * No password provided
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_NOPASSWD = 26;
 
     /**
      * Wrong password provided
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_WRONGPASSWD = 27;
 
     /**
      * Operation not supported
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_OPNOTSUPP = 28;
 
     /**
      * Resource still in use
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_INUSE = 29;
 
     /**
      * Tell error
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_TELL = 30;
 
     /**
      * Compressed data invalid
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_COMPRESSED_DATA = 31;
 
     /**
      * Operation cancelled
-     * @link https://secure.php.net/manual/en/zip.constants.php
-     * @since 7.4.3
+     * @link https://php.net/manual/en/zip.constants.php
+     * @since 7.4
      */
     public const ER_CANCELLED = 32;
 
@@ -573,15 +602,55 @@ class ZipArchive implements Countable
      * @since 5.6
      */
     public const OPSYS_DEFAULT = 3;
+
+    /**
+     * @since 8.0
+     */
     public const FL_OPEN_FILE_NOW = 1073741824;
+
+    /**
+     * @since 8.0
+     */
     public const CM_ZSTD = 93;
+
+    /**
+     * @since 8.0
+     */
     public const ER_DATA_LENGTH = 33;
+
+    /**
+     * @since 8.0
+     */
     public const ER_NOT_ALLOWED = 34;
+
+    /**
+     * @since 8.0
+     */
     public const AFL_RDONLY = 2;
+
+    /**
+     * @since 8.0
+     */
     public const AFL_IS_TORRENTZIP = 4;
+
+    /**
+     * @since 8.0
+     */
     public const AFL_WANT_TORRENTZIP = 8;
+
+    /**
+     * @since 8.0
+     */
     public const AFL_CREATE_OR_KEEP_FILE_FOR_EMPTY_ARCHIVE = 16;
+
+    /**
+     * @since 8.0
+     */
     public const LENGTH_TO_END = 0;
+
+    /**
+     * @since 8.0
+     */
     public const LENGTH_UNCHECKED = -2;
 
     /**
@@ -637,68 +706,71 @@ class ZipArchive implements Countable
      * @param int $flags [optional] <p>
      * The mode to use to open the archive.
      * </p>
-     * <p>
-     * <b>ZipArchive::OVERWRITE</b>
-     * </p>
+     * <table>
+     * <tr valign="top">
+     * <td><b>ZipArchive::OVERWRITE</b></td>
+     * <td>If archive exists, ignore its current contents. In other words, handle it the same way as an empty archive</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::CREATE</b></td>
+     * <td>Create the archive if it does not exist</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::RDONLY</b></td>
+     * <td>Open archive in read only mode. Available as of PHP 7.4.3 and PECL zip 1.17.1, respectively, if built against libzip ≥ 1.0.0</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::EXCL</b></td>
+     * <td>Error if archive already exists</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::CHECKCONS</b></td>
+     * <td>Perform additional consistency checks on the archive, and error if they fail</td>
+     * </tr>
+     * </table>
      *
      * @return int|bool <i>Error codes</i>
      * <p>
      * Returns <b>TRUE</b> on success, <b>FALSE</b> or the error code on error.
      * </p>
-     * <p>
-     * <b>ZipArchive::ER_EXISTS</b>
-     * </p>
-     * <p>
-     * File already exists.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_INCONS</b>
-     * </p>
-     * <p>
-     * Zip archive inconsistent.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_INVAL</b>
-     * </p>
-     * <p>
-     * Invalid argument.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_MEMORY</b>
-     * </p>
-     * <p>
-     * Malloc failure.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_NOENT</b>
-     * </p>
-     * <p>
-     * No such file.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_NOZIP</b>
-     * </p>
-     * <p>
-     * Not a zip archive.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_OPEN</b>
-     * </p>
-     * <p>
-     * Can't open file.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_READ</b>
-     * </p>
-     * <p>
-     * Read error.
-     * </p>
-     * <p>
-     * <b>ZipArchive::ER_SEEK</b>
-     * </p>
-     * <p>
-     * Seek error.
-     * </p>
+     * <table>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_EXISTS</b></td>
+     * <td>File already exists</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_INCONS</b></td>
+     * <td>Zip archive inconsistent</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_INVAL</b></td>
+     * <td>Invalid argument</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_MEMORY</b></td>
+     * <td>Malloc failure</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_NOENT</b></td>
+     * <td>No such file</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_NOZIP</b></td>
+     * <td>Not a zip archive</td>
+     * </tr>
+     * <tr valign="top"></tr>
+     * <td><b>ZipArchive::ER_OPEN</b></td>
+     * <td>Can't open file</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_READ</b></td>
+     * <td>Read error</td>
+     * </tr>
+     * <tr valign="top">
+     * <td><b>ZipArchive::ER_SEEK</b></td>
+     * <td>Seek error</td>
+     * </tr>
+     * </table>
      */
     #[TentativeType]
     public function open(
@@ -719,7 +791,7 @@ class ZipArchive implements Countable
      * (PHP 7 &gt;= 7.2.0, PECL zip &gt;= 1.15.0)<br/>
      * Counts the number of files in the archive.
      * @link https://www.php.net/manual/en/ziparchive.count.php
-     * @return int
+     * @return int Returns the number of files in the archive.
      * @since 7.2
      */
     #[TentativeType]
@@ -729,7 +801,7 @@ class ZipArchive implements Countable
      * Returns the status error message, system and/or zip messages
      * @link https://php.net/manual/en/ziparchive.getstatusstring.php
      * @return string|false a string with the status message on success or <b>FALSE</b> on failure.
-     * @since 5.2.7
+     * @since 5.2
      */
     #[TentativeType]
     public function getStatusString(): string {}
@@ -747,7 +819,7 @@ class ZipArchive implements Countable
     #[TentativeType]
     public function addEmptyDir(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $dirname,
-        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags
+        #[PhpStormStubsElementAvailable(from: '8.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 0
     ): bool {}
 
     /**
@@ -768,7 +840,7 @@ class ZipArchive implements Countable
     public function addFromString(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name,
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $content,
-        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 8192
+        #[PhpStormStubsElementAvailable(from: '8.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 8192
     ): bool {}
 
     /**
@@ -796,7 +868,7 @@ class ZipArchive implements Countable
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $entryname = null,
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $start = 0,
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $length = 0,
-        #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 8192
+        #[PhpStormStubsElementAvailable(from: '8.0')] #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = 8192
     ): bool {}
 
     /**
@@ -821,7 +893,7 @@ class ZipArchive implements Countable
      * "remove_path" or "remove_all_path"
      * options.
      * </p>
-     * @return array|false
+     * @return array|false An array of added files on success or false on failure
      */
     #[TentativeType]
     public function addGlob(
@@ -843,7 +915,7 @@ class ZipArchive implements Countable
      * @param array $options [optional] <p>
      * An associative array of options accepted by <b>ZipArchive::addGlob</b>.
      * </p>
-     * @return array|false
+     * @return array|false An array of added files on success or false on failure
      */
     #[TentativeType]
     public function addPattern(
@@ -964,6 +1036,7 @@ class ZipArchive implements Countable
     /**
      * Set the compression method of an entry defined by its name
      * https://secure.php.net/manual/en/ziparchive.setcompressionname.php
+     * @link https://php.net/manual/en/ziparchive.setcompressionname.php
      * @param string $name Name of the entry.
      * @param int $method The compression method. Either ZipArchive::CM_DEFAULT, ZipArchive::CM_STORE or ZipArchive::CM_DEFLATE.
      * @param int $compflags [optional] Compression flags. Currently unused.
@@ -999,8 +1072,9 @@ class ZipArchive implements Countable
 
     /**
      * (PHP 5 &gt;= 5.6.0, PECL zip &gt;= 1.12.0)<br/>
-     * @param string $password
-     * @return bool
+     * @link https://php.net/manual/en/ziparchive.setpassword.php
+     * @param string $password The password to be used for the archive.
+     * @return bool Returns true on success or false on failure.
      */
     #[TentativeType]
     public function setPassword(#[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $password): bool {}
@@ -1357,27 +1431,71 @@ class ZipArchive implements Countable
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = null
     ): bool {}
 
+    /**
+     * Check if a encryption method is supported by libzip
+     *
+     * Check if a compression method is supported by libzip.
+     *
+     * @link https://php.net/manual/en/ziparchive.isencryptionmethoddupported.php
+     * @param int $method The encryption method, one of the ZipArchive::EM_* constants.
+     * @param bool $enc If true check for encryption, else check for decryption.
+     */
     #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')]
     public static function isEncryptionMethodSupported(
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $method,
         #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $enc = true
     ) {}
 
+    /**
+     * Check if a compression method is supported by libzip
+     * @link https://php.net/manual/en/ziparchive.iscompressionmethoddupported.php
+     * @param int $method The compression method, one of the ZipArchive::CM_* constants.
+     * @param bool $enc If true check for compression, else check for decompression.
+     */
     #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')]
     public static function isCompressionMethodSupported(
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $method,
         #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')] $enc = true
     ) {}
 
+    /**
+     * Register a callback to allow cancellation during archive close.
+     *
+     * Register a callback function to allow cancellation during archive close.
+     *
+     * @link https://php.net/manual/en/ziparchive.registercancelcallback.php
+     * @param callable $callback If this function return 0 operation will continue, other value it
+     * will be cancelled.
+     * @return bool Returns true on success or false on failure.
+     */
     #[TentativeType]
     public function registerCancelCallback(#[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback): bool {}
 
+    /**
+     * Register a callback to provide updates during archive close.
+     *
+     * Register a callback function to provide updates during archive close.
+     *
+     * @link https://php.net/manual/en/ziparchive.registerprogresscallback.php
+     * @param float $rate Change between each call of the callback (from 0.0 to 1.0).
+     * @param callable $callback This function will receive the current state as a float (from 0.0
+     * to 1.0).
+     * @return bool Returns true on success or false on failure.
+     */
     #[TentativeType]
     public function registerProgressCallback(
         #[LanguageLevelTypeAware(['8.0' => 'float'], default: '')] $rate,
         #[LanguageLevelTypeAware(['8.0' => 'callable'], default: '')] $callback
     ): bool {}
 
+    /**
+     * Set the modification time of an entry defined by its name
+     * @link https://php.net/manual/en/ziparchive.setmtimename.php
+     * @param string $name Name of the entry.
+     * @param int $timestamp The modification time (unix timestamp) of the file.
+     * @param int $flags Optional flags, unused for now.
+     * @return bool Returns true on success or false on failure.
+     */
     #[TentativeType]
     public function setMtimeName(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $name,
@@ -1385,6 +1503,14 @@ class ZipArchive implements Countable
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = null
     ): bool {}
 
+    /**
+     * Set the modification time of an entry defined by its index
+     * @link https://php.net/manual/en/ziparchive.setmtimeindex.php
+     * @param int $index Index of the entry.
+     * @param int $timestamp The modification time (unix timestamp) of the file.
+     * @param int $flags Optional flags, unused for now.
+     * @return bool Returns true on success or false on failure.
+     */
     #[TentativeType]
     public function setMtimeIndex(
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $index,
@@ -1392,6 +1518,20 @@ class ZipArchive implements Countable
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = null
     ): bool {}
 
+    /**
+     * Replace file in ZIP archive with a given path
+     * @link https://php.net/manual/en/ziparchive.replacefile.php
+     * @param string $filepath The path to the file to add.
+     * @param int $index The index of the file to be replaced, its name is unchanged.
+     * @param int $start For partial copy, start position.
+     * @param int $length For partial copy, length to be copied, if ZipArchive::LENGTH_TO_END (0)
+     * the file size is used, if ZipArchive::LENGTH_UNCHECKED the whole file is used (starting from
+     * start).
+     * @param int $flags Bitmask consisting of ZipArchive::FL_ENC_GUESS, ZipArchive::FL_ENC_UTF_8,
+     * ZipArchive::FL_ENC_CP437, ZipArchive::FL_OPEN_FILE_NOW. The behaviour of these constants is
+     * described on the ZIP constants page.
+     * @return bool Returns true on success or false on failure.
+     */
     #[TentativeType]
     public function replaceFile(
         #[LanguageLevelTypeAware(['8.0' => 'string'], default: '')] $filepath,
@@ -1401,13 +1541,20 @@ class ZipArchive implements Countable
         #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')] $flags = null
     ): bool {}
 
+    /**
+     * Clear the status error message, system and/or zip messages
+     * @link https://php.net/manual/en/ziparchive.clearerror.php
+     */
     #[LanguageLevelTypeAware(['8.0' => 'void'], default: '')]
     public function clearError() {}
 
     /**
-     * @param int $flag
-     * @param int $value
-     * @return bool
+     * Set a global flag of a ZIP archive
+     * @link https://php.net/manual/en/ziparchive.setarchiveflag.php
+     * @param int $flag The global flag to change, among AFL_* constants.
+     * ZipArchive::AFL_WANT_TORRENTZIP ZipArchive::AFL_CREATE_OR_KEEP_FILE_FOR_EMPTY_ARCHIVE
+     * @param int $value The new value of the flag.
+     * @return bool Returns true on success or false on failure.
      */
     #[LanguageLevelTypeAware(['8.0' => 'bool'], default: '')]
     public function setArchiveFlag(
@@ -1416,9 +1563,17 @@ class ZipArchive implements Countable
     ) {}
 
     /**
-     * @param int $flag
-     * @param int $flags
-     * @return int
+     * Returns the value of a Zip archive global flag
+     *
+     * Returns a Zip archive global flag value.
+     *
+     * @link https://php.net/manual/en/ziparchive.getarchiveflag.php
+     * @param int $flag The global flag to retrieve, among AFL_* constants: ZipArchive::AFL_RDONLY
+     * ZipArchive::AFL_IS_TORRENTZIP ZipArchive::AFL_WANT_TORRENTZIP
+     * ZipArchive::AFL_CREATE_OR_KEEP_FILE_FOR_EMPTY_ARCHIVE
+     * @param int $flags If flags is set to ZipArchive::FL_UNCHANGED, the original unchanged flag is
+     * returned.
+     * @return int Returns 1 if flag is set for archive, 0 if not, and -1 if an error occurred.
      */
     #[LanguageLevelTypeAware(['8.0' => 'int'], default: '')]
     public function getArchiveFlag(
@@ -1427,14 +1582,48 @@ class ZipArchive implements Countable
     ) {}
 
     /**
-     * @param string $name
-     * @param int $flags
-     * @return void
+     * Get a file handler to the entry defined by its name (read only)
+     *
+     * Get a file handler to the entry defined by its name. For now, it only supports read
+     * operations.
+     *
+     * @link https://php.net/manual/en/ziparchive.getstreamname.php
+     * @param string $name The name of the entry to use.
+     * @param int $flags If flags is set to ZipArchive::FL_UNCHANGED, the original unchanged stream
+     * is returned.
+     * @return void Returns a file pointer (resource) on success or false on failure.
      */
     public function getStreamName(
         #[LanguageLevelTypeAware(['8.2' => 'string'], default: '')] $name,
         #[LanguageLevelTypeAware(['8.2' => 'int'], default: '')] $flags = 0
     ) {}
+
+    /**
+     * @return array
+     * @since 8.6
+     */
+    public function __serialize(): array {}
+
+    /**
+     * @param array $data
+     * @return void
+     * @since 8.6
+     */
+    public function __unserialize(array $data): void {}
+
+    /**
+     * @return string|false
+     * @since 8.6
+     */
+    public function closeString(): string|false {}
+
+    /**
+     * @param string $data
+     * @param int $flags
+     * @return int|bool
+     * @since 8.6
+     */
+    public function openString(string $data = '', int $flags = 0): int|bool {}
 }
 
 /**

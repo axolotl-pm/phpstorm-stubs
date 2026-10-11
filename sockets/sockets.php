@@ -20,7 +20,7 @@ use JetBrains\PhpStorm\Internal\PhpStormStubsElementAvailable;
  * @return AddressInfo[]|false of AddrInfo resource handles that can be used with the other socket_addrinfo functions.
  * @since 7.2
  */
-function socket_addrinfo_lookup(string $host, ?string $service, array $hints = []): array|false {}
+function socket_addrinfo_lookup(string $host, ?string $service = null, array $hints = [], #[PhpStormStubsElementAvailable(from: '8.6')] &$error_code = null): array|false {}
 
 /**
  * Create a Socket resource, and connect it to the provided AddrInfo resource.<br/>
@@ -261,6 +261,8 @@ function socket_select(?array &$read, ?array &$write, ?array &$except, ?int $sec
 function socket_create(int $domain, int $type, int $protocol): Socket|false {}
 
 /**
+ * Export a socket into a stream that encapsulates a socket
+ * @link https://php.net/manual/en/function.socket-export-stream.php
  * @param resource|Socket $socket
  * @return resource|Socket|false
  */
@@ -521,7 +523,7 @@ function socket_getpeername(Socket $socket, &$address, &$port = null): bool {}
 /**
  * Initiates a connection on a socket
  * @link https://php.net/manual/en/function.socket-connect.php
- * @param resource|Socket $socket
+ * @param resource|Socket $socket A Socket instance created with socket_create.
  * @param string $address <p>
  * The <i>address</i> parameter is either an IPv4 address
  * in dotted-quad notation (e.g. 127.0.0.1) if
@@ -709,7 +711,7 @@ function socket_send(Socket $socket, string $data, int $length, int $flags): int
 /**
  * (PHP 5 &gt;=5.5.0)<br/>
  * Send a message
- * @link https://secure.php.net/manual/en/function.socket-sendmsg.php
+ * @link https://php.net/manual/en/function.socket-sendmsg.php
  * @param resource|Socket $socket
  * @param array $message
  * @param int $flags
@@ -719,7 +721,7 @@ function socket_send(Socket $socket, string $data, int $length, int $flags): int
 function socket_sendmsg(
     Socket $socket,
     array $message,
-    #[PhpStormStubsElementAvailable(from: '5.5', to: '7.4')] int $flags,
+    #[PhpStormStubsElementAvailable(from: '5.5', to: '7.4')] int $flags = 0,
     #[PhpStormStubsElementAvailable(from: '8.0')] int $flags = 0
 ): int|false {}
 
@@ -799,7 +801,7 @@ function socket_recvfrom(Socket $socket, &$data, int $length, int $flags, &$addr
 
 /**
  * Read a message
- * @link https://secure.php.net/manual/en/function.socket-recvmsg.php
+ * @link https://php.net/manual/en/function.socket-recvmsg.php
  * @param resource|Socket $socket
  * @param array &$message
  * @param int $flags
@@ -809,7 +811,7 @@ function socket_recvfrom(Socket $socket, &$data, int $length, int $flags, &$addr
 function socket_recvmsg(
     Socket $socket,
     array &$message,
-    #[PhpStormStubsElementAvailable(from: '5.5', to: '7.4')] int $flags,
+    #[PhpStormStubsElementAvailable(from: '5.5', to: '7.4')] int $flags = 0,
     #[PhpStormStubsElementAvailable(from: '8.0')] int $flags = 0
 ): int|false {}
 
@@ -1368,9 +1370,9 @@ function socket_setopt(Socket $socket, int $level, int $option, $value): bool {}
  *
  * @link https://www.php.net/manual/en/function.socket-wsaprotocol-info-export.php
  *
- * @param resource|Socket $socket
+ * @param resource|Socket $socket A Socket instance.
  * @param int $target_pid
- * @return string|false
+ * @return string|false Returns an identifier to be used for the import, or false on failure
  *
  * @since 7.3
  */
@@ -1381,8 +1383,9 @@ function socket_wsaprotocol_info_export($socket, $target_pid) {}
  *
  * @link https://www.php.net/manual/en/function.socket-wsaprotocol-info-import.php
  *
- * @param string $info_id
- * @return resource|Socket|false
+ * @param string $info_id The ID which has been returned by a former call to
+ * socket_wsaprotocol_info_export.
+ * @return resource|Socket|false Returns a Socket instance on success, or false on failure
  *
  * @since 7.3
  */
@@ -1393,14 +1396,17 @@ function socket_wsaprotocol_info_import($info_id) {}
  *
  * @link https://www.php.net/manual/en/function.socket-wsaprotocol-info-release.php
  *
- * @param string $info_id
- * @return bool
+ * @param string $info_id The ID which has been returned by a former call to
+ * socket_wsaprotocol_info_export.
+ * @return bool Returns true on success or false on failure.
  *
  * @since 7.3
  */
 function socket_wsaprotocol_info_release($info_id) {}
 
 /**
+ * Determines whether socket is at out-of-band mark
+ * @link https://php.net/manual/en/function.socket-atmark.php
  * @since 8.3
  */
 function socket_atmark(Socket $socket): bool {}
@@ -2394,31 +2400,33 @@ define('SO_BINDTOIFINDEX', 62);
 /**
  * @since 8.5
  */
-const AF_PACKET = 0;
+const AF_PACKET = 17;
 
-const SO_BUSY_POLL = 0;
+const SO_BUSY_POLL = 46;
 
-const IPPROTO_ICMP = 0;
+const IPPROTO_ICMP = 1;
 
-const IPPROTO_ICMPV6 = 0;
+const IPPROTO_ICMPV6 = 58;
 
-const ETH_P_IP = 0;
+const ETH_P_IP = 2048;
 
-const ETH_P_IPV6 = 0;
+const ETH_P_IPV6 = 34525;
 
-const ETH_P_LOOP = 0;
+const ETH_P_LOOP = 96;
 
-const ETH_P_ALL = 0;
+const ETH_P_ALL = 3;
 
-const UDP_SEGMENT = 0;
+const UDP_SEGMENT = 103;
 
 const SHUT_RD = 0;
 
-const SHUT_WR = 0;
+const SHUT_WR = 1;
 
-const SHUT_RDWR = 0;
+const SHUT_RDWR = 2;
 
 /**
+ * A fully opaque class which replaces Socket resources as of PHP 8.0.0.
+ * @link https://php.net/manual/en/class.socket.php
  * @since 8.0
  */
 final class Socket
@@ -2431,6 +2439,8 @@ final class Socket
 }
 
 /**
+ * A fully opaque class which replaces AddressInfo resources as of PHP 8.0.0.
+ * @link https://php.net/manual/en/class.addressinfo.php
  * @since 8.0
  */
 final class AddressInfo
@@ -2441,3 +2451,80 @@ final class AddressInfo
      */
     private function __construct() {}
 }
+
+/**
+ * @since 8.6
+ */
+define('AF_UNSPEC', 0);
+/**
+ * @since 8.6
+ */
+define('TCP_USER_TIMEOUT', 18);
+/**
+ * @since 8.6
+ */
+define('EAI_ADDRFAMILY', -9);
+/**
+ * @since 8.6
+ */
+define('EAI_AGAIN', -3);
+/**
+ * @since 8.6
+ */
+define('EAI_ALLDONE', -103);
+/**
+ * @since 8.6
+ */
+define('EAI_BADFLAGS', -1);
+/**
+ * @since 8.6
+ */
+define('EAI_CANCELED', -101);
+/**
+ * @since 8.6
+ */
+define('EAI_FAIL', -4);
+/**
+ * @since 8.6
+ */
+define('EAI_FAMILY', -6);
+/**
+ * @since 8.6
+ */
+define('EAI_IDN_ENCODE', -105);
+/**
+ * @since 8.6
+ */
+define('EAI_INPROGRESS', -100);
+/**
+ * @since 8.6
+ */
+define('EAI_INTR', -104);
+/**
+ * @since 8.6
+ */
+define('EAI_NODATA', -5);
+/**
+ * @since 8.6
+ */
+define('EAI_NONAME', -2);
+/**
+ * @since 8.6
+ */
+define('EAI_NOTCANCELED', -102);
+/**
+ * @since 8.6
+ */
+define('EAI_OVERFLOW', -12);
+/**
+ * @since 8.6
+ */
+define('EAI_SERVICE', -8);
+/**
+ * @since 8.6
+ */
+define('EAI_SOCKTYPE', -7);
+/**
+ * @since 8.6
+ */
+define('EAI_SYSTEM', -11);
